@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOA 英语听力 · Listening Hub</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50:'#eff6ff', 100:'#dbeafe', 200:'#bfdbfe', 300:'#93c5fd', 400:'#60a5fa', 500:'#3b82f6', 600:'#2563eb', 700:'#1d4ed8', 800:'#1e40af', 900:'#1e3a8a' },
+            sand:  { 50:'#fafaf9', 100:'#f5f5f4', 200:'#e7e5e4', 300:'#d6d3d1', 400:'#a8a29e', 500:'#78716c', 600:'#57534e', 700:'#44403c', 800:'#292524', 900:'#1c1917' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'PingFang SC', 'Microsoft YaHei', 'system-ui', 'sans-serif'],
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          animation: {
+            'fade-in':   'fadeIn .25s ease-out',
+            'slide-up':  'slideUp .3s cubic-bezier(.16,1,.3,1)',
+            'pulse-dot': 'pulseDot 1.3s ease-in-out infinite',
+            'float':     'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn:   { from: { opacity: 0 }, to: { opacity: 1 } },
+            slideUp:  { from: { transform: 'translateY(14px)', opacity: 0 }, to: { transform: 'translateY(0)', opacity: 1 } },
+            pulseDot: { '0%,100%': { transform: 'scale(1)', opacity: 1 }, '50%': { transform: 'scale(1.4)', opacity: .5 } },
+            float:    { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%233b82f6'/><stop offset='1' stop-color='%238b5cf6'/></linearGradient></defs><rect width='24' height='24' rx='5' fill='url(%23g)'/><path fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M9 19V6l12-3v13M9 19c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm12-3c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z'/></svg>" />
+
+  <style>
+    html, body { height: 100%; }
+
+    /* ─── 主题变量 ─── */
+    :root, [data-theme="light"] {
+      --bg-1: 191, 219, 254;   /* blue  */
+      --bg-2: 221, 214, 254;   /* violet */
+      --bg-3: 254, 215, 226;   /* pink */
+      --bg-start: #f8fafc;
+      --bg-end:   #f1f5f9;
+      --surface-glass:        rgba(255,255,255,.7);
+      --surface-glass-strong: rgba(255,255,255,.85);
+      --surface-solid:        #ffffff;
+      --surface-hover:        #f1f5f9;
+      --border-soft:          rgba(255,255,255,.8);
+      --border-subtle:        rgba(226,232,240,.6);
+      --border-base:          #e2e8f0;
+      --text-strong:          #1c1917;
+      --text-base:            #292524;
+      --text-muted:           #78716c;
+      --text-faint:           #a8a29e;
+      --accent:               #3b82f6;
+      --accent-2:             #6366f1;
+      --accent-3:             #8b5cf6;
+      --accent-soft-bg:       #eff6ff;
+      --accent-soft-border:   #bfdbfe;
+      --chip-bg:              #f5f5f4;
+      --shadow-sm:            0 4px 24px -8px rgba(15,23,42,.08);
+      --shadow-md:            0 8px 32px -8px rgba(15,23,42,.1);
+      --kbd-bg:               #f5f5f4;
+      --kbd-border:           #e2e8f0;
+    }
+    [data-theme="dark"] {
+      --bg-1: 59, 130, 246;
+      --bg-2: 139, 92, 246;
+      --bg-3: 236, 72, 153;
+      --bg-start: #0f172a;
+      --bg-end:   #020617;
+      --surface-glass:        rgba(30,41,59,.55);
+      --surface-glass-strong: rgba(30,41,59,.8);
+      --surface-solid:        #1e293b;
+      --surface-hover:        #334155;
+      --border-soft:          rgba(148,163,184,.12);
+      --border-subtle:        rgba(148,163,184,.12);
+      --border-base:          #334155;
+      --text-strong:          #f8fafc;
+      --text-base:            #e2e8f0;
+      --text-muted:           #94a3b8;
+      --text-faint:           #64748b;
+      --accent:               #60a5fa;
+      --accent-2:             #818cf8;
+      --accent-3:             #a78bfa;
+      --accent-soft-bg:       rgba(59,130,246,.15);
+      --accent-soft-border:   rgba(96,165,250,.3);
+      --chip-bg:              #334155;
+      --shadow-sm:            0 4px 24px -8px rgba(0,0,0,.5);
+      --shadow-md:            0 8px 32px -8px rgba(0,0,0,.6);
+      --kbd-bg:               #334155;
+      --kbd-border:           #475569;
+    }
+    [data-theme="sepia"] {
+      --bg-1: 251, 191, 153;
+      --bg-2: 252, 211, 77;
+      --bg-3: 253, 186, 116;
+      --bg-start: #fef6e4;
+      --bg-end:   #faedcd;
+      --surface-glass:        rgba(254,252,232,.75);
+      --surface-glass-strong: rgba(254,252,232,.9);
+      --surface-solid:        #fffbea;
+      --surface-hover:        #fef3c7;
+      --border-soft:          rgba(255,237,181,.9);
+      --border-subtle:        rgba(253,230,138,.6);
+      --border-base:          #fde68a;
+      --text-strong:          #422006;
+      --text-base:            #78350f;
+      --text-muted:           #92400e;
+      --text-faint:           #b45309;
+      --accent:               #b45309;
+      --accent-2:             #a16207;
+      --accent-3:             #d97706;
+      --accent-soft-bg:       #fef3c7;
+      --accent-soft-border:   #fcd34d;
+      --chip-bg:              #fde68a;
+      --shadow-sm:            0 4px 24px -8px rgba(120,53,15,.12);
+      --shadow-md:            0 8px 32px -8px rgba(120,53,15,.15);
+      --kbd-bg:               #fde68a;
+      --kbd-border:           #f59e0b;
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 0%,   rgba(var(--bg-1), .55), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 20%, rgba(var(--bg-2), .45), transparent 65%),
+        radial-gradient(ellipse 50% 50% at 50% 100%, rgba(var(--bg-3), .35), transparent 65%),
+        linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+      background-attachment: fixed;
+      color: var(--text-base);
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, .2); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, .4); }
+
+    /* glass */
+    .glass {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-sm);
+    }
+    .glass-strong {
+      background: var(--surface-glass-strong);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* gradient text */
+    .text-gradient {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* word hover */
+    .word-token {
+      position: relative;
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 1px 3px;
+      transition: all .15s ease;
+    }
+    .word-token:hover {
+      background: linear-gradient(135deg, #dbeafe, #ede9fe);
+      color: #1e40af;
+      transform: translateY(-1px);
+    }
+    .word-token.saved {
+      color: #b45309;
+      border-bottom: 2px dotted #f59e0b;
+      background: rgba(254, 243, 199, .4);
+    }
+    .word-token.saved:hover {
+      background: #fef3c7;
+    }
+
+    /* playing sentence */
+    .sentence-glow {
+      box-shadow:
+        0 0 0 2px rgba(59, 130, 246, .2),
+        0 10px 40px -10px rgba(59, 130, 246, .25),
+        0 4px 12px -4px rgba(15, 23, 42, 0.08);
+      background: linear-gradient(135deg, rgba(239, 246, 255, .9), rgba(238, 242, 255, .8));
+    }
+
+    /* progress bar */
+    .progress-fill {
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      box-shadow: 0 0 8px rgba(99, 102, 241, .4);
+    }
+
+    /* primary button gradient */
+    .btn-gradient {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      box-shadow: 0 6px 20px -6px rgba(99, 102, 241, .45), inset 0 1px 0 rgba(255, 255, 255, .25);
+      color: #fff;
+    }
+    .btn-gradient:hover:not(:disabled) {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      box-shadow: 0 10px 24px -6px rgba(99, 102, 241, .55), inset 0 1px 0 rgba(255, 255, 255, .3);
+      transform: translateY(-1px);
+    }
+
+    /* active sidebar item */
+    .ep-active {
+      background: linear-gradient(135deg, #eff6ff, #eef2ff) !important;
+      border-color: #93c5fd !important;
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, .15), 0 8px 20px -10px rgba(59, 130, 246, .3);
+    }
+
+    /* badge pulse */
+    .badge-pulse {
+      box-shadow: 0 0 0 0 rgba(236, 72, 153, .5);
+      animation: pulseRing 2s infinite;
+    }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, .5); }
+      70% { box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+    }
+
+    [v-cloak] { display: none; }
+
+    /* ─── Home Hero 专用 ─── */
+    .hero-gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .feature-card {
+      transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px rgba(59, 130, 246, .25);
+    }
+    .mock-window {
+      border-radius: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid rgba(226, 232, 240, .8);
+      box-shadow:
+        0 30px 80px -20px rgba(15, 23, 42, 0.25),
+        0 8px 20px -8px rgba(15, 23, 42, 0.1);
+      overflow: hidden;
+    }
+    .mock-window-bar {
+      height: 32px;
+      background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 6px;
+    }
+    .mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mock-dot-r { background: #fca5a5; }
+    .mock-dot-y { background: #fcd34d; }
+    .mock-dot-g { background: #86efac; }
+
+    /* 大数字装饰 */
+    .big-num {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      font-size: 6rem;
+      line-height: 1;
+      background: linear-gradient(180deg, rgba(59,130,246,.12) 0%, rgba(59,130,246,0) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* transitions */
+    .fade-enter-active, .fade-leave-active { transition: opacity .2s ease; }
+    .fade-enter-from, .fade-leave-to { opacity: 0; }
+
+    .popup-enter-active, .popup-leave-active { transition: opacity .2s ease; }
+    .popup-enter-from, .popup-leave-to { opacity: 0; }
+
+    .drawer-enter-active { transition: transform .35s cubic-bezier(.16, 1, .3, 1); }
+    .drawer-leave-active { transition: transform .25s cubic-bezier(.5, 0, .75, 0); }
+    .drawer-enter-from, .drawer-leave-to { transform: translateX(100%); }
+  </style>
+</head>
+
+<body class="font-sans text-sand-800 antialiased overflow-hidden">
+
+<div id="app" v-cloak class="h-screen flex flex-col">
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║                     HOME / LANDING                       ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <div v-if="view === 'home'" class="flex-1 overflow-y-auto">
+
+    <!-- Decorative orbs -->
+    <div class="hero-gradient-orb w-96 h-96 bg-brand-300/40" style="top: -100px; left: -100px;"></div>
+    <div class="hero-gradient-orb w-[500px] h-[500px] bg-purple-300/30" style="top: 200px; right: -200px;"></div>
+    <div class="hero-gradient-orb w-80 h-80 bg-pink-300/25" style="top: 800px; left: 30%;"></div>
+
+    <!-- Nav -->
+    <nav class="relative z-10 flex items-center justify-between px-8 py-5 max-w-7xl mx-auto">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-400 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-brand-500/30">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm12-3c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight text-sand-900">Listening Hub</h1>
+          <p class="text-[10px] text-sand-500 uppercase tracking-widest">VOA Special English</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-sand-600">
+        <a href="#features" class="hover:text-brand-600 transition-colors hidden md:inline">功能</a>
+        <a href="#preview" class="hover:text-brand-600 transition-colors hidden md:inline">预览</a>
+        <button @click="enterApp" class="btn-gradient px-5 py-2 rounded-full text-sm font-semibold">
+          开始练习
+        </button>
+      </div>
+    </nav>
+
+    <!-- ── Hero Section ────────────────────────── -->
+    <section class="relative z-10 max-w-7xl mx-auto px-8 pt-16 pb-24 text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-sand-200 text-xs font-medium text-sand-700 mb-8 shadow-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse-dot"></span>
+        全新升级 · 专为英语学习者打造
+      </div>
+
+      <!-- Main title -->
+      <h1 class="text-5xl md:text-7xl font-display font-extrabold tracking-tight leading-[1.1] mb-6">
+        <span class="text-sand-900">用耳朵</span><br/>
+        <span class="text-gradient">征服英语</span>
+      </h1>
+      <p class="text-lg md:text-xl text-sand-600 max-w-2xl mx-auto leading-relaxed mb-10">
+        基于 VOA Special English 的沉浸式听力练习平台<br/>
+        <span class="text-sand-500 text-base">逐句精听 · 中英对照 · 智能生词本 · 即点即听</span>
+      </p>
+
+      <!-- CTA -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+        <button @click="enterApp"
+                class="btn-gradient px-8 py-4 rounded-2xl text-base font-bold flex items-center gap-2 shadow-2xl shadow-brand-500/30 hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          立即开始练习
+        </button>
+        <a href="#features"
+           class="px-8 py-4 rounded-2xl bg-white border border-sand-200 text-sand-700 font-semibold hover:bg-sand-50 transition-all flex items-center gap-2">
+          了解更多
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl md:text-3xl font-display font-extrabold text-gradient mb-1">{{ episodes.length }}</div>
+          <div class="text-[11px] md:text-xs text-sand-600">精选节目</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl md:text-3xl font-display font-extrabold text-gradient mb-1">{{ episodes.reduce((s,e)=>s+e.sentences.length,0) }}</div>
+          <div class="text-[11px] md:text-xs text-sand-600">双语句子</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl md:text-3xl font-display font-extrabold text-gradient mb-1">{{ categories.length - 1 }}</div>
+          <div class="text-[11px] md:text-xs text-sand-600">学习主题</div>
+        </div>
+        <div class="glass rounded-2xl p-5 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200">
+          <div class="text-2xl md:text-3xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-emerald-500 to-teal-600 mb-1">{{ progressStats.streak }}</div>
+          <div class="text-[11px] md:text-xs text-emerald-700">🔥 天连续学习</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Preview Section (mock app window) ────── -->
+    <section id="preview" class="relative z-10 max-w-6xl mx-auto px-8 pb-24">
+      <div class="text-center mb-10">
+        <div class="inline-block px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold uppercase tracking-wider mb-3">Preview</div>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-sand-900">简洁优雅的练习界面</h2>
+      </div>
+
+      <div class="mock-window max-w-5xl mx-auto">
+        <div class="mock-window-bar">
+          <span class="mock-dot mock-dot-r"></span>
+          <span class="mock-dot mock-dot-y"></span>
+          <span class="mock-dot mock-dot-g"></span>
+          <span class="ml-4 text-xs text-sand-400 font-mono">Listening Hub - VOA Special English</span>
+        </div>
+        <div class="p-6 md:p-10 bg-gradient-to-br from-white via-sand-50 to-blue-50">
+          <!-- fake player -->
+          <div class="flex items-center gap-3 mb-4">
+            <span class="px-2.5 py-0.5 rounded-md bg-gradient-to-br from-brand-500 to-indigo-600 text-white text-[10px] font-bold">EP001</span>
+            <h3 class="text-lg font-bold text-sand-900">Health Report: The Benefits of Exercise</h3>
+          </div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-white border border-sand-200 flex items-center justify-center shadow-sm"><svg class="w-4 h-4 text-sand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg></div>
+            <button class="btn-gradient px-6 h-11 rounded-xl font-semibold text-sm flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              开始播放
+            </button>
+            <div class="w-10 h-10 rounded-xl bg-white border border-sand-200 flex items-center justify-center shadow-sm"><svg class="w-4 h-4 text-sand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg></div>
+          </div>
+          <!-- fake sentence card active -->
+          <div class="sentence-glow border-brand-300 border rounded-2xl p-5 pl-6 mb-3 relative">
+            <div class="absolute left-0 top-4 bottom-4 w-1 rounded-r-full bg-gradient-to-b from-brand-400 via-indigo-400 to-purple-500"></div>
+            <div class="flex items-center gap-3 mb-2.5">
+              <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-[11px] font-bold font-mono bg-brand-100 text-brand-700">01</span>
+              <button class="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-brand-400 to-indigo-500 text-white shadow-md">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>
+              </button>
+              <div class="flex items-center gap-1.5 text-[10px] font-semibold text-emerald-600">
+                <div class="flex items-end gap-0.5 h-3">
+                  <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 40%;"></span>
+                  <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 80%; animation-delay: .15s;"></span>
+                  <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 60%; animation-delay: .3s;"></span>
+                  <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 90%; animation-delay: .45s;"></span>
+                </div>
+                SPEAKING
+              </div>
+            </div>
+            <div class="text-[15px] leading-relaxed text-sand-900 font-medium">
+              Exercise is one of the best things you can do for your
+              <span class="word-token saved">health</span>.
+            </div>
+            <div class="mt-2.5 pt-2.5 border-t border-dashed border-sand-200 text-[13px] leading-relaxed text-sand-600">
+              锻炼是你为健康所做的最好的事情之一。
+            </div>
+          </div>
+          <div class="bg-white/70 border border-sand-200 rounded-2xl p-5 pl-6">
+            <div class="flex items-center gap-3 mb-2.5">
+              <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-[11px] font-bold font-mono bg-sand-100 text-sand-600">02</span>
+              <button class="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-sand-200 text-sand-600">
+                <svg class="w-3 h-3 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <div class="text-[15px] leading-relaxed text-sand-900 font-medium">Regular physical activity can help prevent many diseases.</div>
+            <div class="mt-2.5 pt-2.5 border-t border-dashed border-sand-200 text-[13px] leading-relaxed text-sand-600">规律的体育活动可以帮助预防许多疾病。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Features Section ────────────────────── -->
+    <section id="features" class="relative z-10 max-w-6xl mx-auto px-8 pb-24">
+      <div class="text-center mb-14">
+        <div class="inline-block px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold uppercase tracking-wider mb-3">Features</div>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-sand-900 mb-3">八大核心功能</h2>
+        <p class="text-sand-600">从基础听读到精进复习，一站式覆盖语言学习全流程</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Feature 1 -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">01</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center mb-5 shadow-lg shadow-brand-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">多集节目点播</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">精选 VOA Special English 多期节目，涵盖健康、科学、习语等主题。一键切换集数，支持整集顺序播放或跳转任意句子。</p>
+          <div class="flex gap-2 mt-5 flex-wrap">
+            <span class="text-[11px] px-2 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-100">健康</span>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-100">科学</span>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-100">习语</span>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">02</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-5 shadow-lg shadow-purple-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">逐句精听</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">每一句都可独立播放、循环、回放。配合三档语速调节（慢 / 中 / 快），从基础到进阶循序渐进，把每个发音都听懂、听透。</p>
+          <div class="flex gap-2 mt-5">
+            <span class="flex items-center gap-1 text-[11px] text-sand-500"><kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono">Space</kbd> 播放</span>
+            <span class="flex items-center gap-1 text-[11px] text-sand-500"><kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono">←→</kbd> 切换</span>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">03</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center mb-5 shadow-lg shadow-pink-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">中英双语对照</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">每句英文配备精准中文翻译，一键切换显示 / 隐藏。先听后看、边听边看、纯听力模式，灵活适配各阶段练习需求。</p>
+          <div class="flex gap-2 mt-5 p-3 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200">
+            <div class="flex-1">
+              <div class="text-[10px] font-bold text-emerald-700 uppercase mb-0.5">示例</div>
+              <div class="text-sm text-sand-800 font-medium">Exercise is good for health.</div>
+              <div class="text-xs text-sand-500 mt-0.5">锻炼有益于健康。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">04</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-5 shadow-lg shadow-amber-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">智能生词本</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">点击任意英文单词即可弹出音标、发音、中英双解；一键收藏到生词本，自动保存到本地，随时复习。</p>
+          <div class="mt-5 p-3 rounded-xl bg-white border border-sand-200 shadow-sm">
+            <div class="flex items-center gap-2">
+              <span class="text-lg font-display font-bold text-gradient">exercise</span>
+              <span class="text-xs font-mono text-brand-700">/ˈeksərsaɪz/</span>
+              <button class="ml-auto w-6 h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg></button>
+            </div>
+            <div class="mt-1.5 px-2 py-1 rounded bg-amber-50 border border-amber-200 text-xs">
+              <span class="text-[9px] font-bold text-amber-700 uppercase mr-1">中</span>
+              <span class="text-sand-800">体育锻炼；运动</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 5: Dictation -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">05</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-5 shadow-lg shadow-amber-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">听写模式</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">只听音频写下每一个单词，系统即时对比评分。逐词高亮差异 · 0-100 分评估 · 训练拼写与听辨的绝佳方式。</p>
+          <div class="mt-4 p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-700">
+            <span class="inline-block bg-emerald-100 px-1 rounded mr-1">exercise</span> ✓ 正确　<span class="inline-block bg-rose-100 text-rose-700 px-1 rounded mx-1">excersise</span> ✗ 拼错
+          </div>
+        </div>
+
+        <!-- Feature 6: Shadowing -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">06</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center mb-5 shadow-lg shadow-rose-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">跟读模式</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">麦克风录制你的发音，与原音一键对比回放。模仿语音语调、节奏停顿，打磨真正地道的英语口语。</p>
+          <div class="flex items-center gap-2 mt-4 text-xs text-sand-500">
+            <svg class="w-4 h-4 text-rose-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/></svg>
+            基于 MediaRecorder API · 浏览器原生录音
+          </div>
+        </div>
+
+        <!-- Feature 7: SRS -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">07</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-indigo-500 flex items-center justify-center mb-5 shadow-lg shadow-brand-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">间隔重复复习 (SRS)</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">采用简化版 SM-2 算法，根据你对单词的熟练度，智能安排下次复习时间。记得牢、忘得慢。</p>
+          <div class="flex gap-1 mt-4">
+            <span class="flex-1 text-center py-1 rounded bg-rose-100 text-rose-700 text-[10px] font-semibold">忘记</span>
+            <span class="flex-1 text-center py-1 rounded bg-amber-100 text-amber-700 text-[10px] font-semibold">困难</span>
+            <span class="flex-1 text-center py-1 rounded bg-emerald-100 text-emerald-700 text-[10px] font-semibold">还行</span>
+            <span class="flex-1 text-center py-1 rounded bg-brand-100 text-brand-700 text-[10px] font-semibold">熟练</span>
+          </div>
+        </div>
+
+        <!-- Feature 8: Theme + PWA + MP3 import -->
+        <div class="feature-card glass rounded-3xl p-8 relative overflow-hidden">
+          <div class="big-num absolute -top-6 -right-2 select-none pointer-events-none">08</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center mb-5 shadow-lg shadow-teal-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-sand-900 mb-2">个性化体验</h3>
+          <p class="text-sand-600 text-sm leading-relaxed">三色主题（明亮 / 暗黑 / 复古）· PWA 离线支持，可安装到桌面 · 导入真实 VOA MP3 音频 · Anki / CSV 导出生词。</p>
+          <div class="flex items-center gap-2 mt-4">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-semibold">☀ Light</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-semibold">◐ Sepia</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-100 font-semibold">☾ Dark</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bottom CTA ─────────────────────────── -->
+    <section class="relative z-10 max-w-4xl mx-auto px-8 pb-20 text-center">
+      <div class="glass-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-brand-300/40 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-pink-300/30 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-sand-900 mb-4">准备好开始了吗？</h2>
+          <p class="text-sand-600 mb-8">免费、无广告、无需注册 · 打开即用</p>
+          <button @click="enterApp"
+                  class="btn-gradient px-10 py-4 rounded-2xl text-base font-bold inline-flex items-center gap-2 shadow-2xl shadow-brand-500/30 hover:scale-105 transition-transform">
+            进入练习 Hub
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VOA Attribution ────────────────────────────── -->
+    <section class="relative z-10 max-w-4xl mx-auto px-8 pb-10">
+      <div class="glass rounded-2xl p-6 border border-sand-200/60">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center flex-shrink-0 shadow-md">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+          </div>
+          <div class="flex-1 text-sm">
+            <h3 class="font-bold text-sand-900 mb-1 flex items-center gap-2">
+              📻 节目来源声明
+              <a href="https://learningenglish.voanews.com/" target="_blank" rel="noopener noreferrer"
+                 class="text-[10px] font-normal px-2 py-0.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 hover:bg-brand-100 transition-all inline-flex items-center gap-1">
+                VOA 官网
+                <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </h3>
+            <p class="text-sand-600 leading-relaxed mb-3">
+              本应用的 52 集节目内容灵感源自 <strong class="text-brand-700">Voice of America - Learning English</strong>
+              （美国之音学习英语）栏目，文本按照 Special English 标准 —— 1500 核心词 · 慢速朗读风格改编而成，便于英语学习者逐句精听。
+              每集对应的 VOA 官方栏目如下：
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-1.5 text-xs">
+              <a href="https://learningenglish.voanews.com/z/3881" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-rose-400"></span>Health & Lifestyle</a>
+              <a href="https://learningenglish.voanews.com/z/3879" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-blue-400"></span>Science in the News</a>
+              <a href="https://learningenglish.voanews.com/z/3885" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-cyan-400"></span>Technology Report</a>
+              <a href="https://learningenglish.voanews.com/z/3886" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-purple-400"></span>Arts & Culture</a>
+              <a href="https://learningenglish.voanews.com/z/3884" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-amber-400"></span>This Is America</a>
+              <a href="https://learningenglish.voanews.com/z/3892" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-orange-400"></span>Words & Their Stories</a>
+              <a href="https://learningenglish.voanews.com/z/3888" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-emerald-400"></span>Economics Report</a>
+              <a href="https://learningenglish.voanews.com/z/3887" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-teal-400"></span>Education Report</a>
+              <a href="https://learningenglish.voanews.com/z/3891" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-pink-400"></span>People in America</a>
+              <a href="https://learningenglish.voanews.com/z/3896" target="_blank" class="text-sand-700 hover:text-brand-700 transition-colors flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-red-400"></span>In The News</a>
+            </div>
+            <p class="text-[11px] text-sand-400 italic mt-3 leading-relaxed">
+              ※ 内容为教育与学习目的的再创作，非 VOA 官方稿件。点击上方链接可访问对应栏目的官方原声节目。
+              VOA 内容版权归 <a href="https://www.voanews.com/" target="_blank" class="underline hover:text-sand-600">voanews.com</a> 所有。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="relative z-10 text-center text-xs text-sand-400 py-6">
+      Built with Vue 3 · Tailwind CSS · Web Speech API · Inspired by <a href="https://learningenglish.voanews.com/" target="_blank" class="underline hover:text-brand-600">VOA Learning English</a>
+    </footer>
+  </div>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║                  MAIN APP (Practice UI)                   ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <template v-if="view === 'app'">
+
+  <!-- ╔══════════ HEADER ══════════╗ -->
+  <header class="glass-strong flex items-center justify-between px-6 h-16 relative z-20">
+    <!-- Logo (click to go home) -->
+    <button @click="goHome" class="flex items-center gap-3 group">
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-400 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm12-3c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>
+          </svg>
+        </div>
+        <div class="absolute -inset-1 rounded-xl bg-gradient-to-br from-brand-400 to-purple-500 opacity-30 blur-lg -z-10"></div>
+      </div>
+      <div class="text-left">
+        <h1 class="text-lg font-bold tracking-tight">
+          <span class="text-gradient">Listening Hub</span>
+        </h1>
+        <p class="text-[10px] text-sand-500 uppercase tracking-widest">VOA Special English</p>
+      </div>
+    </button>
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-2">
+      <!-- Progress badge -->
+      <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 text-xs">
+        <svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
+        <span class="font-bold text-emerald-700">{{ progressStats.streak }}</span>
+        <span class="text-emerald-600">天连续</span>
+        <span class="mx-1 text-emerald-300">·</span>
+        <span class="font-bold text-teal-700">{{ progressStats.sentencesPlayed }}</span>
+        <span class="text-teal-600">句</span>
+      </div>
+
+      <!-- Theme switcher -->
+      <div class="flex items-center gap-0.5 p-0.5 rounded-full bg-white/70 border border-sand-200">
+        <button v-for="t in [{v:'light',icon:'☀'},{v:'sepia',icon:'◐'},{v:'dark',icon:'☾'}]" :key="t.v"
+                @click="setTheme(t.v)"
+                class="w-7 h-7 rounded-full text-xs transition-all flex items-center justify-center"
+                :class="theme === t.v ? 'bg-gradient-to-br from-brand-500 to-indigo-500 text-white shadow-md' : 'text-sand-500 hover:bg-sand-100'"
+                :title="'主题 ' + t.v">
+          {{ t.icon }}
+        </button>
+      </div>
+
+      <!-- Speech rate -->
+      <div class="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/70 border border-sand-200 text-xs">
+        <svg class="w-3.5 h-3.5 text-sand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span class="text-sand-500 mr-1">语速</span>
+        <button v-for="r in [{v:0.6,label:'极慢'},{v:0.7,label:'VOA 慢速'},{v:0.85,label:'中速'},{v:1.0,label:'正常'}]" :key="r.v"
+                @click="setRate(r.v)"
+                class="px-2 py-0.5 rounded-full transition-all font-medium whitespace-nowrap"
+                :class="Math.abs(speechRate - r.v) < .01
+                  ? 'bg-brand-500 text-white'
+                  : 'text-sand-600 hover:bg-sand-100'">
+          {{ r.label }}
+        </button>
+      </div>
+
+      <!-- Toggle ZH -->
+      <button @click="showZh = !showZh"
+              class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 border"
+              :class="showZh
+                ? 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'
+                : 'bg-white/70 border-sand-200 text-sand-500 hover:bg-sand-50'">
+        <span class="w-1.5 h-1.5 rounded-full transition-all" :class="showZh ? 'bg-emerald-500' : 'bg-sand-400'"></span>
+        {{ showZh ? '中文显示' : '隐藏中文' }}
+      </button>
+
+      <!-- Vocab button -->
+      <button @click="vocabOpen = true"
+              class="relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-br from-brand-50 to-indigo-50 border border-brand-200 text-brand-700 hover:from-brand-100 hover:to-indigo-100 transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+        生词本
+        <span v-if="vocabCount > 0"
+              class="badge-pulse bg-gradient-to-br from-pink-500 to-rose-500 text-white text-[10px] font-bold min-w-[20px] h-5 px-1.5 rounded-full inline-flex items-center justify-center">
+          {{ vocabCount }}
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ╔══════════ MAIN LAYOUT ══════════╗ -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- ── Sidebar ─────────────────────── -->
+    <aside class="w-80 flex-shrink-0 glass flex flex-col overflow-hidden">
+      <!-- Title + search -->
+      <div class="px-5 py-4 border-b border-sand-200/60 space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[11px] font-bold uppercase tracking-[2px] text-sand-500">节目库</h2>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-br from-brand-100 to-indigo-100 text-brand-700 font-semibold">
+            {{ filteredEpisodes.length }} / {{ episodes.length }}
+          </span>
+        </div>
+
+        <!-- Search -->
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="搜索节目标题或分类..."
+            class="w-full pl-9 pr-8 py-2 rounded-xl bg-white border border-sand-200 text-sm text-sand-800 placeholder-sand-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 outline-none transition-all" />
+          <button v-if="searchQuery" @click="searchQuery = ''"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-sand-200 text-sand-600 hover:bg-sand-300 flex items-center justify-center">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Category chips -->
+        <div class="flex flex-wrap gap-1.5">
+          <button v-for="cat in categories" :key="cat"
+                  @click="selectedCategory = cat"
+                  class="text-[10px] font-semibold px-2.5 py-1 rounded-full transition-all"
+                  :class="selectedCategory === cat
+                    ? 'bg-gradient-to-br from-brand-500 to-indigo-500 text-white shadow-md shadow-brand-500/30'
+                    : 'bg-white border border-sand-200 text-sand-600 hover:bg-sand-50'">
+            {{ cat === 'all' ? '全部' : cat }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Episode list -->
+      <div class="flex-1 overflow-y-auto px-3 py-3 space-y-2">
+        <div v-if="filteredEpisodes.length === 0" class="text-center py-12 text-sand-400 text-sm">
+          <svg class="w-10 h-10 mx-auto mb-2 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          没有找到匹配的节目
+        </div>
+
+        <div v-for="(ep, idx) in filteredEpisodes" :key="ep.id"
+             @click="selectEpisode(ep)"
+             class="group cursor-pointer rounded-xl p-3 border border-sand-200/60 bg-white/60 hover:bg-white hover:border-sand-300 hover:shadow-md transition-all duration-200"
+             :class="{ 'ep-active': currentEp?.id === ep.id }">
+
+          <div class="flex items-start gap-2.5">
+            <!-- Number chip -->
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center text-[11px] font-bold font-mono flex-shrink-0 transition-all"
+                 :class="currentEp?.id === ep.id
+                   ? 'bg-gradient-to-br from-brand-400 to-indigo-500 text-white shadow-lg shadow-brand-500/30'
+                   : 'bg-sand-100 text-sand-600 group-hover:bg-sand-200'">
+              {{ ep.id.replace('ep', '').padStart(2, '0') }}
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 font-semibold uppercase tracking-wider">
+                  {{ ep.category }}
+                </span>
+                <span v-if="currentEp?.id === ep.id" class="text-[9px] font-bold text-emerald-600 flex items-center gap-1">
+                  <span class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse-dot"></span>
+                  NOW
+                </span>
+              </div>
+              <h3 class="text-[13px] font-semibold leading-tight text-sand-900 truncate mb-0.5">{{ ep.title }}</h3>
+              <p class="text-[11px] text-sand-500 leading-snug truncate">{{ ep.description }}</p>
+              <div class="flex items-center gap-2 mt-1.5 text-[10px] text-sand-400">
+                <span class="flex items-center gap-0.5">
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                  {{ ep.sentences.length }} 句
+                </span>
+                <span class="text-sand-300">·</span>
+                <span class="truncate flex items-center gap-0.5" :title="'VOA ' + getSource(ep.category).program">
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h2a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h2z"/></svg>
+                  {{ getSource(ep.category).program }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 border-t border-sand-200/60 text-[10px] text-sand-500 flex items-center gap-2 bg-white/40">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        点击英文单词查询释义
+      </div>
+    </aside>
+
+    <!-- ── Content ─────────────────────── -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- Empty state -->
+      <div v-if="!currentEp" class="flex-1 flex flex-col items-center justify-center text-center px-8 animate-fade-in">
+        <div class="relative mb-8">
+          <div class="w-32 h-32 rounded-full bg-gradient-to-br from-brand-100 via-indigo-100 to-purple-100 flex items-center justify-center animate-float shadow-2xl shadow-brand-200/50">
+            <svg class="w-14 h-14 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+            </svg>
+          </div>
+        </div>
+        <h2 class="text-3xl font-display font-bold text-gradient mb-3">开启你的听力之旅</h2>
+        <p class="text-sand-600 text-sm mb-1">从左侧选择一集节目开始练习</p>
+        <p class="text-sand-500 text-xs">逐句播放 · 中英对照 · 生词收藏 · 发音查询</p>
+
+        <div class="grid grid-cols-3 gap-4 mt-10 max-w-2xl w-full">
+          <div class="glass p-4 rounded-2xl">
+            <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold mb-1 text-sand-900">逐句精听</h3>
+            <p class="text-xs text-sand-500 leading-relaxed">点击任意句子独立朗读，支持单句循环</p>
+          </div>
+          <div class="glass p-4 rounded-2xl">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold mb-1 text-sand-900">中英对照</h3>
+            <p class="text-xs text-sand-500 leading-relaxed">实时翻译辅助，一键进入纯听力模式</p>
+          </div>
+          <div class="glass p-4 rounded-2xl">
+            <div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold mb-1 text-sand-900">智能生词本</h3>
+            <p class="text-xs text-sand-500 leading-relaxed">点词收藏，带音标、发音、中英双解</p>
+          </div>
+        </div>
+      </div>
+
+      <template v-else>
+
+        <!-- ── Player Bar ──────────────── -->
+        <div class="glass-strong px-6 py-5 relative overflow-hidden">
+          <div class="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-brand-200/40 blur-3xl pointer-events-none"></div>
+
+          <div class="relative flex items-center gap-3 mb-2 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded-md bg-gradient-to-br from-brand-500 to-indigo-600 text-white text-[10px] font-bold tracking-wider shadow-lg shadow-brand-500/30">
+              {{ currentEp.id.toUpperCase() }}
+            </span>
+            <h2 class="text-xl font-bold text-sand-900 tracking-tight">{{ currentEp.title }}</h2>
+            <span class="text-xs text-sand-500">· {{ currentEp.sentences.length }} sentences</span>
+
+            <!-- MP3 upload / remove -->
+            <div class="ml-auto flex items-center gap-2">
+              <label v-if="!useRealAudio"
+                     class="text-xs px-3 py-1.5 rounded-full bg-white border border-sand-200 text-sand-600 hover:bg-sand-50 cursor-pointer flex items-center gap-1.5 transition-all">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                导入 MP3
+                <input type="file" accept="audio/*" class="hidden" @change="e => uploadAudio(currentEp.id, e.target.files[0])" />
+              </label>
+              <div v-else class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                MP3 已加载
+                <button @click="removeAudio(currentEp.id)" class="ml-1 w-4 h-4 rounded-full bg-emerald-200 text-emerald-700 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center text-[10px]">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 来源信息行 -->
+          <div class="flex items-center gap-2 mb-4 text-[11px] text-sand-500 flex-wrap">
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-50 border border-purple-200 text-purple-700 font-semibold">
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+              {{ currentEp.category }}
+            </span>
+            <span class="text-sand-400">·</span>
+            <span>节目来源：</span>
+            <a :href="getSource(currentEp.category).url" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white border border-sand-200 text-brand-700 hover:bg-brand-50 hover:border-brand-300 font-semibold transition-all">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h10v2H4v-2z"/></svg>
+              VOA · {{ getSource(currentEp.category).program }}
+              <svg class="w-2.5 h-2.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <span class="text-sand-400 hidden md:inline">·</span>
+            <span class="text-[10px] text-sand-400 italic hidden md:inline">内容改编自 VOA Special English 风格，文本为再创作版本</span>
+          </div>
+
+          <!-- TTS / MP3 hint -->
+          <div v-if="!useRealAudio" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs mb-4">
+            <svg class="w-4 h-4 flex-shrink-0 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+            <span>当前使用浏览器内置 <strong>Web Speech API</strong> 朗读。可点击右上角「导入 MP3」加载真实 VOA 音频以获得更自然的发音</span>
+          </div>
+
+          <!-- 真实音频 progress bar -->
+          <div v-if="useRealAudio" class="mb-3">
+            <audio ref="audioEl" @timeupdate="onAudioTimeUpdate" @loadedmetadata="onAudioLoaded" @ended="onAudioEnded" class="hidden"></audio>
+            <div @click="seekAudio" class="group h-2 bg-sand-200 rounded-full cursor-pointer relative overflow-hidden hover:h-2.5 transition-all">
+              <div class="absolute inset-y-0 left-0 progress-fill rounded-full transition-all duration-100"
+                   :style="{ width: audioDuration ? (audioCurrentTime / audioDuration * 100) + '%' : '0%' }"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-sand-500 mt-1 font-mono">
+              <span>{{ formatTime(audioCurrentTime) }}</span>
+              <span>{{ formatTime(audioDuration) }}</span>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="flex items-center gap-2 flex-wrap relative">
+            <button @click="prevSentence" :disabled="!activeSentenceId"
+                    class="w-10 h-10 rounded-xl bg-white border border-sand-200 text-sand-600 hover:bg-sand-50 hover:border-sand-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
+                    title="上一句 (←)">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+            </button>
+
+            <button @click="isPlaying ? pauseAudio() : (useRealAudio ? playEpisodeAudio() : (activeSentenceId ? resumePlay() : playEpisode()))"
+                    class="btn-gradient px-6 h-11 rounded-xl font-semibold text-sm flex items-center gap-2 transition-all">
+              <svg v-if="isPlaying" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>
+              <svg v-else class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              {{ isPlaying ? '暂停' : (useRealAudio ? '播放 MP3' : (activeSentenceId ? '继续' : '整集播放')) }}
+              <span v-if="playMode === 'sequence' && isPlaying" class="text-[9px] px-1.5 py-0.5 rounded bg-white/20 font-mono">
+                SEQ
+              </span>
+            </button>
+
+            <button @click="nextSentence" :disabled="!activeSentenceId"
+                    class="w-10 h-10 rounded-xl bg-white border border-sand-200 text-sand-600 hover:bg-sand-50 hover:border-sand-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
+                    title="下一句 (→)">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+            </button>
+
+            <button @click="loopSentence = !loopSentence"
+                    class="h-10 px-4 rounded-xl border flex items-center gap-2 text-xs font-medium transition-all"
+                    :class="loopSentence
+                      ? 'bg-purple-50 border-purple-300 text-purple-700'
+                      : 'bg-white border-sand-200 text-sand-600 hover:bg-sand-50'">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              {{ loopSentence ? '循环中' : '单句循环' }}
+            </button>
+
+            <!-- 从头整集播放 -->
+            <button @click="playEpisode()"
+                    class="h-10 px-4 rounded-xl border flex items-center gap-2 text-xs font-medium bg-white border-sand-200 text-sand-600 hover:bg-sand-50 transition-all"
+                    title="从第1句开始整集顺序播放">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14l-7-3.5L5 19V5z M9 10l4 3-4 3v-6z" /></svg>
+              整集播放
+            </button>
+
+            <div class="ml-auto flex items-center gap-1.5 text-[11px] text-sand-500">
+              <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">Space</kbd>
+              <span>播放</span>
+              <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">←</kbd>
+              <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">→</kbd>
+              <span>切换</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sentence list ───────────── -->
+        <div class="flex-1 overflow-y-auto px-6 py-5">
+          <div class="max-w-4xl mx-auto space-y-3">
+            <div v-for="sent in currentEp.sentences" :key="sent.id"
+                 @click="playSentence(sent)"
+                 class="group relative rounded-2xl p-5 pl-6 border transition-all duration-300 cursor-pointer animate-slide-up"
+                 :class="activeSentenceId === sent.id
+                   ? 'sentence-glow border-brand-300'
+                   : 'bg-white/70 border-sand-200/70 hover:border-sand-300 hover:shadow-md hover:bg-white'">
+
+              <div class="absolute left-0 top-4 bottom-4 w-1 rounded-r-full transition-all duration-300"
+                   :class="activeSentenceId === sent.id
+                     ? 'bg-gradient-to-b from-brand-400 via-indigo-400 to-purple-500'
+                     : 'bg-transparent group-hover:bg-sand-300'"></div>
+
+              <div class="flex items-center gap-3 mb-2.5">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-[11px] font-bold font-mono transition-colors"
+                      :class="activeSentenceId === sent.id
+                        ? 'bg-brand-100 text-brand-700'
+                        : 'bg-sand-100 text-sand-600 group-hover:bg-sand-200'">
+                  {{ String(sent.id).padStart(2, '0') }}
+                </span>
+
+                <button @click.stop="playSentence(sent)"
+                        class="w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-md"
+                        :class="activeSentenceId === sent.id
+                          ? 'bg-gradient-to-br from-brand-400 to-indigo-500 text-white shadow-brand-500/40'
+                          : 'bg-white border border-sand-200 text-sand-600 hover:bg-sand-50 hover:text-sand-900'">
+                  <svg v-if="activeSentenceId === sent.id && isPlaying" class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>
+                  <svg v-else class="w-3 h-3 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+
+                <div v-if="activeSentenceId === sent.id && isPlaying" class="flex items-center gap-1.5 text-[10px] font-semibold text-emerald-600">
+                  <div class="flex items-end gap-0.5 h-3">
+                    <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 40%; animation-delay: 0s;"></span>
+                    <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 80%; animation-delay: .15s;"></span>
+                    <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 60%; animation-delay: .3s;"></span>
+                    <span class="w-0.5 bg-emerald-500 rounded-full animate-pulse-dot" style="height: 90%; animation-delay: .45s;"></span>
+                  </div>
+                  SPEAKING
+                </div>
+
+                <!-- 右侧工具按钮组：听写 / 跟读 -->
+                <div class="ml-auto flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity" :class="{ 'opacity-100': activeSentenceId === sent.id }">
+                  <button @click.stop="startDictation(sent)"
+                          class="px-2 h-7 rounded-lg bg-white border border-sand-200 text-[10px] font-semibold text-sand-600 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700 flex items-center gap-1 transition-all"
+                          title="听写本句">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                    听写
+                  </button>
+                  <button @click.stop="openShadowing(sent)"
+                          class="px-2 h-7 rounded-lg bg-white border border-sand-200 text-[10px] font-semibold text-sand-600 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-700 flex items-center gap-1 transition-all"
+                          title="跟读本句">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                    跟读
+                  </button>
+                </div>
+              </div>
+
+              <div class="text-[15px] leading-relaxed text-sand-900 font-medium">
+                <template v-for="(token, i) in tokenize(sent.en)" :key="i">
+                  <span v-if="token.isWord"
+                        class="word-token"
+                        :class="{ saved: isWordSaved(token.clean) }"
+                        @click.stop="openWordPopup(token.raw, sent.id)"
+                        :title="isWordSaved(token.clean) ? '已收藏' : '点击查询'">{{ token.raw }}</span>
+                  <span v-else>{{ token.raw }}</span>
+                </template>
+              </div>
+
+              <transition name="fade">
+                <div v-if="showZh"
+                     class="mt-2.5 pt-2.5 border-t border-dashed border-sand-200 text-[13px] leading-relaxed text-sand-600">
+                  {{ sent.zh }}
+                </div>
+              </transition>
+            </div>
+          </div>
+        </div>
+      </template>
+    </main>
+  </div>
+
+  <!-- ╔══════════ WORD POPUP ══════════╗ -->
+  <transition name="popup">
+    <div v-if="popup.visible"
+         @click.self="closePopup"
+         class="fixed inset-0 bg-sand-900/30 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+
+      <div class="glass-strong w-full max-w-md rounded-3xl p-6 shadow-2xl animate-slide-up relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-brand-200/60 to-purple-200/60 blur-3xl pointer-events-none"></div>
+
+        <!-- Loading -->
+        <div v-if="popup.loading" class="py-10 text-center relative">
+          <div class="inline-block w-10 h-10 rounded-full border-2 border-sand-200 border-t-brand-500 animate-spin mb-4"></div>
+          <p class="text-sm text-sand-600">正在查询 <strong class="text-sand-900">{{ popup.word }}</strong></p>
+        </div>
+
+        <!-- Error -->
+        <div v-else-if="popup.error" class="py-4 text-center relative">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-50 flex items-center justify-center">
+            <svg class="w-8 h-8 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <p class="text-sm text-sand-700 mb-1">词典中未找到 <strong>{{ popup.word }}</strong></p>
+
+          <!-- 翻译 fallback -->
+          <div v-if="popup.translation" class="mt-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-left">
+            <div class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-1">中文翻译</div>
+            <p class="text-sm text-sand-800">{{ popup.translation }}</p>
+          </div>
+
+          <div class="flex justify-center gap-2 mt-5">
+            <button @click="closePopup" class="px-5 py-2 rounded-xl bg-sand-100 border border-sand-200 text-sm text-sand-700 hover:bg-sand-200 transition-all">关闭</button>
+            <button v-if="popup.translation && !isWordSaved(popup.word)"
+                    @click="addToVocab"
+                    class="btn-gradient px-4 py-2 rounded-xl text-sm font-semibold">
+              加入生词本
+            </button>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <template v-else-if="popup.data">
+          <div class="relative">
+            <h3 class="text-3xl font-display font-bold text-gradient mb-1">{{ popup.data.word }}</h3>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-sm font-mono text-brand-700">{{ popup.data.phonetic || '—' }}</span>
+              <button @click="playPopupAudio"
+                      class="w-8 h-8 rounded-full bg-brand-100 border border-brand-200 text-brand-600 hover:bg-brand-500 hover:text-white hover:border-brand-500 transition-all flex items-center justify-center"
+                      title="播放发音">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- 中文翻译 -->
+          <div v-if="popup.translation || popup.translationLoading"
+               class="mb-4 p-3 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[10px] font-bold text-amber-700 uppercase tracking-wider">中文</span>
+              <span class="text-[10px] text-amber-600/70">· Translate</span>
+            </div>
+            <div v-if="popup.translationLoading" class="shimmer h-4 w-32 rounded"></div>
+            <p v-else class="text-sm text-sand-800 font-medium leading-relaxed">{{ popup.translation }}</p>
+          </div>
+
+          <!-- Meanings -->
+          <div class="space-y-2 mb-5 max-h-60 overflow-y-auto">
+            <div class="text-[10px] font-bold text-sand-500 uppercase tracking-wider flex items-center gap-2">
+              英文释义
+              <div class="flex-1 h-px bg-sand-200"></div>
+            </div>
+            <div v-for="(m, i) in popup.data.meanings" :key="i"
+                 class="p-3 rounded-xl bg-sand-50 border border-sand-200">
+              <span class="inline-block px-2 py-0.5 rounded-md bg-brand-100 text-brand-700 text-[10px] font-bold uppercase tracking-wider mb-1.5">{{ m.partOfSpeech }}</span>
+              <p class="text-sm text-sand-800 leading-relaxed">{{ m.definition }}</p>
+              <p v-if="m.example" class="text-xs text-sand-500 italic mt-1.5">"{{ m.example }}"</p>
+            </div>
+            <div v-if="popup.data.meanings.length === 0" class="text-sm text-sand-500 text-center py-4">暂无详细释义</div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2 justify-end pt-4 border-t border-sand-200 relative">
+            <button @click="closePopup" class="px-4 py-2 rounded-xl bg-sand-100 border border-sand-200 text-sm text-sand-700 hover:bg-sand-200 transition-all">关闭</button>
+            <button v-if="!isWordSaved(popup.data.word)"
+                    @click="addToVocab"
+                    class="btn-gradient px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              加入生词本
+            </button>
+            <button v-else
+                    @click="removeFromVocab(popup.data.word); closePopup()"
+                    class="px-4 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-sm font-semibold hover:bg-amber-100 flex items-center gap-1.5 transition-all">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718L12 17.725l-7.416 5.388 2.833-8.718L0 9.006h9.167z"/></svg>
+              已收藏 · 点击移除
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </transition>
+
+  <!-- ╔══════════ VOCAB DRAWER ══════════╗ -->
+  <transition name="fade">
+    <div v-if="vocabOpen" @click="vocabOpen = false"
+         class="fixed inset-0 bg-sand-900/30 backdrop-blur-sm z-40"></div>
+  </transition>
+
+  <transition name="drawer">
+    <aside v-if="vocabOpen"
+           class="fixed top-0 right-0 bottom-0 w-full sm:w-[420px] glass-strong z-50 flex flex-col shadow-2xl">
+      <div class="px-5 py-4 border-b border-sand-200 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-sand-900 flex items-center gap-2">
+            <svg class="w-5 h-5 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            我的生词本
+          </h2>
+          <p class="text-xs text-sand-500 mt-0.5">{{ vocabCount }} 个单词 · {{ dueReviewCount }} 个待复习</p>
+        </div>
+        <button @click="vocabOpen = false"
+                class="w-9 h-9 rounded-xl bg-sand-100 border border-sand-200 text-sand-600 hover:bg-sand-200 flex items-center justify-center transition-all">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Action bar -->
+      <div v-if="vocabCount > 0" class="px-4 py-2.5 border-b border-sand-200 flex items-center gap-2">
+        <button @click="startSRS()" :disabled="dueReviewCount === 0"
+                class="btn-gradient px-3 h-9 rounded-xl text-xs font-semibold flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed"
+                title="开始间隔复习">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          复习 <span v-if="dueReviewCount > 0" class="bg-white/20 px-1.5 rounded-full font-bold">{{ dueReviewCount }}</span>
+        </button>
+        <button @click="exportVocabAnki()"
+                class="px-3 h-9 rounded-xl bg-white border border-sand-200 text-xs font-semibold text-sand-700 hover:bg-sand-50 flex items-center gap-1.5 transition-all"
+                title="导出为 Anki 格式（制表符分隔 .txt）">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Anki
+        </button>
+        <button @click="exportVocabCSV()"
+                class="px-3 h-9 rounded-xl bg-white border border-sand-200 text-xs font-semibold text-sand-700 hover:bg-sand-50 flex items-center gap-1.5 transition-all"
+                title="导出为 CSV">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0h6m-6 0H5a2 2 0 01-2-2v-6a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-2 2h-4"/></svg>
+          CSV
+        </button>
+      </div>
+
+      <!-- Empty -->
+      <div v-if="vocabCount === 0" class="flex-1 flex flex-col items-center justify-center text-center px-8 gap-3">
+        <div class="w-20 h-20 rounded-full bg-sand-100 flex items-center justify-center">
+          <svg class="w-10 h-10 text-sand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+        </div>
+        <p class="text-sm text-sand-700">生词本还是空的</p>
+        <p class="text-xs text-sand-500">点击英文句子中的单词即可收藏</p>
+      </div>
+
+      <!-- List -->
+      <div v-else class="flex-1 overflow-y-auto px-4 py-3 space-y-2">
+        <div v-for="item in vocabList" :key="item.word"
+             class="bg-white rounded-2xl p-4 border border-sand-200 hover:border-sand-300 hover:shadow-md transition-all group">
+          <div class="flex items-start justify-between mb-2">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-bold text-sand-900 truncate">{{ item.word }}</h3>
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-xs font-mono text-brand-700">{{ item.phonetic || '—' }}</span>
+                <button @click="playVocabAudio(item)"
+                        class="w-6 h-6 rounded-full bg-brand-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition-all"
+                        title="播放发音">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+                </button>
+              </div>
+            </div>
+            <button @click="removeFromVocab(item.word)"
+                    class="opacity-0 group-hover:opacity-100 w-7 h-7 rounded-lg bg-rose-50 border border-rose-200 text-rose-500 hover:bg-rose-100 flex items-center justify-center transition-all"
+                    title="从生词本移除">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M10 7V3a1 1 0 011-1h2a1 1 0 011 1v4"/></svg>
+            </button>
+          </div>
+
+          <!-- 中文翻译高亮显示 -->
+          <div v-if="item.translation" class="mb-2 px-2.5 py-1.5 rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-[9px] font-bold text-amber-700 uppercase tracking-wider flex-shrink-0">中文</span>
+              <span class="text-sm text-sand-800 font-medium">{{ item.translation }}</span>
+            </div>
+          </div>
+
+          <!-- 英文释义 -->
+          <div v-if="item.meanings && item.meanings.length > 0" class="space-y-1 mb-2">
+            <div v-for="(m, i) in item.meanings.slice(0, 2)" :key="i" class="text-xs text-sand-600 leading-relaxed">
+              <span class="inline-block px-1.5 py-0.5 mr-1.5 rounded bg-brand-50 text-brand-700 text-[9px] font-bold uppercase align-middle">{{ m.partOfSpeech }}</span>
+              {{ m.definition }}
+            </div>
+          </div>
+
+          <!-- Meta -->
+          <div v-if="item.fromEpisode" class="text-[10px] text-sand-400 flex items-center gap-1.5 pt-2 border-t border-sand-100">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+            <span class="truncate">{{ getEpTitle(item.fromEpisode) }}</span>
+            <span v-if="item.fromSentenceId" class="ml-auto flex-shrink-0">· 第 {{ item.fromSentenceId }} 句</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </transition>
+
+  </template><!-- end v-if="view === 'app'" -->
+
+  <!-- ╔══════════ DICTATION MODAL ══════════╗ -->
+  <transition name="popup">
+    <div v-if="dictation.active"
+         @click.self="closeDictation"
+         class="fixed inset-0 bg-sand-900/40 backdrop-blur-md flex items-center justify-center z-50 p-4">
+      <div class="glass-strong w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-slide-up relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-amber-200/60 to-orange-200/60 blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between mb-4 relative">
+          <div>
+            <div class="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold tracking-wider mb-1">DICTATION</div>
+            <h3 class="text-xl font-display font-bold text-sand-900">听写模式</h3>
+          </div>
+          <button @click="closeDictation" class="w-9 h-9 rounded-xl bg-sand-100 border border-sand-200 text-sand-600 hover:bg-sand-200 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Input phase -->
+        <template v-if="!dictation.result">
+          <p class="text-sm text-sand-600 mb-3">听到的内容写下来，然后提交查看对比</p>
+          <div class="flex gap-2 mb-4">
+            <button @click="replayDictation"
+                    class="flex-1 px-4 h-11 rounded-xl bg-white border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-50 flex items-center justify-center gap-2 transition-all">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              再听一次
+            </button>
+          </div>
+          <textarea v-model="dictation.userInput"
+                    placeholder="请在这里输入听到的内容..."
+                    rows="4"
+                    class="w-full px-4 py-3 rounded-xl bg-white border border-sand-200 text-sm text-sand-800 placeholder-sand-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-100 outline-none transition-all"></textarea>
+          <div class="flex justify-end gap-2 mt-4">
+            <button @click="closeDictation" class="px-4 py-2 rounded-xl bg-sand-100 border border-sand-200 text-sm text-sand-700 hover:bg-sand-200">取消</button>
+            <button @click="submitDictation" :disabled="!dictation.userInput.trim()"
+                    class="btn-gradient px-5 py-2 rounded-xl text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+              提交检查
+            </button>
+          </div>
+        </template>
+
+        <!-- Result phase -->
+        <template v-else>
+          <div class="text-center mb-5">
+            <div class="text-5xl font-display font-extrabold mb-1"
+                 :class="dictation.result.score >= 80 ? 'text-gradient' : dictation.result.score >= 60 ? 'text-amber-600' : 'text-rose-600'">
+              {{ dictation.result.score }}
+            </div>
+            <p class="text-sm text-sand-600">{{ dictation.result.correct }} / {{ dictation.result.total }} 个单词正确</p>
+          </div>
+
+          <!-- Diff -->
+          <div class="bg-sand-50 rounded-xl p-4 mb-4 max-h-48 overflow-y-auto text-sm leading-relaxed">
+            <template v-for="(w, i) in dictation.result.diff" :key="i">
+              <span v-if="w.ok" class="inline-block bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded mr-1 mb-1">{{ w.correct }}</span>
+              <span v-else class="inline-block bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded mr-1 mb-1">
+                <span class="line-through opacity-60">{{ w.user || '∅' }}</span>
+                <span class="ml-1 font-semibold">→ {{ w.correct || '（多余）' }}</span>
+              </span>
+            </template>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <button @click="dictation.result = null; dictation.userInput = ''"
+                    class="px-4 py-2 rounded-xl bg-white border border-sand-200 text-sm text-sand-700 hover:bg-sand-50">
+              再写一次
+            </button>
+            <button @click="closeDictation" class="btn-gradient px-5 py-2 rounded-xl text-sm font-semibold">完成</button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </transition>
+
+  <!-- ╔══════════ SHADOWING MODAL ══════════╗ -->
+  <transition name="popup">
+    <div v-if="shadow.active"
+         @click.self="closeShadowing"
+         class="fixed inset-0 bg-sand-900/40 backdrop-blur-md flex items-center justify-center z-50 p-4">
+      <div class="glass-strong w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-slide-up relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-rose-200/60 to-pink-200/60 blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between mb-4 relative">
+          <div>
+            <div class="inline-block px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-700 text-[10px] font-bold tracking-wider mb-1">SHADOWING</div>
+            <h3 class="text-xl font-display font-bold text-sand-900">跟读模式</h3>
+          </div>
+          <button @click="closeShadowing" class="w-9 h-9 rounded-xl bg-sand-100 border border-sand-200 text-sand-600 hover:bg-sand-200 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Reference sentence -->
+        <div v-if="currentEp" class="p-4 rounded-xl bg-sand-50 border border-sand-200 mb-4">
+          <div class="text-[10px] font-bold text-sand-500 uppercase tracking-wider mb-1">原文</div>
+          <p class="text-[15px] font-medium text-sand-900 leading-relaxed">
+            {{ currentEp.sentences.find(s => s.id === shadow.sentenceId)?.en }}
+          </p>
+          <p v-if="showZh" class="text-xs text-sand-500 mt-2">
+            {{ currentEp.sentences.find(s => s.id === shadow.sentenceId)?.zh }}
+          </p>
+        </div>
+
+        <!-- Error -->
+        <div v-if="shadow.error" class="p-3 mb-4 rounded-xl bg-rose-50 border border-rose-200 text-sm text-rose-700">
+          {{ shadow.error }}
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <button @click="playShadowOriginal"
+                  class="w-14 h-14 rounded-full bg-white border-2 border-sand-200 text-sand-700 hover:border-brand-300 hover:text-brand-600 flex items-center justify-center transition-all shadow-md"
+                  title="播放原音">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+          </button>
+          <button @click="shadow.recording ? stopRecording() : startRecording()"
+                  class="w-20 h-20 rounded-full flex items-center justify-center text-white font-bold shadow-xl transition-all"
+                  :class="shadow.recording
+                    ? 'bg-rose-500 hover:bg-rose-600 animate-pulse scale-110'
+                    : 'bg-gradient-to-br from-rose-400 to-pink-500 hover:scale-105'">
+            <svg v-if="!shadow.recording" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+            <svg v-else class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+          </button>
+          <button v-if="shadow.recordedUrl" @click="playRecording"
+                  class="w-14 h-14 rounded-full bg-white border-2 border-sand-200 text-sand-700 hover:border-emerald-300 hover:text-emerald-600 flex items-center justify-center transition-all shadow-md"
+                  title="回放我的录音">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div v-else class="w-14 h-14"></div>
+        </div>
+
+        <p class="text-center text-xs text-sand-500">
+          {{ shadow.recording ? '🔴 正在录音，点击停止' : shadow.recordedUrl ? '点击右侧按钮回放对比发音' : '① 先听原音 → ② 点击麦克风录音 → ③ 对比回放' }}
+        </p>
+
+        <div class="flex justify-end mt-5 pt-4 border-t border-sand-200">
+          <button @click="closeShadowing" class="px-5 py-2 rounded-xl bg-sand-100 border border-sand-200 text-sm text-sand-700 hover:bg-sand-200">关闭</button>
+        </div>
+      </div>
+    </div>
+  </transition>
+
+  <!-- ╔══════════ SRS REVIEW MODAL ══════════╗ -->
+  <transition name="popup">
+    <div v-if="srsActive"
+         @click.self="closeSRS"
+         class="fixed inset-0 bg-sand-900/40 backdrop-blur-md flex items-center justify-center z-50 p-4">
+      <div class="glass-strong w-full max-w-md rounded-3xl p-6 shadow-2xl animate-slide-up relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-brand-200/60 to-indigo-200/60 blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between mb-4 relative">
+          <div>
+            <div class="inline-block px-2.5 py-0.5 rounded-md bg-brand-100 text-brand-700 text-[10px] font-bold tracking-wider mb-1">SRS REVIEW</div>
+            <h3 class="text-xl font-display font-bold text-sand-900">间隔复习</h3>
+          </div>
+          <div class="text-xs text-sand-500 font-mono">剩余 {{ srsQueue?.length || 0 }}</div>
+        </div>
+
+        <div v-if="srsCurrent" class="relative">
+          <!-- Question card -->
+          <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-sand-50 to-white border border-sand-200 mb-5">
+            <h4 class="text-4xl font-display font-extrabold text-gradient mb-2">{{ srsCurrent.word }}</h4>
+            <div class="flex items-center justify-center gap-2 mb-3">
+              <span class="text-sm font-mono text-brand-700">{{ srsCurrent.phonetic || '—' }}</span>
+              <button v-if="srsCurrent.audioUrl" @click="playVocabAudio(srsCurrent)"
+                      class="w-7 h-7 rounded-full bg-brand-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition-all">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+              </button>
+            </div>
+
+            <button v-if="!srsShowAnswer" @click="srsShowAnswer = true"
+                    class="mt-2 px-6 py-2 rounded-xl bg-white border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-50 transition-all">
+              显示答案
+            </button>
+
+            <div v-else class="mt-4 text-left space-y-2 animate-slide-up">
+              <div v-if="srsCurrent.translation" class="p-3 rounded-lg bg-amber-50 border border-amber-200">
+                <span class="text-[9px] font-bold text-amber-700 uppercase mr-1.5">中文</span>
+                <span class="text-sm text-sand-800 font-medium">{{ srsCurrent.translation }}</span>
+              </div>
+              <div v-for="(m, i) in (srsCurrent.meanings || []).slice(0, 2)" :key="i" class="p-2 rounded-lg bg-white border border-sand-200 text-sm">
+                <span class="text-[9px] font-bold text-brand-700 uppercase mr-1.5">{{ m.partOfSpeech }}</span>
+                <span class="text-sand-700">{{ m.definition }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rating -->
+          <div v-if="srsShowAnswer" class="grid grid-cols-4 gap-2 animate-fade-in">
+            <button @click="rateSRS(0)" class="py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold hover:bg-rose-100 transition-all">
+              😵<div class="mt-0.5">忘记</div>
+            </button>
+            <button @click="rateSRS(1)" class="py-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold hover:bg-amber-100 transition-all">
+              😐<div class="mt-0.5">困难</div>
+            </button>
+            <button @click="rateSRS(2)" class="py-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold hover:bg-emerald-100 transition-all">
+              🙂<div class="mt-0.5">还行</div>
+            </button>
+            <button @click="rateSRS(3)" class="py-3 rounded-xl bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold hover:bg-brand-100 transition-all">
+              😎<div class="mt-0.5">熟练</div>
+            </button>
+          </div>
+          <div v-else class="text-center text-xs text-sand-400">
+            回忆一下单词的含义，然后点击「显示答案」
+          </div>
+        </div>
+
+        <!-- Finished -->
+        <div v-else class="text-center py-8">
+          <div class="text-5xl mb-3">🎉</div>
+          <p class="text-lg font-bold text-sand-900 mb-1">今日复习完成！</p>
+          <p class="text-sm text-sand-500 mb-5">继续保持，让记忆更牢固</p>
+          <button @click="closeSRS" class="btn-gradient px-6 py-2 rounded-xl text-sm font-semibold">知道了</button>
+        </div>
+      </div>
+    </div>
+  </transition>
+
+</div><!-- #app -->
+
+<!-- shimmer animation -->
+<style>
+  .shimmer {
+    background: linear-gradient(90deg, rgba(226,232,240,.4) 0%, rgba(226,232,240,.8) 50%, rgba(226,232,240,.4) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+</style>
+
+<!-- Scripts -->
+<script src="data/episodes.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="app.js"></script>
+
+<!-- PWA Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
