@@ -1,0 +1,22 @@
+# 构建元数据
+.git
+.gitignore
+.github
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# 编辑器/系统
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# 项目文档（可选，保留 README 也无妨）
+README.md
+
+# Claude / 计划文件
+.claude
+.claude-internal

@@ -1,0 +1,876 @@
+const { createApp, ref, reactive, computed, watch, onMounted, onUnmounted, nextTick } = Vue;
+
+// ── Data & Storage ────────────────────────────────────────────────────────────
+const EPISODES = ALL_EPISODES;
+const VOCAB_KEY    = 'voa_vocabulary';
+const THEME_KEY    = 'voa_theme';
+const PROGRESS_KEY = 'voa_progress';
+const AUDIO_KEY    = 'voa_audio_map';   // { epId -> dataUrl } (blob URLs 临时存储时用)
+
+function loadVocab() {
+  try { return JSON.parse(localStorage.getItem(VOCAB_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveVocab(v) {
+  localStorage.setItem(VOCAB_KEY, JSON.stringify(v));
+}
+
+function loadTheme() {
+  return localStorage.getItem(THEME_KEY) || 'light';
+}
+function saveTheme(t) {
+  localStorage.setItem(THEME_KEY, t);
+}
+
+function loadProgress() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
+    return {
+      sentencesPlayed: raw.sentencesPlayed || 0,
+      episodesStarted: raw.episodesStarted || {},  // { epId: ts }
+      episodesCompleted: raw.episodesCompleted || {}, // { epId: ts }
+      studyDays: raw.studyDays || {},              // { 'YYYY-MM-DD': count }
+      lastStudyDate: raw.lastStudyDate || '',
+      streak: raw.streak || 0
+    };
+  } catch {
+    return { sentencesPlayed: 0, episodesStarted: {}, episodesCompleted: {}, studyDays: {}, lastStudyDate: '', streak: 0 };
+  }
+}
+function saveProgress(p) {
+  localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+}
+
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function yesterdayStr() {
+  const d = new Date(); d.setDate(d.getDate() - 1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function formatTime(sec) {
+  if (isNaN(sec) || !isFinite(sec)) return '0:00';
+  const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function cleanWord(w) {
+  return w.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+}
+
+function tokenize(text) {
+  const parts = text.split(/(\s+)/);
+  return parts.map(p => ({
+    raw: p,
+    isWord: /[a-zA-Z]/.test(p),
+    clean: cleanWord(p)
+  }));
+}
+
+// ── Speech Synthesis (TTS) ────────────────────────────────────────────────────
+// 使用浏览器内置 Web Speech API，免费无需音频文件
+const synth = window.speechSynthesis;
+let cachedVoice = null;
+
+function getBestEnglishVoice() {
+  if (cachedVoice) return cachedVoice;
+  const voices = synth.getVoices();
+  // 优先美式英语女声
+  const preferred = [
+    /en-US.*female/i, /Google US English/i, /Samantha/i, /Microsoft Zira/i,
+    /en-US/i, /en-GB/i, /en/i
+  ];
+  for (const pat of preferred) {
+    const v = voices.find(v => pat.test(v.name) || pat.test(v.lang));
+    if (v) { cachedVoice = v; return v; }
+  }
+  return voices[0] || null;
+}
+
+function speakText(text, { rate = 0.7, onEnd, onStart } = {}) {
+  if (!synth) return null;
+  synth.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  const voice = getBestEnglishVoice();
+  if (voice) utter.voice = voice;
+  utter.lang = 'en-US';
+  utter.rate = rate;
+  utter.pitch = 1.0;
+  if (onEnd) utter.onend = onEnd;
+  if (onStart) utter.onstart = onStart;
+  synth.speak(utter);
+  return utter;
+}
+
+// ── Translate API (MyMemory - free, no key) ───────────────────────────────────
+const translateCache = new Map();
+
+async function translateToChinese(text) {
+  if (translateCache.has(text)) return translateCache.get(text);
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|zh-CN`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const zh = data?.responseData?.translatedText || '';
+    translateCache.set(text, zh);
+    return zh;
+  } catch {
+    return '';
+  }
+}
+
+// ── Dictionary API ────────────────────────────────────────────────────────────
+async function fetchWordInfo(word) {
+  const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+  if (!res.ok) throw new Error('Not found');
+  const data = await res.json();
+  const entry = data[0];
+
+  let phonetic = '';
+  let audioUrl = '';
+  for (const p of (entry.phonetics || [])) {
+    if (p.text && !phonetic) phonetic = p.text;
+    if (p.audio && !audioUrl) audioUrl = p.audio;
+  }
+
+  const meanings = (entry.meanings || []).slice(0, 3).map(m => ({
+    partOfSpeech: m.partOfSpeech,
+    definition: m.definitions?.[0]?.definition || '',
+    example: m.definitions?.[0]?.example || ''
+  }));
+
+  return { word: entry.word || word, phonetic, audioUrl, meanings };
+}
+
+// ── Vue App ───────────────────────────────────────────────────────────────────
+createApp({
+  setup() {
+    const episodes = ref(EPISODES);
+    const currentEp = ref(null);
+    const showZh = ref(true);
+    const searchQuery = ref('');
+    const selectedCategory = ref('all');
+
+    // ── Theme ─────────────────────────────────────────────────────────────────
+    const theme = ref(loadTheme());
+    function setTheme(t) {
+      theme.value = t;
+      document.documentElement.setAttribute('data-theme', t);
+      saveTheme(t);
+    }
+    // 初始应用
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', theme.value);
+    }
+
+    // ── Progress ──────────────────────────────────────────────────────────────
+    const progress = ref(loadProgress());
+
+    function recordSentencePlayed(epId) {
+      const p = progress.value;
+      p.sentencesPlayed += 1;
+
+      // 进入集
+      if (!p.episodesStarted[epId]) p.episodesStarted[epId] = Date.now();
+
+      // 今日学习天数 + streak
+      const today = todayStr();
+      if (!p.studyDays[today]) p.studyDays[today] = 0;
+      p.studyDays[today] += 1;
+
+      if (p.lastStudyDate !== today) {
+        p.streak = p.lastStudyDate === yesterdayStr() ? (p.streak || 0) + 1 : 1;
+        p.lastStudyDate = today;
+      }
+
+      saveProgress(p);
+    }
+
+    function recordEpisodeCompleted(epId) {
+      const p = progress.value;
+      p.episodesCompleted[epId] = Date.now();
+      saveProgress(p);
+    }
+
+    const progressStats = computed(() => {
+      const p = progress.value;
+      return {
+        sentencesPlayed: p.sentencesPlayed,
+        episodesStartedCount: Object.keys(p.episodesStarted).length,
+        episodesCompletedCount: Object.keys(p.episodesCompleted).length,
+        streak: p.streak,
+        todayCount: p.studyDays[todayStr()] || 0
+      };
+    });
+
+
+    // 分类列表
+    const categories = computed(() => {
+      const cats = [...new Set(EPISODES.map(e => e.category))];
+      return ['all', ...cats];
+    });
+
+    // 筛选后的节目列表
+    const filteredEpisodes = computed(() => {
+      let list = EPISODES;
+      if (selectedCategory.value !== 'all') {
+        list = list.filter(e => e.category === selectedCategory.value);
+      }
+      const q = searchQuery.value.trim().toLowerCase();
+      if (q) {
+        list = list.filter(e =>
+          e.title.toLowerCase().includes(q) ||
+          e.description.toLowerCase().includes(q) ||
+          e.category.toLowerCase().includes(q)
+        );
+      }
+      return list;
+    });
+
+    const isPlaying = ref(false);
+    const activeSentenceId = ref(null);
+    const loopSentence = ref(false);
+    const speechRate = ref(0.7);    // 默认 VOA 慢速（约 90 wpm）
+    const playMode = ref('single');   // 'single' | 'sequence' —— 区分单句/整集
+    const view = ref('home');         // 'home' | 'app' —— 首页 vs 主界面
+
+    const popup = reactive({
+      visible: false,
+      loading: false,
+      error: false,
+      word: '',
+      data: null,
+      translation: '',          // 新增：中文翻译
+      translationLoading: false,
+      fromSentenceId: null
+    });
+
+    const vocabOpen = ref(false);
+    const vocabulary = ref(loadVocab());
+    const vocabList = computed(() => Object.values(vocabulary.value).sort((a, b) => b.addedAt - a.addedAt));
+    const vocabCount = computed(() => vocabList.value.length);
+
+    // ── MP3 audio map (per-episode uploaded audio) ────────────────────────────
+    // 由于 localStorage 不适合存大文件，采用内存 + IndexedDB 混合；这里用简单的内存 Map
+    const audioMap = reactive({});  // { epId: blobUrl }
+    const audioEl = ref(null);      // 真实 <audio> 元素引用
+    const useRealAudio = computed(() => !!audioMap[currentEp.value?.id]);
+    const audioCurrentTime = ref(0);
+    const audioDuration = ref(0);
+
+    function uploadAudio(epId, file) {
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      audioMap[epId] = url;
+      // 下次加载 audio 元素
+      nextTick(() => {
+        if (audioEl.value) {
+          audioEl.value.src = url;
+          audioEl.value.load();
+        }
+      });
+    }
+    function removeAudio(epId) {
+      if (audioMap[epId]) {
+        URL.revokeObjectURL(audioMap[epId]);
+        delete audioMap[epId];
+        if (audioEl.value) { audioEl.value.src = ''; }
+      }
+    }
+
+    // ── Dictation 听写模式 ────────────────────────────────────────────────────
+    const dictation = reactive({
+      active: false,
+      sentenceId: null,
+      userInput: '',
+      result: null,   // { correct, total, score, diff: [] }
+    });
+
+    function startDictation(sentence) {
+      stopSpeaking();
+      dictation.active = true;
+      dictation.sentenceId = sentence.id;
+      dictation.userInput = '';
+      dictation.result = null;
+      // 朗读句子供用户听写
+      speakText(sentence.en, { rate: speechRate.value * 0.95 });
+    }
+
+    function replayDictation() {
+      const sent = currentEp.value?.sentences.find(s => s.id === dictation.sentenceId);
+      if (sent) speakText(sent.en, { rate: speechRate.value * 0.95 });
+    }
+
+    function submitDictation() {
+      const sent = currentEp.value?.sentences.find(s => s.id === dictation.sentenceId);
+      if (!sent) return;
+      const answer = sent.en;
+      const userWords = dictation.userInput.trim().toLowerCase().replace(/[.,!?;:"'()]/g, '').split(/\s+/).filter(Boolean);
+      const correctWords = answer.toLowerCase().replace(/[.,!?;:"'()]/g, '').split(/\s+/).filter(Boolean);
+
+      // 简单逐词对比
+      const maxLen = Math.max(userWords.length, correctWords.length);
+      let correct = 0;
+      const diff = [];
+      for (let i = 0; i < maxLen; i++) {
+        const u = userWords[i] || '';
+        const c = correctWords[i] || '';
+        const isCorrect = u === c;
+        if (isCorrect) correct += 1;
+        diff.push({ user: u, correct: c, ok: isCorrect });
+      }
+      dictation.result = {
+        correct,
+        total: correctWords.length,
+        score: Math.round((correct / correctWords.length) * 100),
+        diff
+      };
+    }
+
+    function closeDictation() {
+      dictation.active = false;
+      dictation.sentenceId = null;
+      dictation.userInput = '';
+      dictation.result = null;
+    }
+
+    // ── Shadowing 跟读模式 ────────────────────────────────────────────────────
+    const shadow = reactive({
+      active: false,
+      sentenceId: null,
+      recording: false,
+      recordedUrl: null,
+      error: ''
+    });
+    let mediaRecorder = null;
+    let recordedChunks = [];
+
+    function openShadowing(sentence) {
+      stopSpeaking();
+      shadow.active = true;
+      shadow.sentenceId = sentence.id;
+      shadow.recording = false;
+      shadow.error = '';
+      if (shadow.recordedUrl) { URL.revokeObjectURL(shadow.recordedUrl); shadow.recordedUrl = null; }
+    }
+
+    function playShadowOriginal() {
+      const sent = currentEp.value?.sentences.find(s => s.id === shadow.sentenceId);
+      if (sent) speakText(sent.en, { rate: speechRate.value });
+    }
+
+    async function startRecording() {
+      if (shadow.recording) return;
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recordedChunks = [];
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+          if (shadow.recordedUrl) URL.revokeObjectURL(shadow.recordedUrl);
+          shadow.recordedUrl = URL.createObjectURL(blob);
+          // 停止所有 tracks
+          stream.getTracks().forEach(t => t.stop());
+        };
+        mediaRecorder.start();
+        shadow.recording = true;
+        shadow.error = '';
+      } catch (err) {
+        shadow.error = '无法访问麦克风，请检查浏览器权限';
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && shadow.recording) {
+        mediaRecorder.stop();
+        shadow.recording = false;
+      }
+    }
+
+    function playRecording() {
+      if (shadow.recordedUrl) new Audio(shadow.recordedUrl).play().catch(() => {});
+    }
+
+    function closeShadowing() {
+      if (shadow.recording) stopRecording();
+      if (shadow.recordedUrl) { URL.revokeObjectURL(shadow.recordedUrl); shadow.recordedUrl = null; }
+      shadow.active = false;
+      shadow.sentenceId = null;
+    }
+
+    // ── SRS 生词本间隔复习 ────────────────────────────────────────────────────
+    const srsActive = ref(false);
+    const srsCurrent = ref(null);      // 当前复习的单词对象
+    const srsShowAnswer = ref(false);
+    const srsQueue = ref([]);          // 待复习队列
+
+    // 初始化新词的 SRS 字段
+    function initSRS(item) {
+      if (typeof item.srsLevel === 'undefined') {
+        item.srsLevel = 0;       // 0 ~ 5
+        item.srsEase = 2.5;      // 难度因子
+        item.nextReviewAt = Date.now();
+        item.lastReviewAt = 0;
+      }
+      return item;
+    }
+
+    // 筛选到期复习的单词
+    const dueReviewCount = computed(() => {
+      const now = Date.now();
+      return vocabList.value.filter(v => !v.nextReviewAt || v.nextReviewAt <= now).length;
+    });
+
+    function startSRS() {
+      const now = Date.now();
+      const due = vocabList.value.filter(v => !v.nextReviewAt || v.nextReviewAt <= now);
+      if (due.length === 0) return;
+      srsQueue.value = [...due].sort(() => Math.random() - 0.5); // 随机打乱
+      srsActive.value = true;
+      srsCurrent.value = srsQueue.value[0];
+      srsShowAnswer.value = false;
+    }
+
+    // SM-2 简化：quality = 0(忘)/1(难)/2(好)/3(熟)
+    function rateSRS(quality) {
+      if (!srsCurrent.value) return;
+      const word = srsCurrent.value.word.toLowerCase();
+      const item = vocabulary.value[word];
+      if (!item) return;
+      initSRS(item);
+
+      // 间隔计算（单位：毫秒）
+      const DAY = 24 * 60 * 60 * 1000;
+      const baseIntervals = [1, 6, 1 * DAY, 3 * DAY, 7 * DAY, 21 * DAY, 60 * DAY];
+
+      if (quality === 0) {
+        item.srsLevel = 0;
+        item.srsEase = Math.max(1.3, item.srsEase - 0.2);
+      } else {
+        item.srsLevel = Math.min(6, item.srsLevel + (quality === 1 ? 0 : 1));
+        item.srsEase = Math.max(1.3, item.srsEase + (quality - 1) * 0.1);
+      }
+      const idx = Math.min(item.srsLevel, baseIntervals.length - 1);
+      item.nextReviewAt = Date.now() + baseIntervals[idx] * item.srsEase;
+      item.lastReviewAt = Date.now();
+
+      saveVocab(vocabulary.value);
+
+      // 下一个
+      srsQueue.value.shift();
+      if (srsQueue.value.length === 0) {
+        srsActive.value = false;
+        srsCurrent.value = null;
+      } else {
+        srsCurrent.value = srsQueue.value[0];
+        srsShowAnswer.value = false;
+      }
+    }
+
+    function closeSRS() {
+      srsActive.value = false;
+      srsCurrent.value = null;
+      srsQueue.value = [];
+    }
+
+    // ── Export Vocabulary ─────────────────────────────────────────────────────
+    function triggerDownload(filename, content, mime = 'text/plain;charset=utf-8') {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function exportVocabAnki() {
+      // Anki txt 格式：front\tback，每行一个卡片
+      const lines = vocabList.value.map(v => {
+        const front = v.word;
+        const parts = [];
+        if (v.phonetic) parts.push(v.phonetic);
+        if (v.translation) parts.push(v.translation);
+        if (v.meanings && v.meanings.length) {
+          parts.push(v.meanings.map(m => `[${m.partOfSpeech}] ${m.definition}`).join(' · '));
+        }
+        const back = parts.join(' | ').replace(/\t/g, ' ');
+        return `${front}\t${back}`;
+      });
+      triggerDownload(`vocabulary-${todayStr()}.txt`, lines.join('\n'));
+    }
+
+    function exportVocabCSV() {
+      const header = 'Word,Phonetic,Translation,Meanings,From Episode,Added At';
+      const rows = vocabList.value.map(v => {
+        const meanings = (v.meanings || []).map(m => `[${m.partOfSpeech}] ${m.definition}`).join(' | ');
+        const cells = [
+          v.word, v.phonetic || '', v.translation || '', meanings,
+          v.fromEpisode || '', new Date(v.addedAt || Date.now()).toISOString()
+        ].map(c => `"${String(c).replace(/"/g, '""')}"`);
+        return cells.join(',');
+      });
+      triggerDownload(`vocabulary-${todayStr()}.csv`, '\ufeff' + header + '\n' + rows.join('\n'), 'text/csv;charset=utf-8');
+    }
+
+    const activeSentence = computed(() =>
+      currentEp.value?.sentences.find(s => s.id === activeSentenceId.value) || null
+    );
+
+    // ── Episode selection ─────────────────────────────────────────────────────
+    function selectEpisode(ep) {
+      if (currentEp.value?.id === ep.id) return;
+      stopSpeaking();
+      currentEp.value = ep;
+      activeSentenceId.value = null;
+      isPlaying.value = false;
+    }
+
+    // ── Playback (TTS) ────────────────────────────────────────────────────────
+    // 单句播放（始终 TTS，便于逐句精听）
+    function playSentence(sentence) {
+      if (!sentence) return;
+      stopSpeaking();
+      stopAudioPlayer();
+      playMode.value = 'single';
+      activeSentenceId.value = sentence.id;
+
+      speakText(sentence.en, {
+        rate: speechRate.value,
+        onStart: () => {
+          isPlaying.value = true;
+          recordSentencePlayed(currentEp.value?.id);
+        },
+        onEnd: () => {
+          isPlaying.value = false;
+          // 单句模式下开启循环就重播
+          if (loopSentence.value && activeSentenceId.value === sentence.id && playMode.value === 'single') {
+            setTimeout(() => playSentence(sentence), 400);
+          }
+        }
+      });
+    }
+
+    // 整集顺序播放（从指定句子起，或默认从头开始）
+    function playEpisode(startFromId = null) {
+      if (!currentEp.value) return;
+      stopSpeaking();
+      playMode.value = 'sequence';
+      const sents = currentEp.value.sentences;
+      const startIdx = startFromId
+        ? Math.max(0, sents.findIndex(s => s.id === startFromId))
+        : 0;
+      playFromIndex(startIdx);
+    }
+
+    function playFromIndex(idx) {
+      if (!currentEp.value || playMode.value !== 'sequence') return;
+      const sents = currentEp.value.sentences;
+      if (idx >= sents.length) {
+        // 整集播放完毕
+        isPlaying.value = false;
+        playMode.value = 'single';
+        return;
+      }
+      const sent = sents[idx];
+      activeSentenceId.value = sent.id;
+
+      speakText(sent.en, {
+        rate: speechRate.value,
+        onStart: () => {
+          isPlaying.value = true;
+          recordSentencePlayed(currentEp.value?.id);
+        },
+        onEnd: () => {
+          // 循环开关优先：无论单句模式还是整集模式，开启循环就重播当前句
+          if (loopSentence.value && activeSentenceId.value === sent.id) {
+            setTimeout(() => playFromIndex(idx), 400);
+            return;
+          }
+          // 未循环：整集模式继续下一句，单句模式停止
+          if (playMode.value === 'sequence' && activeSentenceId.value === sent.id) {
+            if (idx + 1 >= currentEp.value.sentences.length) {
+              // 最后一句结束 → 标记整集已完成
+              recordEpisodeCompleted(currentEp.value.id);
+            }
+            setTimeout(() => playFromIndex(idx + 1), 350);
+          } else {
+            isPlaying.value = false;
+          }
+        }
+      });
+    }
+
+    function stopSpeaking() {
+      if (synth) synth.cancel();
+      isPlaying.value = false;
+    }
+
+    function stopAudioPlayer() {
+      if (audioEl.value) {
+        audioEl.value.pause();
+      }
+    }
+
+    function pauseAudio() {
+      stopSpeaking();
+      stopAudioPlayer();
+      // 保持 playMode 便于"继续"时恢复
+    }
+
+    // 整集 MP3 播放（整段从头播放到底）
+    function playEpisodeAudio() {
+      if (!audioEl.value || !useRealAudio.value) return;
+      playMode.value = 'sequence';
+      audioEl.value.currentTime = 0;
+      audioEl.value.play().then(() => {
+        isPlaying.value = true;
+        recordSentencePlayed(currentEp.value?.id);
+      }).catch(() => { isPlaying.value = false; });
+    }
+
+    function onAudioTimeUpdate() {
+      if (audioEl.value) audioCurrentTime.value = audioEl.value.currentTime;
+    }
+    function onAudioLoaded() {
+      if (audioEl.value) audioDuration.value = audioEl.value.duration;
+    }
+    function onAudioEnded() {
+      isPlaying.value = false;
+      recordEpisodeCompleted(currentEp.value?.id);
+    }
+    function seekAudio(e) {
+      if (!audioEl.value || !audioDuration.value) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      audioEl.value.currentTime = ratio * audioDuration.value;
+    }
+
+    function resumePlay() {
+      // 根据 playMode 恢复播放
+      if (!activeSentence.value) {
+        playEpisode();
+        return;
+      }
+      if (playMode.value === 'sequence') {
+        const idx = currentEp.value.sentences.findIndex(s => s.id === activeSentenceId.value);
+        playFromIndex(idx >= 0 ? idx : 0);
+      } else {
+        playSentence(activeSentence.value);
+      }
+    }
+
+    function prevSentence() {
+      if (!currentEp.value) return;
+      const sents = currentEp.value.sentences;
+      const idx = sents.findIndex(s => s.id === activeSentenceId.value);
+      const target = idx > 0 ? sents[idx - 1] : (idx === -1 && sents.length ? sents[0] : null);
+      if (!target) return;
+      if (playMode.value === 'sequence') {
+        playFromIndex(sents.indexOf(target));
+      } else {
+        playSentence(target);
+      }
+    }
+
+    function nextSentence() {
+      if (!currentEp.value) return;
+      const sents = currentEp.value.sentences;
+      const idx = sents.findIndex(s => s.id === activeSentenceId.value);
+      if (idx < sents.length - 1) {
+        if (playMode.value === 'sequence') {
+          playFromIndex(idx + 1);
+        } else {
+          playSentence(sents[idx + 1]);
+        }
+      }
+    }
+
+    function replaySentence() {
+      if (activeSentence.value) playSentence(activeSentence.value);
+    }
+
+    function setRate(r) {
+      speechRate.value = r;
+      if (isPlaying.value && activeSentence.value) {
+        if (playMode.value === 'sequence') {
+          const idx = currentEp.value.sentences.findIndex(s => s.id === activeSentenceId.value);
+          playFromIndex(idx);
+        } else {
+          playSentence(activeSentence.value);
+        }
+      }
+    }
+
+    // 首页 → 主界面
+    function enterApp() { view.value = 'app'; }
+    function goHome() {
+      stopSpeaking();
+      view.value = 'home';
+    }
+
+    // ── Word popup ────────────────────────────────────────────────────────────
+    async function openWordPopup(rawWord, sentenceId) {
+      const word = cleanWord(rawWord);
+      if (!word || word.length < 2) return;
+
+      popup.visible = true;
+      popup.loading = true;
+      popup.error = false;
+      popup.data = null;
+      popup.translation = '';
+      popup.translationLoading = true;
+      popup.word = word;
+      popup.fromSentenceId = sentenceId;
+
+      // 并行请求词典 + 翻译
+      const [dictRes, trRes] = await Promise.allSettled([
+        fetchWordInfo(word),
+        translateToChinese(word)
+      ]);
+
+      popup.loading = false;
+      popup.translationLoading = false;
+
+      if (dictRes.status === 'fulfilled') {
+        popup.data = dictRes.value;
+      } else {
+        popup.error = true;
+      }
+
+      if (trRes.status === 'fulfilled') {
+        popup.translation = trRes.value;
+      }
+    }
+
+    function closePopup() {
+      popup.visible = false;
+    }
+
+    function playPopupAudio() {
+      if (popup.data?.audioUrl) {
+        new Audio(popup.data.audioUrl).play().catch(() => {
+          // Fallback to TTS if audio fails
+          speakText(popup.word, { rate: 0.9 });
+        });
+      } else {
+        speakText(popup.word, { rate: 0.9 });
+      }
+    }
+
+    // ── Vocabulary ────────────────────────────────────────────────────────────
+    function addToVocab() {
+      if (!popup.data && !popup.word) return;
+      const key = (popup.data?.word || popup.word).toLowerCase();
+      vocabulary.value[key] = {
+        word: popup.data?.word || popup.word,
+        phonetic: popup.data?.phonetic || '',
+        audioUrl: popup.data?.audioUrl || '',
+        meanings: popup.data?.meanings || [],
+        translation: popup.translation || '',       // 新增：中文翻译
+        addedAt: Date.now(),
+        fromEpisode: currentEp.value?.id || '',
+        fromSentenceId: popup.fromSentenceId
+      };
+      saveVocab(vocabulary.value);
+      popup.visible = false;
+    }
+
+    function removeFromVocab(word) {
+      const key = word.toLowerCase();
+      delete vocabulary.value[key];
+      vocabulary.value = { ...vocabulary.value };
+      saveVocab(vocabulary.value);
+    }
+
+    function isWordSaved(word) {
+      return !!vocabulary.value[cleanWord(word)?.toLowerCase()];
+    }
+
+    function playVocabAudio(item) {
+      if (item.audioUrl) {
+        new Audio(item.audioUrl).play().catch(() => speakText(item.word, { rate: 0.9 }));
+      } else {
+        speakText(item.word, { rate: 0.9 });
+      }
+    }
+
+    function getEpTitle(epId) {
+      return EPISODES.find(e => e.id === epId)?.title || epId;
+    }
+
+    // VOA 来源（根据分类）
+    function getSource(category) {
+      return typeof getVoaSource === 'function' ? getVoaSource(category) : { program: 'VOA Learning English', url: 'https://learningenglish.voanews.com/' };
+    }
+
+    // ── Keyboard shortcuts ────────────────────────────────────────────────────
+    function onKeyDown(e) {
+      if (popup.visible) {
+        if (e.key === 'Escape') closePopup();
+        return;
+      }
+      if (vocabOpen.value && e.key === 'Escape') { vocabOpen.value = false; return; }
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); prevSentence(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); nextSentence(); }
+      if (e.key === ' ') {
+        e.preventDefault();
+        if (activeSentence.value) {
+          isPlaying.value ? pauseAudio() : replaySentence();
+        } else if (currentEp.value) {
+          playSentence(currentEp.value.sentences[0]);
+        }
+      }
+    }
+
+    // ── Lifecycle ─────────────────────────────────────────────────────────────
+    onMounted(() => {
+      window.addEventListener('keydown', onKeyDown);
+      // 预加载语音列表（某些浏览器异步加载）
+      if (synth) {
+        synth.getVoices();
+        synth.onvoiceschanged = () => { cachedVoice = null; getBestEnglishVoice(); };
+      }
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('keydown', onKeyDown);
+      stopSpeaking();
+    });
+
+    return {
+      episodes, currentEp, showZh, selectEpisode,
+      searchQuery, selectedCategory, categories, filteredEpisodes,
+      isPlaying, activeSentenceId, activeSentence,
+      loopSentence, speechRate, setRate,
+      playMode, view, enterApp, goHome,
+      formatTime,
+      playSentence, playEpisode, pauseAudio, resumePlay,
+      prevSentence, nextSentence, replaySentence,
+      popup, openWordPopup, closePopup, playPopupAudio,
+      vocabOpen, vocabulary, vocabList, vocabCount,
+      addToVocab, removeFromVocab, isWordSaved, playVocabAudio,
+      getEpTitle, tokenize, cleanWord,
+      getSource,
+      // Theme & progress
+      theme, setTheme, progressStats,
+      // Dictation
+      dictation, startDictation, replayDictation, submitDictation, closeDictation,
+      // Shadowing
+      shadow, openShadowing, playShadowOriginal, startRecording, stopRecording, playRecording, closeShadowing,
+      // SRS
+      srsActive, srsCurrent, srsShowAnswer, dueReviewCount, startSRS, rateSRS, closeSRS,
+      // Export
+      exportVocabAnki, exportVocabCSV,
+      // MP3 upload
+      audioMap, audioEl, useRealAudio, audioCurrentTime, audioDuration,
+      uploadAudio, removeAudio, playEpisodeAudio,
+      onAudioTimeUpdate, onAudioLoaded, onAudioEnded, seekAudio
+    };
+  }
+}).mount('#app');

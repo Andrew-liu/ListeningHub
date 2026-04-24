@@ -1,0 +1,63 @@
+# ─── 操作系统 ─────────────────────────────────────────────
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ─── 编辑器 / IDE ─────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+.project
+.settings/
+
+# ─── 日志与临时文件 ────────────────────────────────────────
+*.log
+*.tmp
+*.bak
+*.old
+
+# ─── 环境变量 / 密钥 ───────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ─── Docker 构建产物 ───────────────────────────────────────
+#  build-image.sh save 生成的离线镜像包不应提交
+*.tar
+*.tar.gz
+voa-english-*.tar*
+
+# ─── 依赖 / 缓存（未来引入构建工具时预置）──────────────────
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+.next/
+.nuxt/
+*.tsbuildinfo
+
+# ─── 测试 / 覆盖率 ─────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+
+# ─── Claude Code / AI 工具 ─────────────────────────────────
+.claude/
+.claude-internal/
+CLAUDE.md.local
+
+# ─── 包管理器锁文件（当前项目零依赖，保留以防万一）─────────
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
