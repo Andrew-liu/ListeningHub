@@ -17,6 +17,10 @@
 </p>
 
 <p>
+  <a href="https://andrew-liu.github.io/ListeningHub/"><img alt="Live Demo" src="https://img.shields.io/badge/🌐_Live_Demo-Online-success?style=for-the-badge" /></a>
+</p>
+
+<p>
   <img alt="Episodes" src="https://img.shields.io/badge/Episodes-52-3b82f6?style=for-the-badge" />
   <img alt="Sentences" src="https://img.shields.io/badge/Sentences-418-8b5cf6?style=for-the-badge" />
   <img alt="Categories" src="https://img.shields.io/badge/Categories-20-ec4899?style=for-the-badge" />
@@ -167,7 +171,7 @@ docker compose up -d
 
 | 平台 | 步骤 |
 |---|---|
-| **GitHub Pages** | 推送到 `main`，Settings → Pages → Source: `main` |
+| **GitHub Pages** | 仓库已配置 Actions 自动部署，访问 **[andrew-liu.github.io/ListeningHub](https://andrew-liu.github.io/ListeningHub/)** |
 | **Vercel** | `vercel deploy` |
 | **Netlify** | 拖拽整个文件夹到 [app.netlify.com/drop](https://app.netlify.com/drop) |
 | **Cloudflare Pages** | 连接 GitHub 仓库，无需构建命令 |

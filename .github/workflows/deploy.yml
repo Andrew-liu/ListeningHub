@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:        # 支持手动触发
+
+# 只允许一个部署同时进行，新的推送会取消正在进行的旧部署
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 可选：构建时注入当前 commit hash 作为版本标记，便于排查缓存问题
+      - name: Inject build metadata
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "Build: $SHORT_SHA @ $BUILD_TIME"
+          # 把 service-worker.js 里的 CACHE_NAME 后缀替换为 commit sha，确保每次部署触发 SW 更新
+          sed -i "s/listening-hub-v2/listening-hub-${SHORT_SHA}/" service-worker.js
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+          # 排除无关文件，减小 artifact 体积
+          # 默认会包含整个目录，这里无需 exclude，但注意仓库内 *.tar.gz 已被 .gitignore
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
