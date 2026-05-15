@@ -256,11 +256,20 @@ const SyncManager = {
       if (!merged[word]) {
         merged[word] = data;
       } else {
-        // 两边都有，取 addedAt 较新的版本（保留最新的 SRS 状态）
-        const localTime = merged[word].addedAt || 0;
-        const remoteTime = data.addedAt || 0;
-        if (remoteTime > localTime) {
+        // 两边都有，保留 SRS 等级更高的版本（学习进度更深）
+        // 如果 SRS 等级相同，取最近复习的版本
+        const local = merged[word];
+        const localLevel = local.srsLevel || 0;
+        const remoteLevel = data.srsLevel || 0;
+        if (remoteLevel > localLevel) {
           merged[word] = data;
+        } else if (remoteLevel === localLevel) {
+          // 同等级取最近更新的
+          const localReview = local.lastReviewAt || local.addedAt || 0;
+          const remoteReview = data.lastReviewAt || data.addedAt || 0;
+          if (remoteReview > localReview) {
+            merged[word] = data;
+          }
         }
       }
     }

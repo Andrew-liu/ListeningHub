@@ -166,6 +166,12 @@ createApp({
     const authUser = ref(SyncManager.getUser());
     const syncVersion = ref(parseInt(localStorage.getItem('sync_version') || '0', 10));
 
+    // ── Vocabulary (声明需在 SyncManager.onChange 之前) ──────────────────────
+    const vocabOpen = ref(false);
+    const vocabulary = ref(loadVocab());
+    const vocabList = computed(() => Object.values(vocabulary.value).sort((a, b) => b.addedAt - a.addedAt));
+    const vocabCount = computed(() => vocabList.value.length);
+
     // 初始化同步管理器
     SyncManager.init();
     SyncManager.onChange((event, data) => {
@@ -393,11 +399,6 @@ createApp({
       translationLoading: false,
       fromSentenceId: null
     });
-
-    const vocabOpen = ref(false);
-    const vocabulary = ref(loadVocab());
-    const vocabList = computed(() => Object.values(vocabulary.value).sort((a, b) => b.addedAt - a.addedAt));
-    const vocabCount = computed(() => vocabList.value.length);
 
     // ── MP3 audio map (per-episode uploaded audio) ────────────────────────────
     // 由于 localStorage 不适合存大文件，采用内存 + IndexedDB 混合；这里用简单的内存 Map
