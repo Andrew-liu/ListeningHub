@@ -1545,6 +1545,33 @@
               数据已同步 · v{{ syncVersion }}
             </div>
           </div>
+
+          <!-- 勋章成就 -->
+          <div class="mt-5 border-t border-sand-200 pt-4">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-sm font-bold text-sand-800 flex items-center gap-1.5">
+                <span class="text-base">🏅</span> 我的成就
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-100 text-brand-700 font-bold">
+                {{ achievementUnlockedCount }} / {{ achievements.length }}
+              </span>
+            </div>
+            <div class="grid grid-cols-5 gap-2">
+              <div v-for="a in achievements" :key="a.id"
+                   class="relative group flex flex-col items-center p-2 rounded-xl transition-all duration-200 cursor-default"
+                   :class="a.unlocked ? 'bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200' : 'bg-sand-50 border border-sand-100 opacity-50'">
+                <span class="text-xl" :class="a.unlocked ? '' : 'grayscale'">{{ a.icon }}</span>
+                <span class="text-[9px] font-semibold mt-1 text-center leading-tight" :class="a.unlocked ? 'text-sand-800' : 'text-sand-400'">{{ a.name }}</span>
+                <!-- Tooltip -->
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 rounded-lg bg-sand-800 text-white text-[10px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
+                  <div class="font-semibold">{{ a.desc }}</div>
+                  <div class="text-sand-300 mt-0.5">{{ a.unlocked ? '✓ 已解锁' : '🔒 未解锁' }}</div>
+                  <div class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-sand-800"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button @click="doLogout"
                   class="w-full mt-4 px-4 py-3 rounded-xl bg-sand-100 border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-200 transition-all">
             退出登录
