@@ -1,0 +1,19 @@
+{
+  "name": "listening-hub-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create listening-hub-db",
+    "db:init": "wrangler d1 execute listening-hub-db --file=schema.sql",
+    "db:init:local": "wrangler d1 execute listening-hub-db --file=schema.sql --local"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "jose": "^5.2.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

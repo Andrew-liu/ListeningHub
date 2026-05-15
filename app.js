@@ -13,6 +13,7 @@ function loadVocab() {
 }
 function saveVocab(v) {
   localStorage.setItem(VOCAB_KEY, JSON.stringify(v));
+  if (typeof SyncManager !== 'undefined') SyncManager.schedulePush();
 }
 
 function loadTheme() {
@@ -39,6 +40,7 @@ function loadProgress() {
 }
 function saveProgress(p) {
   localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+  if (typeof SyncManager !== 'undefined') SyncManager.schedulePush();
 }
 
 function todayStr() {
@@ -153,6 +155,80 @@ createApp({
     const searchQuery = ref('');
     const selectedCategory = ref('all');
 
+    // ── Auth & Sync ───────────────────────────────────────────────────────────
+    const authModalOpen = ref(false);
+    const authStep = ref('email');  // 'email' | 'verify'
+    const authEmail = ref('');
+    const authCode = ref('');
+    const authDisplayCode = ref('');
+    const authError = ref('');
+    const authLoading = ref(false);
+    const authUser = ref(SyncManager.getUser());
+    const syncVersion = ref(parseInt(localStorage.getItem('sync_version') || '0', 10));
+
+    // 初始化同步管理器
+    SyncManager.init();
+    SyncManager.onChange((event, data) => {
+      if (event === 'login') {
+        authUser.value = data;
+      } else if (event === 'logout') {
+        authUser.value = null;
+        syncVersion.value = 0;
+      } else if (event === 'synced') {
+        syncVersion.value = data.version;
+      } else if (event === 'dataUpdated') {
+        // 云端数据合并后，刷新本地状态
+        progress.value = loadProgress();
+        vocabulary.value = loadVocab();
+      }
+    });
+
+    async function doLogin() {
+      if (!authEmail.value || !authEmail.value.includes('@')) {
+        authError.value = '请输入有效的邮箱地址';
+        return;
+      }
+      authError.value = '';
+      authLoading.value = true;
+      try {
+        const result = await SyncManager.login(authEmail.value);
+        authDisplayCode.value = result.code;
+        authStep.value = 'verify';
+      } catch (err) {
+        authError.value = err.message;
+      } finally {
+        authLoading.value = false;
+      }
+    }
+
+    async function doVerify() {
+      if (!authCode.value || authCode.value.length !== 6) {
+        authError.value = '请输入 6 位验证码';
+        return;
+      }
+      authError.value = '';
+      authLoading.value = true;
+      try {
+        await SyncManager.verify(authEmail.value, authCode.value);
+        authModalOpen.value = false;
+        // 重置登录表单
+        authStep.value = 'email';
+        authEmail.value = '';
+        authCode.value = '';
+        authDisplayCode.value = '';
+      } catch (err) {
+        authError.value = err.message;
+      } finally {
+        authLoading.value = false;
+      }
+    }
+
+    function doLogout() {
+      SyncManager.logout();
+      authModalOpen.value = false;
+      authStep.value = 'email';
+    }
+
     // ── Theme ─────────────────────────────────────────────────────────────────
     const theme = ref(loadTheme());
     function setTheme(t) {
@@ -201,7 +277,8 @@ createApp({
         episodesStartedCount: Object.keys(p.episodesStarted).length,
         episodesCompletedCount: Object.keys(p.episodesCompleted).length,
         streak: p.streak,
-        todayCount: p.studyDays[todayStr()] || 0
+        todayCount: p.studyDays[todayStr()] || 0,
+        totalDays: Object.keys(p.studyDays || {}).length
       };
     });
 
@@ -211,6 +288,35 @@ createApp({
       const cats = [...new Set(EPISODES.map(e => e.category))];
       return ['all', ...cats];
     });
+
+    // 分类颜色映射
+    const categoryColors = {
+      'all':         { dot: 'bg-gray-400',    bg: 'bg-gray-50',    border: 'border-gray-200',    text: 'text-gray-700',    hoverBg: 'hover:bg-gray-100',  activeBg: 'from-gray-500 to-gray-600' },
+      'Health':      { dot: 'bg-rose-400',    bg: 'bg-rose-50',    border: 'border-rose-200',    text: 'text-rose-700',    hoverBg: 'hover:bg-rose-100',  activeBg: 'from-rose-500 to-pink-500' },
+      'Science':     { dot: 'bg-blue-400',    bg: 'bg-blue-50',    border: 'border-blue-200',    text: 'text-blue-700',    hoverBg: 'hover:bg-blue-100',  activeBg: 'from-blue-500 to-blue-600' },
+      'Technology':  { dot: 'bg-cyan-400',    bg: 'bg-cyan-50',    border: 'border-cyan-200',    text: 'text-cyan-700',    hoverBg: 'hover:bg-cyan-100',  activeBg: 'from-cyan-500 to-teal-500' },
+      'Nature':      { dot: 'bg-green-400',   bg: 'bg-green-50',   border: 'border-green-200',   text: 'text-green-700',   hoverBg: 'hover:bg-green-100', activeBg: 'from-green-500 to-emerald-500' },
+      'Culture':     { dot: 'bg-purple-400',  bg: 'bg-purple-50',  border: 'border-purple-200',  text: 'text-purple-700',  hoverBg: 'hover:bg-purple-100', activeBg: 'from-purple-500 to-violet-500' },
+      'History':     { dot: 'bg-amber-400',   bg: 'bg-amber-50',   border: 'border-amber-200',   text: 'text-amber-700',   hoverBg: 'hover:bg-amber-100', activeBg: 'from-amber-500 to-orange-500' },
+      'Food':        { dot: 'bg-orange-400',  bg: 'bg-orange-50',  border: 'border-orange-200',  text: 'text-orange-700',  hoverBg: 'hover:bg-orange-100', activeBg: 'from-orange-500 to-red-400' },
+      'Space':       { dot: 'bg-indigo-400',  bg: 'bg-indigo-50',  border: 'border-indigo-200',  text: 'text-indigo-700',  hoverBg: 'hover:bg-indigo-100', activeBg: 'from-indigo-500 to-purple-500' },
+      'Business':    { dot: 'bg-slate-400',   bg: 'bg-slate-50',   border: 'border-slate-200',   text: 'text-slate-700',   hoverBg: 'hover:bg-slate-100', activeBg: 'from-slate-500 to-gray-600' },
+      'Education':   { dot: 'bg-teal-400',    bg: 'bg-teal-50',    border: 'border-teal-200',    text: 'text-teal-700',    hoverBg: 'hover:bg-teal-100',  activeBg: 'from-teal-500 to-cyan-500' },
+      'Travel':      { dot: 'bg-sky-400',     bg: 'bg-sky-50',     border: 'border-sky-200',     text: 'text-sky-700',     hoverBg: 'hover:bg-sky-100',   activeBg: 'from-sky-500 to-blue-500' },
+      'Music':       { dot: 'bg-pink-400',    bg: 'bg-pink-50',    border: 'border-pink-200',    text: 'text-pink-700',    hoverBg: 'hover:bg-pink-100',  activeBg: 'from-pink-500 to-rose-500' },
+      'Sports':      { dot: 'bg-red-400',     bg: 'bg-red-50',     border: 'border-red-200',     text: 'text-red-700',     hoverBg: 'hover:bg-red-100',   activeBg: 'from-red-500 to-rose-600' },
+      'Psychology':  { dot: 'bg-violet-400',  bg: 'bg-violet-50',  border: 'border-violet-200',  text: 'text-violet-700',  hoverBg: 'hover:bg-violet-100', activeBg: 'from-violet-500 to-purple-500' },
+      'Environment': { dot: 'bg-emerald-400', bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', hoverBg: 'hover:bg-emerald-100', activeBg: 'from-emerald-500 to-green-500' },
+      'Biography':   { dot: 'bg-fuchsia-400', bg: 'bg-fuchsia-50', border: 'border-fuchsia-200', text: 'text-fuchsia-700', hoverBg: 'hover:bg-fuchsia-100', activeBg: 'from-fuchsia-500 to-pink-500' },
+      'Art':         { dot: 'bg-yellow-400',  bg: 'bg-yellow-50',  border: 'border-yellow-200',  text: 'text-yellow-700',  hoverBg: 'hover:bg-yellow-100', activeBg: 'from-yellow-500 to-amber-500' },
+      'Economy':     { dot: 'bg-lime-500',    bg: 'bg-lime-50',    border: 'border-lime-200',    text: 'text-lime-700',    hoverBg: 'hover:bg-lime-100',  activeBg: 'from-lime-500 to-green-500' },
+      'Cinema':      { dot: 'bg-red-300',     bg: 'bg-red-50',     border: 'border-red-200',     text: 'text-red-600',     hoverBg: 'hover:bg-red-100',   activeBg: 'from-red-400 to-orange-500' },
+      'Idioms':      { dot: 'bg-teal-300',    bg: 'bg-teal-50',    border: 'border-teal-200',    text: 'text-teal-600',    hoverBg: 'hover:bg-teal-100',  activeBg: 'from-teal-400 to-emerald-500' }
+    };
+
+    function getCatColor(cat) {
+      return categoryColors[cat] || categoryColors['all'];
+    }
 
     // 筛选后的节目列表
     const filteredEpisodes = computed(() => {
@@ -803,11 +909,6 @@ createApp({
       return EPISODES.find(e => e.id === epId)?.title || epId;
     }
 
-    // VOA 来源（根据分类）
-    function getSource(category) {
-      return typeof getVoaSource === 'function' ? getVoaSource(category) : { program: 'VOA Learning English', url: 'https://learningenglish.voanews.com/' };
-    }
-
     // ── Keyboard shortcuts ────────────────────────────────────────────────────
     function onKeyDown(e) {
       if (popup.visible) {
@@ -845,7 +946,7 @@ createApp({
 
     return {
       episodes, currentEp, showZh, selectEpisode,
-      searchQuery, selectedCategory, categories, filteredEpisodes,
+      searchQuery, selectedCategory, categories, filteredEpisodes, getCatColor,
       isPlaying, activeSentenceId, activeSentence,
       loopSentence, speechRate, setRate,
       playMode, view, enterApp, goHome,
@@ -856,9 +957,11 @@ createApp({
       vocabOpen, vocabulary, vocabList, vocabCount,
       addToVocab, removeFromVocab, isWordSaved, playVocabAudio,
       getEpTitle, tokenize, cleanWord,
-      getSource,
       // Theme & progress
       theme, setTheme, progressStats,
+      // Auth & Sync
+      authModalOpen, authStep, authEmail, authCode, authDisplayCode, authError, authLoading,
+      authUser, syncVersion, doLogin, doVerify, doLogout,
       // Dictation
       dictation, startDictation, replayDictation, submitDictation, closeDictation,
       // Shadowing

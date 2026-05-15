@@ -1,0 +1,14 @@
+name = "listening-hub-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# 绑定 D1 数据库
+# 部署前需要先执行: npx wrangler d1 create listening-hub-db
+# 然后将生成的 database_id 填入下方
+[[d1_databases]]
+binding = "DB"
+database_name = "listening-hub-db"
+database_id = "7ff776f2-d8a7-4ab6-9397-835402898cc4"
+
+[vars]
+JWT_SECRET = "my-listening-hub-secret-2026"

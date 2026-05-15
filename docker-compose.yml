@@ -1,16 +1,39 @@
-# Listening Hub - VOA English
-# NAS 只需保留这一个文件，执行：docker compose up -d
-# 然后浏览器访问 http://<主机IP>:28080
+# Listening Hub - English Listening Practice
+# 部署：docker compose up -d
+# 访问：http://<主机IP>:28080
 
 services:
-  voa-english:
-    image: listening-hub/voa-english:latest
-    container_name: voa-english
+  frontend:
+    image: listening-hub/frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: listening-hub-web
     restart: unless-stopped
     ports:
-      - "28080:28080"     # 宿主机端口 : 容器端口
+      - "28080:28080"
+    depends_on:
+      - backend
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:28080/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: listening-hub-api
+    restart: unless-stopped
+    volumes:
+      - ./server/data:/app/data
+    environment:
+      - PORT=3000
+      - JWT_SECRET=listening-hub-change-this-secret-in-production
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 5s
       retries: 3
