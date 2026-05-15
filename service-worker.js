@@ -1,5 +1,5 @@
-/* Listening Hub Service Worker v2 - network-first for HTML/JS, cache-first for others */
-const CACHE_NAME = 'listening-hub-v2';
+/* Listening Hub Service Worker v3 - network-first for HTML/JS, cache-first for others */
+const CACHE_NAME = 'listening-hub-v3';
 const CORE_ASSETS = [
   './',
   './index.html',

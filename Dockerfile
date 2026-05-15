@@ -9,7 +9,7 @@ LABEL maintainer="Listening Hub Contributors"
 LABEL description="VOA Special English listening practice · Vue 3 · PWA"
 
 # 复制静态资源
-COPY index.html app.js manifest.json service-worker.js /usr/share/nginx/html/
+COPY index.html app.js sync.js manifest.json service-worker.js /usr/share/nginx/html/
 COPY data/ /usr/share/nginx/html/data/
 
 # 复制自定义 nginx 配置（监听 28080）

@@ -1,5 +1,5 @@
-// VOA Special English 节目集合 - 52 集
-// 每集 16-18 句，按 VOA Learning English 慢速朗读（约 90 wpm）约 2 分钟
+// 英语听力材料集合 - 100 集
+// 每集 16-17 句，慢速朗读（约 90 wpm）约 2 分钟
 // 文本遵循 Special English 规范：1500 核心词 · 简明语法 · 平均每句 10-12 词
 
 const ALL_EPISODES = [
@@ -1146,39 +1146,1018 @@ const ALL_EPISODES = [
       { id: 16, en: "Each country has its own traditional chocolate styles.",                 zh: "每个国家都有自己的传统巧克力风格。" },
       { id: 17, en: "Chocolate remains one of the world's favorite treats today.",            zh: "巧克力至今仍是世界最爱的美食之一。" }
     ]
+  },
+  // ─── 新增听力材料 (ep053-ep100) ─── 确保每个分类至少5篇 ───
+  {
+    id: "ep053", category: "Health", title: "How Sleep Affects Your Health", description: "Health · 睡眠与健康",
+    sentences: [
+      { id: 1,  en: "Sleep is essential for good health and well-being.",                          zh: "睡眠对于健康和幸福至关重要。" },
+      { id: 2,  en: "Most adults need seven to nine hours of sleep each night.",                   zh: "大多数成年人每晚需要七到九小时的睡眠。" },
+      { id: 3,  en: "During sleep, your body repairs cells and restores energy.",                  zh: "睡眠期间，身体修复细胞并恢复能量。" },
+      { id: 4,  en: "Poor sleep can lead to weight gain and heart problems.",                     zh: "睡眠不好会导致体重增加和心脏问题。" },
+      { id: 5,  en: "Your brain needs sleep to process memories and learn new things.",            zh: "大脑需要睡眠来处理记忆和学习新事物。" },
+      { id: 6,  en: "People who sleep well tend to have better concentration.",                   zh: "睡眠好的人往往注意力更集中。" },
+      { id: 7,  en: "Blue light from phones and computers can make it hard to fall asleep.",      zh: "手机和电脑的蓝光会让人难以入睡。" },
+      { id: 8,  en: "Experts suggest turning off screens one hour before bed.",                   zh: "专家建议睡前一小时关闭屏幕。" },
+      { id: 9,  en: "A dark and quiet room helps you sleep more deeply.",                         zh: "黑暗安静的房间有助于深度睡眠。" },
+      { id: 10, en: "Going to bed at the same time each night is very helpful.",                  zh: "每晚同一时间睡觉非常有帮助。" },
+      { id: 11, en: "Caffeine in the afternoon can disrupt your sleep at night.",                 zh: "下午摄入咖啡因会影响晚上的睡眠。" },
+      { id: 12, en: "Regular exercise during the day can improve sleep quality.",                 zh: "白天适当运动可以改善睡眠质量。" },
+      { id: 13, en: "Stress and worry are common causes of sleep problems.",                      zh: "压力和焦虑是睡眠问题的常见原因。" },
+      { id: 14, en: "Reading a book before bed can help you relax.",                              zh: "睡前读书可以帮助你放松。" },
+      { id: 15, en: "Children need more sleep than adults for proper growth.",                    zh: "儿童比成人需要更多睡眠以正常发育。" },
+      { id: 16, en: "If you have trouble sleeping, talk to your doctor.",                         zh: "如果你有睡眠问题，请咨询医生。" },
+      { id: 17, en: "Good sleep habits can improve your life in many ways.",                      zh: "良好的睡眠习惯能在多方面改善你的生活。" }
+    ]
+  },
+  {
+    id: "ep054", category: "Science", title: "How Vaccines Work", description: "Science · 疫苗的工作原理",
+    sentences: [
+      { id: 1,  en: "Vaccines are one of the greatest inventions in medicine.",                   zh: "疫苗是医学上最伟大的发明之一。" },
+      { id: 2,  en: "They help your body fight diseases before you get sick.",                    zh: "它们帮助你的身体在生病之前对抗疾病。" },
+      { id: 3,  en: "A vaccine contains a weak or dead form of a virus or bacteria.",             zh: "疫苗含有弱化或灭活的病毒或细菌。" },
+      { id: 4,  en: "When you receive a vaccine, your body learns to recognize the threat.",      zh: "当你接种疫苗时，身体学会识别威胁。" },
+      { id: 5,  en: "Your immune system makes special proteins called antibodies.",               zh: "你的免疫系统会产生称为抗体的特殊蛋白质。" },
+      { id: 6,  en: "These antibodies remember how to fight the disease in the future.",          zh: "这些抗体会记住将来如何对抗该疾病。" },
+      { id: 7,  en: "The first vaccine was created in seventeen ninety six.",                     zh: "第一支疫苗创制于 1796 年。" },
+      { id: 8,  en: "Edward Jenner made it to protect people from smallpox.",                    zh: "爱德华·詹纳发明它来保护人们免受天花之害。" },
+      { id: 9,  en: "Smallpox was once a terrible disease that killed millions.",                 zh: "天花曾是一种夺走数百万人生命的可怕疾病。" },
+      { id: 10, en: "Thanks to vaccines, smallpox no longer exists in the world.",                zh: "多亏了疫苗，天花已从世界上消失。" },
+      { id: 11, en: "Today, children receive vaccines for many different diseases.",              zh: "如今，儿童接种多种疾病的疫苗。" },
+      { id: 12, en: "Measles, polio, and tetanus are prevented by vaccines.",                    zh: "疫苗可以预防麻疹、脊髓灰质炎和破伤风。" },
+      { id: 13, en: "Vaccines are safe and have been tested for many years.",                     zh: "疫苗是安全的，经过多年测试。" },
+      { id: 14, en: "Some people may feel a little tired after getting a vaccine.",               zh: "有些人接种后可能会感到有点疲倦。" },
+      { id: 15, en: "This is normal and means your body is building protection.",                 zh: "这是正常的，说明你的身体正在建立保护。" },
+      { id: 16, en: "When most people are vaccinated, diseases cannot spread easily.",            zh: "当大多数人接种后，疾病就不容易传播。" },
+      { id: 17, en: "Vaccines have saved millions of lives around the world.",                    zh: "疫苗在世界各地拯救了数百万人的生命。" }
+    ]
+  },
+  {
+    id: "ep055", category: "Culture", title: "Tea Cultures Around the World", description: "Culture · 世界茶文化",
+    sentences: [
+      { id: 1,  en: "Tea is the most popular drink in the world after water.",                    zh: "茶是继水之后世界上最受欢迎的饮料。" },
+      { id: 2,  en: "People have been drinking tea for thousands of years.",                      zh: "人们已经喝茶数千年了。" },
+      { id: 3,  en: "Tea was first discovered in China about five thousand years ago.",           zh: "茶最早在大约五千年前的中国被发现。" },
+      { id: 4,  en: "Chinese tea culture emphasizes peace and harmony with nature.",              zh: "中国茶文化强调宁静与自然的和谐。" },
+      { id: 5,  en: "Japan developed its own tea ceremony called the Way of Tea.",               zh: "日本发展出了自己的茶道。" },
+      { id: 6,  en: "The Japanese ceremony focuses on mindfulness and simplicity.",               zh: "日本茶道注重正念和简约。" },
+      { id: 7,  en: "In Britain, afternoon tea became popular in the eighteen hundreds.",         zh: "在英国，下午茶在 1800 年代变得流行。" },
+      { id: 8,  en: "British people often drink tea with milk and sugar.",                        zh: "英国人通常在茶中加牛奶和糖。" },
+      { id: 9,  en: "India is one of the largest tea producers in the world today.",              zh: "印度是当今世界上最大的茶叶产区之一。" },
+      { id: 10, en: "Indian chai is made with spices like cardamom and ginger.",                  zh: "印度奶茶用豆蔻和姜等香料制成。" },
+      { id: 11, en: "Morocco is famous for its sweet mint tea served with hospitality.",          zh: "摩洛哥以热情好客的甜薄荷茶闻名。" },
+      { id: 12, en: "In Turkey, tea is served in small glass cups throughout the day.",           zh: "在土耳其，人们全天用小玻璃杯喝茶。" },
+      { id: 13, en: "There are many types of tea including green, black, and white.",             zh: "茶有很多种，包括绿茶、红茶和白茶。" },
+      { id: 14, en: "Each type of tea has its own flavor and health benefits.",                   zh: "每种茶都有自己的风味和健康益处。" },
+      { id: 15, en: "Green tea contains substances that may help prevent some diseases.",         zh: "绿茶含有可能帮助预防某些疾病的物质。" },
+      { id: 16, en: "Tea brings people together in every culture around the world.",              zh: "在世界各地的每种文化中，茶都将人们聚在一起。" }
+    ]
+  },
+  {
+    id: "ep056", category: "History", title: "The Ancient Silk Road", description: "History · 古代丝绸之路",
+    sentences: [
+      { id: 1,  en: "The Silk Road was a network of trade routes connecting East and West.",      zh: "丝绸之路是连接东西方的贸易路线网络。" },
+      { id: 2,  en: "It stretched over six thousand kilometers across Asia and Europe.",          zh: "它横跨亚欧大陆，绵延六千多公里。" },
+      { id: 3,  en: "The route got its name from the silk that China exported.",                  zh: "这条路线因中国出口的丝绸而得名。" },
+      { id: 4,  en: "Trade along the Silk Road began over two thousand years ago.",               zh: "丝绸之路上的贸易始于两千多年前。" },
+      { id: 5,  en: "Merchants carried silk, spices, gold, and precious stones.",                 zh: "商人们运输丝绸、香料、黄金和宝石。" },
+      { id: 6,  en: "The journey was long and dangerous for traders.",                            zh: "对于商人来说，旅程漫长而危险。" },
+      { id: 7,  en: "Camels were the main animals used to carry goods across deserts.",           zh: "骆驼是穿越沙漠运输货物的主要动物。" },
+      { id: 8,  en: "Cities along the route grew rich from the trade.",                           zh: "沿线城市因贸易而变得富裕。" },
+      { id: 9,  en: "The Silk Road also spread ideas, religions, and technology.",                zh: "丝绸之路还传播了思想、宗教和技术。" },
+      { id: 10, en: "Buddhism spread from India to China along these routes.",                    zh: "佛教沿着这些路线从印度传到中国。" },
+      { id: 11, en: "Paper and gunpowder traveled from China to the West.",                      zh: "纸和火药从中国传到了西方。" },
+      { id: 12, en: "Different cultures met and exchanged knowledge on the road.",                zh: "不同文化在路途中相遇并交流知识。" },
+      { id: 13, en: "Marco Polo traveled the Silk Road in the thirteen hundreds.",                zh: "马可·波罗在 1300 年代走过丝绸之路。" },
+      { id: 14, en: "He wrote about the wonders he saw in China and Asia.",                       zh: "他写下了在中国和亚洲看到的奇迹。" },
+      { id: 15, en: "The Silk Road declined when sea routes became more popular.",                zh: "当海路变得更流行时，丝绸之路衰落了。" },
+      { id: 16, en: "Today, the Silk Road remains an important symbol of connection.",            zh: "今天，丝绸之路仍然是联系的重要象征。" },
+      { id: 17, en: "Many historic sites along the route are now protected by governments.",      zh: "沿线许多历史遗迹现已受到政府保护。" }
+    ]
+  },
+  {
+    id: "ep057", category: "History", title: "The Industrial Revolution", description: "History · 工业革命",
+    sentences: [
+      { id: 1,  en: "The Industrial Revolution changed the world more than any other event.",    zh: "工业革命比任何其他事件都更深刻地改变了世界。" },
+      { id: 2,  en: "It began in Britain in the middle of the seventeen hundreds.",              zh: "它始于 1700 年代中期的英国。" },
+      { id: 3,  en: "Before this time, most people worked on farms or made goods by hand.",      zh: "在此之前，大多数人在农场工作或手工制品。" },
+      { id: 4,  en: "New machines made it possible to produce goods much faster.",               zh: "新机器使得更快地生产商品成为可能。" },
+      { id: 5,  en: "The steam engine was one of the most important inventions.",                zh: "蒸汽机是最重要的发明之一。" },
+      { id: 6,  en: "Factories were built in cities, and people moved there for work.",          zh: "工厂建在城市里，人们搬到那里工作。" },
+      { id: 7,  en: "Cities grew very quickly, often without good planning.",                    zh: "城市增长很快，往往缺乏良好规划。" },
+      { id: 8,  en: "Working conditions in early factories were often terrible.",                 zh: "早期工厂的工作条件通常很糟糕。" },
+      { id: 9,  en: "Children as young as five worked long hours in some factories.",            zh: "一些工厂里年仅五岁的孩子长时间工作。" },
+      { id: 10, en: "Over time, laws were made to protect workers and children.",                 zh: "随着时间推移，法律被制定来保护工人和儿童。" },
+      { id: 11, en: "Railways connected cities and made travel much faster.",                     zh: "铁路连接了城市，使旅行快得多。" },
+      { id: 12, en: "New inventions kept appearing throughout the eighteen hundreds.",            zh: "新发明在整个 1800 年代不断出现。" },
+      { id: 13, en: "The telephone, light bulb, and automobile all came from this period.",       zh: "电话、电灯泡和汽车都来自这个时期。" },
+      { id: 14, en: "The revolution spread from Britain to Europe and America.",                  zh: "革命从英国扩展到欧洲和美国。" },
+      { id: 15, en: "It created both great wealth and serious social problems.",                  zh: "它既创造了巨大财富，也带来了严重社会问题。" },
+      { id: 16, en: "The modern world we live in was shaped by this revolution.",                 zh: "我们生活的现代世界由这场革命塑造。" }
+    ]
+  },
+  {
+    id: "ep058", category: "Food", title: "The World of Rice", description: "Food · 稻米的世界",
+    sentences: [
+      { id: 1,  en: "Rice is the main food for more than half the world's people.",              zh: "稻米是世界一半以上人口的主食。" },
+      { id: 2,  en: "It has been grown in Asia for over seven thousand years.",                  zh: "亚洲种植稻米已有七千多年历史。" },
+      { id: 3,  en: "China and India are the largest producers of rice today.",                   zh: "中国和印度是当今最大的稻米生产国。" },
+      { id: 4,  en: "Rice grows best in warm, wet areas with plenty of water.",                  zh: "稻米在温暖潮湿、水源充足的地区生长最好。" },
+      { id: 5,  en: "Farmers plant rice in flooded fields called paddies.",                      zh: "农民在称为稻田的浸水田地中种植水稻。" },
+      { id: 6,  en: "There are more than forty thousand different types of rice.",               zh: "有超过四万种不同类型的稻米。" },
+      { id: 7,  en: "White rice and brown rice are the two most common kinds.",                  zh: "白米和糙米是最常见的两种。" },
+      { id: 8,  en: "Brown rice is healthier because it keeps its outer layer.",                 zh: "糙米更健康，因为它保留了外层。" },
+      { id: 9,  en: "In Japan, rice is so important that it was once used as money.",            zh: "在日本，稻米曾经重要到被用作货币。" },
+      { id: 10, en: "Sushi, a famous Japanese food, is made with special sticky rice.",          zh: "寿司这种著名的日本食物用特殊的粘米制成。" },
+      { id: 11, en: "In India, rice is served with curry and many different spices.",            zh: "在印度，米饭配咖喱和各种香料一起食用。" },
+      { id: 12, en: "Spanish paella is a colorful rice dish with seafood and vegetables.",       zh: "西班牙海鲜饭是用海鲜和蔬菜做的彩色米饭。" },
+      { id: 13, en: "Rice provides energy and important nutrients for the body.",                 zh: "稻米为身体提供能量和重要营养素。" },
+      { id: 14, en: "Scientists are working to grow rice that needs less water.",                 zh: "科学家正在研究种植需水量更少的稻米。" },
+      { id: 15, en: "Climate change is making it harder to grow rice in some areas.",            zh: "气候变化使某些地区更难种植稻米。" },
+      { id: 16, en: "Rice will continue to feed billions of people for many years to come.",     zh: "稻米将在未来很多年继续养活数十亿人。" }
+    ]
+  },
+  {
+    id: "ep059", category: "Food", title: "Street Food Around the World", description: "Food · 世界各地的街头美食",
+    sentences: [
+      { id: 1,  en: "Street food is popular in almost every country in the world.",              zh: "街头美食在世界几乎每个国家都很流行。" },
+      { id: 2,  en: "It is usually quick, cheap, and full of local flavor.",                     zh: "它通常快捷、便宜，且充满当地风味。" },
+      { id: 3,  en: "In Thailand, vendors sell pad thai and grilled meat on sticks.",            zh: "在泰国，小贩出售泰式炒面和烤肉串。" },
+      { id: 4,  en: "Mexican tacos are filled with meat, vegetables, and spicy sauce.",          zh: "墨西哥玉米饼里装着肉、蔬菜和辣酱。" },
+      { id: 5,  en: "In India, samosas are a favorite snack sold on the streets.",               zh: "在印度，咖喱角是街头最受欢迎的零食。" },
+      { id: 6,  en: "Japanese ramen stalls serve hot noodle soup late at night.",                 zh: "日本拉面摊深夜供应热腾腾的汤面。" },
+      { id: 7,  en: "Turkish kebabs are grilled meat served in bread or on plates.",             zh: "土耳其烤肉串是夹在面包里或装盘的烤肉。" },
+      { id: 8,  en: "In China, dumplings and baozi are common street foods.",                    zh: "在中国，饺子和包子是常见的街头美食。" },
+      { id: 9,  en: "Street food lets you taste a country's culture quickly.",                   zh: "街头美食让你快速品尝一个国家的文化。" },
+      { id: 10, en: "Many famous restaurants started as simple street food stalls.",              zh: "许多著名餐厅最初是简单的街头小摊。" },
+      { id: 11, en: "Food markets bring together many different vendors in one place.",           zh: "美食市场将许多不同的摊贩聚集在一起。" },
+      { id: 12, en: "Night markets in Asia are especially exciting for food lovers.",             zh: "亚洲的夜市对美食爱好者来说特别令人兴奋。" },
+      { id: 13, en: "Safety is important when choosing where to eat street food.",                zh: "选择在哪里吃街头美食时安全很重要。" },
+      { id: 14, en: "Look for stalls with many local customers as a good sign.",                  zh: "有很多本地顾客的摊位是个好兆头。" },
+      { id: 15, en: "Street food is a wonderful way to explore new places and tastes.",           zh: "街头美食是探索新地方和新口味的好方式。" },
+      { id: 16, en: "Every bite tells a story about the people and their traditions.",            zh: "每一口都讲述着人们和他们传统的故事。" }
+    ]
+  },
+  {
+    id: "ep060", category: "Biography", title: "The Life of Marie Curie", description: "Biography · 居里夫人的一生",
+    sentences: [
+      { id: 1,  en: "Marie Curie was one of the greatest scientists in history.",                zh: "居里夫人是历史上最伟大的科学家之一。" },
+      { id: 2,  en: "She was born in Poland in eighteen sixty seven.",                           zh: "她于 1867 年出生在波兰。" },
+      { id: 3,  en: "As a young woman, she moved to Paris to study science.",                    zh: "年轻时，她搬到巴黎学习科学。" },
+      { id: 4,  en: "She was one of the few women in her university classes.",                   zh: "她是大学课堂上为数不多的女性之一。" },
+      { id: 5,  en: "Marie married Pierre Curie, who was also a scientist.",                    zh: "玛丽嫁给了同为科学家的皮埃尔·居里。" },
+      { id: 6,  en: "Together, they discovered two new elements: polonium and radium.",          zh: "他们一起发现了两种新元素：钋和镭。" },
+      { id: 7,  en: "In nineteen oh three, Marie became the first woman to win a Nobel Prize.",  zh: "1903 年，玛丽成为第一位获得诺贝尔奖的女性。" },
+      { id: 8,  en: "She won the prize in physics with her husband and another scientist.",      zh: "她与丈夫和另一位科学家一起获得物理学奖。" },
+      { id: 9,  en: "In nineteen eleven, she won a second Nobel Prize in chemistry.",            zh: "1911 年，她获得了第二个诺贝尔化学奖。" },
+      { id: 10, en: "She is the only person to win Nobel Prizes in two different sciences.",     zh: "她是唯一获得两个不同科学领域诺贝尔奖的人。" },
+      { id: 11, en: "Her work helped doctors understand and treat cancer.",                      zh: "她的工作帮助医生理解和治疗癌症。" },
+      { id: 12, en: "During World War One, she brought X-ray machines to hospitals.",            zh: "一战期间，她把X光机带到了医院。" },
+      { id: 13, en: "She faced discrimination because she was a woman in science.",              zh: "她因为是科学界的女性而遭受歧视。" },
+      { id: 14, en: "Despite difficulties, she never stopped her research work.",                zh: "尽管困难重重，她从未停止研究工作。" },
+      { id: 15, en: "Marie Curie died in nineteen thirty four from radiation exposure.",         zh: "居里夫人于 1934 年因辐射暴露去世。" },
+      { id: 16, en: "Her courage and dedication continue to inspire scientists today.",          zh: "她的勇气和奉献精神至今仍激励着科学家。" }
+    ]
+  },
+  {
+    id: "ep061", category: "Biography", title: "The Story of Nelson Mandela", description: "Biography · 曼德拉的故事",
+    sentences: [
+      { id: 1,  en: "Nelson Mandela spent his life fighting for equality in South Africa.",     zh: "曼德拉一生都在为南非的平等而奋斗。" },
+      { id: 2,  en: "He was born in nineteen eighteen in a small village.",                     zh: "他于 1918 年出生在一个小村庄。" },
+      { id: 3,  en: "South Africa had a system called apartheid that separated people by race.", zh: "南非有一个叫做种族隔离的制度。" },
+      { id: 4,  en: "Black South Africans had fewer rights than white South Africans.",         zh: "南非黑人比白人拥有更少的权利。" },
+      { id: 5,  en: "Mandela studied law and became a leader against apartheid.",               zh: "曼德拉学习法律，成为反对种族隔离的领导者。" },
+      { id: 6,  en: "He organized peaceful protests and fought for justice.",                    zh: "他组织和平抗议并为正义而斗争。" },
+      { id: 7,  en: "In nineteen sixty four, he was sent to prison for his beliefs.",           zh: "1964 年，他因信仰被送进监狱。" },
+      { id: 8,  en: "He spent twenty seven years in a small prison cell.",                      zh: "他在一间小牢房里度过了二十七年。" },
+      { id: 9,  en: "People around the world demanded his freedom.",                             zh: "世界各地的人们要求释放他。" },
+      { id: 10, en: "He was finally released from prison in nineteen ninety.",                   zh: "他终于在 1990 年获释出狱。" },
+      { id: 11, en: "In nineteen ninety four, he became South Africa's first black president.",  zh: "1994 年，他成为南非第一位黑人总统。" },
+      { id: 12, en: "He worked to bring peace between all races in the country.",                zh: "他致力于在国内各种族之间实现和平。" },
+      { id: 13, en: "Mandela believed in forgiveness rather than revenge.",                      zh: "曼德拉相信宽恕而非复仇。" },
+      { id: 14, en: "He won the Nobel Peace Prize in nineteen ninety three.",                    zh: "他在 1993 年获得诺贝尔和平奖。" },
+      { id: 15, en: "His life shows that one person can change the world.",                      zh: "他的一生表明一个人可以改变世界。" },
+      { id: 16, en: "Mandela is remembered as a hero of freedom and human rights.",              zh: "曼德拉被铭记为自由和人权的英雄。" }
+    ]
+  },
+  {
+    id: "ep062", category: "Travel", title: "Visiting National Parks", description: "Travel · 参观国家公园",
+    sentences: [
+      { id: 1,  en: "National parks protect some of the most beautiful places on Earth.",       zh: "国家公园保护着地球上一些最美丽的地方。" },
+      { id: 2,  en: "The first national park was Yellowstone, created in eighteen seventy two.", zh: "第一个国家公园是黄石公园，建于 1872 年。" },
+      { id: 3,  en: "Today, there are thousands of national parks around the world.",            zh: "如今，世界各地有数千个国家公园。" },
+      { id: 4,  en: "These parks preserve forests, mountains, rivers, and wildlife.",            zh: "这些公园保护森林、山脉、河流和野生动物。" },
+      { id: 5,  en: "Visitors can hike trails, camp, and watch animals in nature.",              zh: "游客可以徒步、露营并在大自然中观赏动物。" },
+      { id: 6,  en: "The Grand Canyon in America attracts millions of visitors each year.",      zh: "美国大峡谷每年吸引数百万游客。" },
+      { id: 7,  en: "Africa's Serengeti is famous for its large animal migrations.",             zh: "非洲的塞伦盖蒂以大规模动物迁徙闻名。" },
+      { id: 8,  en: "National parks help protect endangered species from disappearing.",         zh: "国家公园帮助保护濒危物种免于消失。" },
+      { id: 9,  en: "Park rangers work hard to keep the land and animals safe.",                  zh: "公园巡护员努力工作以保护土地和动物安全。" },
+      { id: 10, en: "Some parks have rules about where you can walk and camp.",                  zh: "一些公园对可以行走和露营的地方有规定。" },
+      { id: 11, en: "These rules help protect the environment for future generations.",          zh: "这些规定帮助为后代保护环境。" },
+      { id: 12, en: "Many parks offer programs to teach children about nature.",                  zh: "许多公园提供教孩子了解自然的项目。" },
+      { id: 13, en: "Photography is a popular activity in national parks.",                      zh: "摄影是国家公园中一项热门活动。" },
+      { id: 14, en: "Always bring enough water and food when visiting parks.",                   zh: "参观公园时一定要带够水和食物。" },
+      { id: 15, en: "Leave no trace means taking all your waste with you.",                      zh: "不留痕迹意味着带走你所有的废物。" },
+      { id: 16, en: "National parks remind us of the beauty of the natural world.",              zh: "国家公园提醒我们自然界的美丽。" }
+    ]
+  },
+  {
+    id: "ep063", category: "Travel", title: "Train Travel in Europe", description: "Travel · 欧洲火车旅行",
+    sentences: [
+      { id: 1,  en: "Europe has one of the best train systems in the world.",                   zh: "欧洲拥有世界上最好的铁路系统之一。" },
+      { id: 2,  en: "High-speed trains can travel over three hundred kilometers per hour.",     zh: "高速列车时速可超过三百公里。" },
+      { id: 3,  en: "You can travel between major cities without needing an airplane.",          zh: "你可以在主要城市之间旅行而不需要飞机。" },
+      { id: 4,  en: "France's TGV trains connect Paris to other cities very quickly.",          zh: "法国的 TGV 列车将巴黎与其他城市快速连接。" },
+      { id: 5,  en: "The Eurostar goes under the English Channel from London to Paris.",        zh: "欧洲之星从伦敦到巴黎穿过英吉利海峡。" },
+      { id: 6,  en: "Train stations in Europe are often beautiful historic buildings.",          zh: "欧洲的火车站通常是美丽的历史建筑。" },
+      { id: 7,  en: "A rail pass lets you travel on many trains for one price.",                 zh: "铁路通票让你以一个价格乘坐多趟列车。" },
+      { id: 8,  en: "This is a popular way for young people to explore Europe.",                 zh: "这是年轻人探索欧洲的一种流行方式。" },
+      { id: 9,  en: "You can see beautiful countryside through the train windows.",              zh: "你可以透过车窗看到美丽的乡村。" },
+      { id: 10, en: "Night trains have beds so you can sleep while traveling.",                   zh: "夜间列车有卧铺，你可以在旅途中睡觉。" },
+      { id: 11, en: "Switzerland is famous for its scenic mountain railways.",                   zh: "瑞士以其风景优美的山地铁路闻名。" },
+      { id: 12, en: "Trains are better for the environment than planes or cars.",                zh: "火车比飞机或汽车对环境更好。" },
+      { id: 13, en: "Most trains have comfortable seats and space for luggage.",                 zh: "大多数火车有舒适的座位和行李空间。" },
+      { id: 14, en: "You can read, work, or enjoy the view during your journey.",                zh: "你可以在旅途中阅读、工作或欣赏风景。" },
+      { id: 15, en: "Booking tickets early is often cheaper than buying them later.",            zh: "提前订票通常比后来买便宜。" },
+      { id: 16, en: "Train travel is a relaxing way to discover new places in Europe.",          zh: "火车旅行是发现欧洲新地方的轻松方式。" }
+    ]
+  },
+  {
+    id: "ep064", category: "Travel", title: "Island Destinations for Vacation", description: "Travel · 度假海岛",
+    sentences: [
+      { id: 1,  en: "Islands are among the most popular vacation destinations.",                 zh: "岛屿是最受欢迎的度假目的地之一。" },
+      { id: 2,  en: "They offer beautiful beaches, clear water, and warm weather.",              zh: "它们提供美丽的海滩、清澈的海水和温暖的天气。" },
+      { id: 3,  en: "The Maldives in the Indian Ocean is famous for its luxury resorts.",       zh: "印度洋的马尔代夫以豪华度假村闻名。" },
+      { id: 4,  en: "Bali in Indonesia attracts visitors with its culture and scenery.",        zh: "印尼巴厘岛以其文化和风景吸引游客。" },
+      { id: 5,  en: "Hawaii has active volcanoes and stunning tropical landscapes.",             zh: "夏威夷有活火山和迷人的热带景观。" },
+      { id: 6,  en: "The Greek islands are known for white buildings and blue seas.",            zh: "希腊岛屿以白色建筑和蓝色大海闻名。" },
+      { id: 7,  en: "Many islands have coral reefs that are perfect for snorkeling.",            zh: "许多岛屿有适合浮潜的珊瑚礁。" },
+      { id: 8,  en: "You can see colorful fish and sea creatures underwater.",                   zh: "你可以在水下看到五颜六色的鱼和海洋生物。" },
+      { id: 9,  en: "Island food often includes fresh seafood and tropical fruits.",             zh: "岛上食物通常包括新鲜海鲜和热带水果。" },
+      { id: 10, en: "Some islands are very remote and take many hours to reach.",                zh: "一些岛屿非常偏远，需要很多小时才能到达。" },
+      { id: 11, en: "This makes them quiet and peaceful places to rest.",                        zh: "这使它们成为安静祥和的休息之地。" },
+      { id: 12, en: "Water sports like surfing and kayaking are popular on islands.",             zh: "冲浪和皮划艇等水上运动在岛屿上很流行。" },
+      { id: 13, en: "The best time to visit depends on the island's weather season.",            zh: "最佳游览时间取决于岛屿的天气季节。" },
+      { id: 14, en: "Always protect your skin from the strong sun near the ocean.",              zh: "在海边一定要保护皮肤免受强烈阳光照射。" },
+      { id: 15, en: "Island vacations help people relax and forget about work stress.",          zh: "岛屿度假帮助人们放松并忘记工作压力。" },
+      { id: 16, en: "Even a short trip to an island can refresh your mind and body.",            zh: "即使是短暂的岛屿之旅也能让你身心焕然一新。" }
+    ]
+  },
+  {
+    id: "ep065", category: "Sports", title: "The History of the Olympics", description: "Sports · 奥运会的历史",
+    sentences: [
+      { id: 1,  en: "The Olympic Games are the world's biggest sports event.",                  zh: "奥运会是世界上最大的体育赛事。" },
+      { id: 2,  en: "They began in ancient Greece nearly three thousand years ago.",            zh: "它们始于近三千年前的古希腊。" },
+      { id: 3,  en: "The ancient games were held in Olympia every four years.",                  zh: "古代运动会每四年在奥林匹亚举行一次。" },
+      { id: 4,  en: "Athletes competed in running, jumping, and throwing events.",               zh: "运动员参加跑步、跳跃和投掷项目。" },
+      { id: 5,  en: "The modern Olympics started again in eighteen ninety six in Athens.",       zh: "现代奥运会于 1896 年在雅典重新开始。" },
+      { id: 6,  en: "A French man named Pierre de Coubertin helped restart the games.",         zh: "一位名叫皮埃尔·德·顾拜旦的法国人帮助重启了运动会。" },
+      { id: 7,  en: "The five Olympic rings represent the five continents of the world.",       zh: "五个奥运环代表世界五大洲。" },
+      { id: 8,  en: "Athletes from over two hundred countries now participate.",                  zh: "来自两百多个国家的运动员现在参加比赛。" },
+      { id: 9,  en: "The Summer and Winter Olympics are held in different years.",                zh: "夏季和冬季奥运会在不同年份举行。" },
+      { id: 10, en: "Women were first allowed to compete in nineteen hundred.",                  zh: "女性于 1900 年首次被允许参赛。" },
+      { id: 11, en: "New sports are added to the Olympics as they become popular.",               zh: "随着运动变得流行，新项目被加入奥运会。" },
+      { id: 12, en: "Hosting the Olympics brings pride and visitors to a country.",               zh: "举办奥运会给一个国家带来自豪感和游客。" },
+      { id: 13, en: "The Olympic flame travels from Greece to the host city.",                    zh: "奥运火炬从希腊传递到主办城市。" },
+      { id: 14, en: "Gold, silver, and bronze medals are given to the top three athletes.",      zh: "金、银、铜牌分别颁发给前三名运动员。" },
+      { id: 15, en: "The Olympics promote peace and friendship between nations.",                 zh: "奥运会促进国家间的和平与友谊。" },
+      { id: 16, en: "Millions of people watch the games on television around the world.",        zh: "全世界数百万人通过电视观看比赛。" }
+    ]
+  },
+  {
+    id: "ep066", category: "Sports", title: "The Science of Running", description: "Sports · 跑步的科学",
+    sentences: [
+      { id: 1,  en: "Running is one of the simplest and oldest forms of exercise.",             zh: "跑步是最简单、最古老的运动形式之一。" },
+      { id: 2,  en: "Humans have been running for millions of years to survive.",                zh: "人类为了生存已经跑了数百万年。" },
+      { id: 3,  en: "Today, millions of people run for health and enjoyment.",                   zh: "如今，数百万人为了健康和乐趣而跑步。" },
+      { id: 4,  en: "When you run, your heart beats faster to send blood to muscles.",           zh: "跑步时，心脏跳动加快以向肌肉输送血液。" },
+      { id: 5,  en: "Your lungs work harder to bring more oxygen into your body.",               zh: "你的肺更努力工作以吸入更多氧气。" },
+      { id: 6,  en: "Regular running makes your heart stronger over time.",                      zh: "经常跑步会随着时间让你的心脏更强壮。" },
+      { id: 7,  en: "Good running shoes are important to protect your feet and knees.",          zh: "好的跑鞋对保护脚和膝盖很重要。" },
+      { id: 8,  en: "Beginners should start slowly and increase distance gradually.",            zh: "初学者应该慢慢开始，逐渐增加距离。" },
+      { id: 9,  en: "Warming up before running helps prevent injuries.",                         zh: "跑前热身有助于预防受伤。" },
+      { id: 10, en: "Drinking water before and after running keeps your body working well.",     zh: "跑前跑后喝水让身体保持良好状态。" },
+      { id: 11, en: "Marathon races are forty two kilometers long and very challenging.",         zh: "马拉松赛跑全长四十二公里，非常具有挑战性。" },
+      { id: 12, en: "The fastest marathon runners can finish in about two hours.",                zh: "最快的马拉松跑者能在大约两小时内完赛。" },
+      { id: 13, en: "Running releases chemicals in the brain that improve mood.",                 zh: "跑步释放大脑中改善情绪的化学物质。" },
+      { id: 14, en: "Many runners describe a feeling of happiness called runner's high.",        zh: "许多跑者描述一种被称为跑步愉悦感的幸福感觉。" },
+      { id: 15, en: "Running with friends or in groups can make it more fun.",                   zh: "和朋友或团队一起跑步可以更有趣。" },
+      { id: 16, en: "Even running for just twenty minutes has real health benefits.",            zh: "即使只跑二十分钟也有真正的健康益处。" }
+    ]
+  },
+  {
+    id: "ep067", category: "Sports", title: "Swimming and Water Safety", description: "Sports · 游泳与水上安全",
+    sentences: [
+      { id: 1,  en: "Swimming is a skill that everyone should learn.",                           zh: "游泳是每个人都应该学会的技能。" },
+      { id: 2,  en: "It is both a fun activity and an important safety skill.",                  zh: "它既是有趣的活动，也是重要的安全技能。" },
+      { id: 3,  en: "Children can start learning to swim at a very young age.",                  zh: "孩子们可以在很小的时候就开始学游泳。" },
+      { id: 4,  en: "Swimming uses almost every muscle in your body.",                           zh: "游泳几乎使用身体的每一块肌肉。" },
+      { id: 5,  en: "It is a great exercise that is easy on your joints.",                       zh: "它是一项对关节影响小的优秀运动。" },
+      { id: 6,  en: "There are four main swimming styles: freestyle, backstroke, breaststroke, and butterfly.", zh: "游泳有四种主要姿势：自由泳、仰泳、蛙泳和蝶泳。" },
+      { id: 7,  en: "Never swim alone, especially in the ocean or lakes.",                       zh: "永远不要独自游泳，尤其是在海洋或湖泊中。" },
+      { id: 8,  en: "Always check for safety signs before entering the water.",                  zh: "下水前一定要查看安全标志。" },
+      { id: 9,  en: "Strong currents in the ocean can be very dangerous.",                       zh: "海洋中的强流可能非常危险。" },
+      { id: 10, en: "If you get caught in a current, swim sideways to escape it.",               zh: "如果被水流卷住，横向游泳逃离。" },
+      { id: 11, en: "Lifeguards watch over swimmers at beaches and pools.",                      zh: "救生员在海滩和泳池看护游泳者。" },
+      { id: 12, en: "Learning CPR can help you save someone who is drowning.",                   zh: "学习心肺复苏术可以帮助你救溺水的人。" },
+      { id: 13, en: "Young children should always be watched near water.",                       zh: "幼儿在水边时应始终有人看护。" },
+      { id: 14, en: "Swimming competitions are a major part of the Olympic Games.",              zh: "游泳比赛是奥运会的重要组成部分。" },
+      { id: 15, en: "Regular swimming can reduce stress and improve sleep.",                     zh: "经常游泳可以减轻压力，改善睡眠。" },
+      { id: 16, en: "Water safety knowledge can save lives every summer.",                       zh: "水上安全知识每年夏天都能挽救生命。" }
+    ]
+  },
+  {
+    id: "ep068", category: "Space", title: "Life on the International Space Station", description: "Space · 国际空间站的生活",
+    sentences: [
+      { id: 1,  en: "The International Space Station orbits Earth about four hundred kilometers above us.", zh: "国际空间站在我们上方约四百公里的轨道上运行。" },
+      { id: 2,  en: "It travels at a speed of twenty eight thousand kilometers per hour.",      zh: "它以每小时两万八千公里的速度飞行。" },
+      { id: 3,  en: "Astronauts from many countries live and work there together.",              zh: "来自许多国家的宇航员在那里一起生活和工作。" },
+      { id: 4,  en: "They usually stay on the station for about six months.",                    zh: "他们通常在空间站停留约六个月。" },
+      { id: 5,  en: "In space, there is no gravity, so everything floats.",                      zh: "在太空中没有重力，所以一切都漂浮着。" },
+      { id: 6,  en: "Astronauts must exercise two hours every day to stay healthy.",             zh: "宇航员每天必须锻炼两小时以保持健康。" },
+      { id: 7,  en: "Without exercise, their muscles and bones would become weak.",              zh: "如果不锻炼，他们的肌肉和骨骼会变弱。" },
+      { id: 8,  en: "Food on the station comes in special packages that do not float away.",    zh: "空间站上的食物装在不会飘走的特殊包装中。" },
+      { id: 9,  en: "Sleeping in space requires a sleeping bag attached to the wall.",           zh: "在太空中睡觉需要固定在墙上的睡袋。" },
+      { id: 10, en: "The station sees sixteen sunrises and sunsets every day.",                   zh: "空间站每天能看到十六次日出和日落。" },
+      { id: 11, en: "Scientists on the station do experiments that cannot be done on Earth.",    zh: "空间站上的科学家做地球上无法完成的实验。" },
+      { id: 12, en: "Growing plants in space helps us learn about farming on other planets.",    zh: "在太空种植物帮助我们了解在其他星球上的农业。" },
+      { id: 13, en: "Astronauts communicate with their families through video calls.",           zh: "宇航员通过视频通话与家人交流。" },
+      { id: 14, en: "Water is recycled on the station because supplies are limited.",            zh: "空间站上的水被回收利用，因为补给有限。" },
+      { id: 15, en: "The station has been continuously occupied since the year two thousand.",   zh: "空间站自 2000 年以来一直有人居住。" },
+      { id: 16, en: "Living in space teaches us how humans can explore farther into the universe.", zh: "在太空生活教会我们人类如何更深入地探索宇宙。" }
+    ]
+  },
+  {
+    id: "ep069", category: "Space", title: "The Search for Life on Mars", description: "Space · 火星上的生命探索",
+    sentences: [
+      { id: 1,  en: "Mars is the planet most like Earth in our solar system.",                   zh: "火星是太阳系中最像地球的行星。" },
+      { id: 2,  en: "Scientists have been studying Mars for hundreds of years.",                  zh: "科学家已经研究火星数百年了。" },
+      { id: 3,  en: "The planet is called the Red Planet because of its color.",                  zh: "这颗行星因其颜色被称为红色星球。" },
+      { id: 4,  en: "Several robots have been sent to explore the surface of Mars.",             zh: "多个机器人已被送去探索火星表面。" },
+      { id: 5,  en: "These robots collect soil samples and take photographs.",                   zh: "这些机器人采集土壤样本并拍摄照片。" },
+      { id: 6,  en: "Evidence shows that water once flowed on the surface of Mars.",             zh: "证据表明水曾经在火星表面流淌。" },
+      { id: 7,  en: "Where there was water, there might have been life.",                        zh: "有水的地方，可能就有生命存在过。" },
+      { id: 8,  en: "Scientists look for tiny organisms called microbes in the soil.",           zh: "科学家在土壤中寻找称为微生物的微小有机体。" },
+      { id: 9,  en: "Mars has a very thin atmosphere and no magnetic field.",                    zh: "火星有非常稀薄的大气层，没有磁场。" },
+      { id: 10, en: "The temperature on Mars can drop to minus one hundred degrees.",            zh: "火星上的温度可以降至零下一百度。" },
+      { id: 11, en: "Despite the harsh conditions, some bacteria might survive there.",          zh: "尽管条件恶劣，一些细菌可能在那里存活。" },
+      { id: 12, en: "Future missions plan to bring Mars soil samples back to Earth.",            zh: "未来的任务计划将火星土壤样本带回地球。" },
+      { id: 13, en: "Some people dream of building human colonies on Mars someday.",             zh: "有些人梦想有朝一日在火星上建立人类殖民地。" },
+      { id: 14, en: "The journey to Mars takes about seven months with current technology.",     zh: "以目前的技术，到火星的旅程大约需要七个月。" },
+      { id: 15, en: "Finding life on Mars would be one of the biggest discoveries ever.",        zh: "在火星上发现生命将是有史以来最重大的发现之一。" },
+      { id: 16, en: "The search continues as technology improves each year.",                     zh: "随着技术每年的进步，探索仍在继续。" }
+    ]
+  },
+  {
+    id: "ep070", category: "Space", title: "Understanding Black Holes", description: "Space · 认识黑洞",
+    sentences: [
+      { id: 1,  en: "Black holes are the most mysterious objects in the universe.",              zh: "黑洞是宇宙中最神秘的物体。" },
+      { id: 2,  en: "They form when very large stars die and collapse inward.",                  zh: "它们在非常大的恒星死亡并向内坍缩时形成。" },
+      { id: 3,  en: "The gravity of a black hole is so strong that nothing can escape.",         zh: "黑洞的引力如此之强，没有任何东西能逃脱。" },
+      { id: 4,  en: "Not even light can escape from a black hole.",                              zh: "甚至光也无法从黑洞中逃逸。" },
+      { id: 5,  en: "That is why they appear completely dark to us.",                            zh: "这就是为什么它们在我们看来完全是黑暗的。" },
+      { id: 6,  en: "Albert Einstein first predicted black holes in his theory.",                zh: "阿尔伯特·爱因斯坦在他的理论中首次预测了黑洞。" },
+      { id: 7,  en: "Scientists cannot see black holes directly with telescopes.",               zh: "科学家无法用望远镜直接看到黑洞。" },
+      { id: 8,  en: "They find them by observing how nearby stars behave.",                      zh: "他们通过观察附近恒星的行为来找到它们。" },
+      { id: 9,  en: "In twenty nineteen, scientists took the first picture of a black hole.",   zh: "2019 年，科学家拍下了第一张黑洞照片。" },
+      { id: 10, en: "The image showed a bright ring around a dark center.",                      zh: "图像显示了一个围绕黑暗中心的明亮光环。" },
+      { id: 11, en: "There is a giant black hole at the center of our galaxy.",                  zh: "在我们银河系的中心有一个巨大的黑洞。" },
+      { id: 12, en: "It is millions of times heavier than our sun.",                             zh: "它比我们的太阳重数百万倍。" },
+      { id: 13, en: "Black holes do not move around eating everything near them.",               zh: "黑洞不会到处移动吞噬附近的一切。" },
+      { id: 14, en: "Objects must get very close to be pulled in by the gravity.",               zh: "物体必须非常靠近才会被引力拉入。" },
+      { id: 15, en: "Studying black holes helps us understand how the universe works.",          zh: "研究黑洞帮助我们理解宇宙如何运作。" },
+      { id: 16, en: "There is still much to learn about these amazing objects in space.",        zh: "关于太空中这些神奇的物体仍有很多东西要学。" }
+    ]
+  },
+  {
+    id: "ep071", category: "Psychology", title: "Understanding Emotions", description: "Psychology · 理解情绪",
+    sentences: [
+      { id: 1,  en: "Emotions are feelings that affect how we think and behave.",               zh: "情绪是影响我们思维和行为的感受。" },
+      { id: 2,  en: "Everyone experiences emotions like happiness, sadness, and anger.",         zh: "每个人都会经历快乐、悲伤和愤怒等情绪。" },
+      { id: 3,  en: "Scientists believe there are six basic emotions shared by all humans.",     zh: "科学家认为所有人类共有六种基本情绪。" },
+      { id: 4,  en: "These include joy, sadness, fear, anger, surprise, and disgust.",          zh: "包括喜悦、悲伤、恐惧、愤怒、惊讶和厌恶。" },
+      { id: 5,  en: "Our emotions help us respond to the world around us.",                      zh: "我们的情绪帮助我们回应周围的世界。" },
+      { id: 6,  en: "Fear keeps us safe by warning us of danger.",                               zh: "恐惧通过警告我们危险来保护我们安全。" },
+      { id: 7,  en: "Happiness encourages us to repeat good experiences.",                       zh: "快乐鼓励我们重复美好的经历。" },
+      { id: 8,  en: "It is normal and healthy to feel a wide range of emotions.",                zh: "感受各种情绪是正常和健康的。" },
+      { id: 9,  en: "Learning to manage your emotions is an important life skill.",              zh: "学会管理情绪是一项重要的生活技能。" },
+      { id: 10, en: "Taking deep breaths can help when you feel angry or stressed.",             zh: "感到愤怒或有压力时深呼吸会有帮助。" },
+      { id: 11, en: "Talking to friends or family about feelings can make you feel better.",     zh: "和朋友或家人谈论感受可以让你感觉好些。" },
+      { id: 12, en: "Writing in a journal is another way to understand your emotions.",          zh: "写日记是理解情绪的另一种方式。" },
+      { id: 13, en: "Children learn about emotions by watching adults around them.",             zh: "孩子通过观察周围的成人来了解情绪。" },
+      { id: 14, en: "People from different cultures may express emotions differently.",          zh: "不同文化的人可能以不同方式表达情绪。" },
+      { id: 15, en: "Emotional intelligence means understanding your own and others' feelings.", zh: "情商意味着理解自己和他人的感受。" },
+      { id: 16, en: "Being kind to yourself during difficult times is very important.",          zh: "在困难时期善待自己非常重要。" }
+    ]
+  },
+  {
+    id: "ep072", category: "Psychology", title: "The Power of Habits", description: "Psychology · 习惯的力量",
+    sentences: [
+      { id: 1,  en: "Habits are actions we do automatically without thinking.",                  zh: "习惯是我们不假思索自动做的行为。" },
+      { id: 2,  en: "About forty percent of what we do each day is based on habit.",            zh: "我们每天大约百分之四十的行为是基于习惯。" },
+      { id: 3,  en: "Brushing your teeth in the morning is an example of a good habit.",        zh: "早上刷牙就是一个好习惯的例子。" },
+      { id: 4,  en: "Habits form through a loop of cue, routine, and reward.",                  zh: "习惯通过提示、常规和奖励的循环形成。" },
+      { id: 5,  en: "The cue is something that triggers the behavior.",                          zh: "提示是触发行为的事物。" },
+      { id: 6,  en: "The routine is the action itself that you perform.",                        zh: "常规是你执行的行为本身。" },
+      { id: 7,  en: "The reward is the good feeling you get after the action.",                  zh: "奖励是你完成行为后获得的好感觉。" },
+      { id: 8,  en: "It takes about two months to form a new habit on average.",                 zh: "平均大约需要两个月来养成一个新习惯。" },
+      { id: 9,  en: "Starting small makes it easier to build new habits.",                       zh: "从小事开始更容易建立新习惯。" },
+      { id: 10, en: "If you want to read more, start with just five pages a day.",              zh: "如果你想多读书，从每天只读五页开始。" },
+      { id: 11, en: "Bad habits can be changed by replacing them with better ones.",             zh: "坏习惯可以通过用更好的习惯替代来改变。" },
+      { id: 12, en: "Telling others about your goals can help you stay on track.",               zh: "告诉别人你的目标可以帮助你坚持下去。" },
+      { id: 13, en: "Missing one day does not mean your habit is broken.",                       zh: "错过一天并不意味着你的习惯就被打破了。" },
+      { id: 14, en: "The most successful people often have strong daily routines.",              zh: "最成功的人通常有强大的日常惯例。" },
+      { id: 15, en: "Good habits save mental energy for more important decisions.",              zh: "好习惯为更重要的决定节省精力。" },
+      { id: 16, en: "Small daily habits can lead to big changes over time.",                     zh: "日常小习惯随时间可以带来大改变。" }
+    ]
+  },
+  {
+    id: "ep073", category: "Psychology", title: "How Memory Works", description: "Psychology · 记忆如何运作",
+    sentences: [
+      { id: 1,  en: "Memory is how our brain stores and recalls information.",                   zh: "记忆是大脑存储和回忆信息的方式。" },
+      { id: 2,  en: "There are two main types: short-term and long-term memory.",               zh: "主要有两种类型：短期记忆和长期记忆。" },
+      { id: 3,  en: "Short-term memory holds information for only a few seconds.",               zh: "短期记忆只能保持信息几秒钟。" },
+      { id: 4,  en: "Long-term memory can store information for years or even a lifetime.",     zh: "长期记忆可以存储信息数年甚至一生。" },
+      { id: 5,  en: "Sleep is very important for moving memories from short to long term.",     zh: "睡眠对于将记忆从短期转为长期非常重要。" },
+      { id: 6,  en: "Repetition helps strengthen memories in your brain.",                       zh: "重复有助于加强大脑中的记忆。" },
+      { id: 7,  en: "This is why studying the same material several times helps you learn.",    zh: "这就是为什么反复学习同一材料有助于学习。" },
+      { id: 8,  en: "Emotions can make memories stronger and easier to recall.",                 zh: "情绪可以使记忆更强烈、更容易回忆。" },
+      { id: 9,  en: "That is why we clearly remember very happy or sad events.",                 zh: "这就是为什么我们清楚地记得非常快乐或悲伤的事。" },
+      { id: 10, en: "Our brain does not record memories like a video camera.",                   zh: "我们的大脑不像摄像机那样记录记忆。" },
+      { id: 11, en: "Memories can change slightly each time we recall them.",                    zh: "每次我们回忆时，记忆可能会略有改变。" },
+      { id: 12, en: "Exercise and healthy food help keep your memory sharp.",                    zh: "运动和健康食物有助于保持记忆力敏锐。" },
+      { id: 13, en: "Learning new skills creates new connections in the brain.",                  zh: "学习新技能在大脑中创建新的连接。" },
+      { id: 14, en: "Stress can make it harder to form and recall memories.",                    zh: "压力会使形成和回忆记忆变得更困难。" },
+      { id: 15, en: "Using memory tricks like rhymes can help you remember things.",             zh: "使用韵律等记忆技巧可以帮助你记住东西。" },
+      { id: 16, en: "Taking care of your brain health is important at every age.",               zh: "在任何年龄保护大脑健康都很重要。" }
+    ]
+  },
+  {
+    id: "ep074", category: "Environment", title: "Saving the Ocean", description: "Environment · 拯救海洋",
+    sentences: [
+      { id: 1,  en: "The ocean covers more than seventy percent of the Earth's surface.",       zh: "海洋覆盖了地球表面百分之七十以上。" },
+      { id: 2,  en: "It provides food, oxygen, and controls our climate.",                       zh: "它提供食物、氧气并调节我们的气候。" },
+      { id: 3,  en: "However, the ocean faces many serious threats today.",                      zh: "然而，海洋今天面临许多严重威胁。" },
+      { id: 4,  en: "Plastic waste is one of the biggest problems for ocean health.",           zh: "塑料垃圾是海洋健康最大的问题之一。" },
+      { id: 5,  en: "Millions of tons of plastic enter the ocean every year.",                   zh: "每年有数百万吨塑料进入海洋。" },
+      { id: 6,  en: "Sea animals often eat plastic thinking it is food.",                        zh: "海洋动物经常把塑料当作食物吃掉。" },
+      { id: 7,  en: "This can make them sick or cause them to die.",                             zh: "这会让它们生病或导致死亡。" },
+      { id: 8,  en: "Overfishing is another major threat to ocean life.",                        zh: "过度捕鱼是海洋生物的另一个主要威胁。" },
+      { id: 9,  en: "When too many fish are caught, populations cannot recover.",                zh: "当太多鱼被捕获时，种群无法恢复。" },
+      { id: 10, en: "Ocean temperatures are rising because of climate change.",                  zh: "由于气候变化，海洋温度正在上升。" },
+      { id: 11, en: "Warmer water harms coral reefs that many animals depend on.",               zh: "更暖的水损害了许多动物依赖的珊瑚礁。" },
+      { id: 12, en: "We can help by reducing our use of single-use plastics.",                   zh: "我们可以通过减少使用一次性塑料来帮助。" },
+      { id: 13, en: "Choosing sustainable seafood also protects ocean ecosystems.",              zh: "选择可持续海鲜也能保护海洋生态系统。" },
+      { id: 14, en: "Beach cleanups remove harmful waste from coastal areas.",                   zh: "海滩清理活动清除沿海地区的有害废物。" },
+      { id: 15, en: "Marine protected areas give ocean life space to recover.",                  zh: "海洋保护区给海洋生物恢复的空间。" },
+      { id: 16, en: "Everyone can play a part in keeping our oceans healthy.",                   zh: "每个人都可以为保持海洋健康出一份力。" }
+    ]
+  },
+  {
+    id: "ep075", category: "Environment", title: "The Importance of Trees", description: "Environment · 树木的重要性",
+    sentences: [
+      { id: 1,  en: "Trees are essential for life on Earth.",                                    zh: "树木对地球上的生命至关重要。" },
+      { id: 2,  en: "They produce oxygen that we need to breathe.",                              zh: "它们产生我们呼吸所需的氧气。" },
+      { id: 3,  en: "Trees also absorb carbon dioxide from the atmosphere.",                     zh: "树木还从大气中吸收二氧化碳。" },
+      { id: 4,  en: "This helps slow down the effects of climate change.",                       zh: "这有助于减缓气候变化的影响。" },
+      { id: 5,  en: "Forests are home to more than eighty percent of land animals.",             zh: "森林是百分之八十以上陆地动物的家园。" },
+      { id: 6,  en: "Trees provide shade that keeps cities cooler in summer.",                   zh: "树木提供阴凉，使城市在夏天更凉爽。" },
+      { id: 7,  en: "Their roots hold soil in place and prevent flooding.",                      zh: "它们的根固定土壤并防止洪水。" },
+      { id: 8,  en: "Every year, large areas of forest are cut down around the world.",          zh: "每年，世界各地大面积的森林被砍伐。" },
+      { id: 9,  en: "This is called deforestation and it harms the environment.",                zh: "这被称为森林砍伐，它危害环境。" },
+      { id: 10, en: "Forests are cleared for farming, building, and making paper.",              zh: "森林被开垦用于农业、建筑和造纸。" },
+      { id: 11, en: "Many organizations are working to plant new trees.",                        zh: "许多组织正在努力种植新树。" },
+      { id: 12, en: "Some countries have planted billions of trees in recent years.",             zh: "一些国家近年来已种植了数十亿棵树。" },
+      { id: 13, en: "You can help by using less paper and recycling.",                           zh: "你可以通过少用纸张和回收来帮助。" },
+      { id: 14, en: "Planting even one tree makes a positive difference.",                       zh: "即使种一棵树也能产生积极影响。" },
+      { id: 15, en: "Trees can live for hundreds or even thousands of years.",                   zh: "树木可以活数百年甚至数千年。" },
+      { id: 16, en: "Protecting our forests is one of the best things we can do for the planet.", zh: "保护森林是我们能为地球做的最好的事之一。" }
+    ]
+  },
+  {
+    id: "ep076", category: "Environment", title: "Renewable Energy Solutions", description: "Environment · 可再生能源方案",
+    sentences: [
+      { id: 1,  en: "Renewable energy comes from sources that never run out.",                   zh: "可再生能源来自永不耗竭的来源。" },
+      { id: 2,  en: "Sunlight, wind, and water are the main sources of clean energy.",          zh: "阳光、风和水是清洁能源的主要来源。" },
+      { id: 3,  en: "Solar panels turn sunlight directly into electricity.",                     zh: "太阳能板将阳光直接转化为电力。" },
+      { id: 4,  en: "The cost of solar energy has dropped greatly in recent years.",            zh: "太阳能的成本近年来大幅下降。" },
+      { id: 5,  en: "Wind turbines use the power of wind to generate electricity.",             zh: "风力涡轮机利用风力发电。" },
+      { id: 6,  en: "Some countries get most of their electricity from wind power.",             zh: "一些国家大部分电力来自风能。" },
+      { id: 7,  en: "Hydroelectric dams use flowing water to create energy.",                    zh: "水力发电大坝利用流水产生能量。" },
+      { id: 8,  en: "These energy sources do not produce harmful greenhouse gases.",             zh: "这些能源不会产生有害的温室气体。" },
+      { id: 9,  en: "Fossil fuels like coal and oil pollute the air when burned.",              zh: "煤和石油等化石燃料燃烧时污染空气。" },
+      { id: 10, en: "Switching to clean energy can reduce air pollution in cities.",             zh: "转向清洁能源可以减少城市空气污染。" },
+      { id: 11, en: "Electric cars powered by clean energy are becoming more common.",           zh: "由清洁能源驱动的电动汽车越来越普遍。" },
+      { id: 12, en: "Storing energy in batteries is improving every year.",                      zh: "电池储能技术每年都在进步。" },
+      { id: 13, en: "Many homes now have solar panels on their rooftops.",                       zh: "许多家庭现在屋顶上有太阳能板。" },
+      { id: 14, en: "Governments offer support to help people use renewable energy.",            zh: "政府提供支持帮助人们使用可再生能源。" },
+      { id: 15, en: "Clean energy creates new jobs in manufacturing and installation.",          zh: "清洁能源在制造和安装领域创造新工作。" },
+      { id: 16, en: "The future of energy is clean, renewable, and available to everyone.",     zh: "能源的未来是清洁、可再生且人人可用的。" }
+    ]
+  },
+  {
+    id: "ep077", category: "Education", title: "Learning a Second Language", description: "Education · 学习第二语言",
+    sentences: [
+      { id: 1,  en: "Learning a new language opens doors to different cultures.",                zh: "学习新语言打开了通往不同文化的大门。" },
+      { id: 2,  en: "Children can learn languages more easily than adults.",                     zh: "儿童比成人更容易学习语言。" },
+      { id: 3,  en: "However, adults can also become fluent with regular practice.",             zh: "不过，成人通过经常练习也能变得流利。" },
+      { id: 4,  en: "Listening to native speakers is one of the best ways to learn.",           zh: "听母语者说话是最好的学习方式之一。" },
+      { id: 5,  en: "Reading books in your target language builds vocabulary quickly.",          zh: "用目标语言阅读书籍可以快速增加词汇量。" },
+      { id: 6,  en: "Making mistakes is a natural and necessary part of learning.",              zh: "犯错是学习中自然且必要的一部分。" },
+      { id: 7,  en: "Do not be afraid to speak even if your grammar is not perfect.",           zh: "不要害怕说话，即使你的语法不完美。" },
+      { id: 8,  en: "Watching movies with subtitles can improve your listening skills.",         zh: "看带字幕的电影可以提高你的听力技能。" },
+      { id: 9,  en: "Language apps make it easy to practice for a few minutes each day.",        zh: "语言应用程序让每天练习几分钟变得容易。" },
+      { id: 10, en: "Speaking with a language partner gives you real conversation practice.",    zh: "和语言伙伴交谈给你真正的对话练习。" },
+      { id: 11, en: "Learning common phrases first helps you communicate faster.",               zh: "先学常用短语有助于你更快地交流。" },
+      { id: 12, en: "Studying a little every day is better than studying a lot once a week.",   zh: "每天学一点比一周学一次多的效果更好。" },
+      { id: 13, en: "Bilingual people often find it easier to learn a third language.",         zh: "双语者通常发现学习第三种语言更容易。" },
+      { id: 14, en: "Language learning also improves memory and problem-solving skills.",        zh: "语言学习还能提高记忆力和解决问题能力。" },
+      { id: 15, en: "Setting small goals keeps you motivated during the learning process.",     zh: "设定小目标让你在学习过程中保持动力。" },
+      { id: 16, en: "With patience and practice, anyone can learn a new language.",              zh: "有耐心和练习，任何人都能学会新语言。" }
+    ]
+  },
+  {
+    id: "ep078", category: "Education", title: "The Future of Online Learning", description: "Education · 在线学习的未来",
+    sentences: [
+      { id: 1,  en: "Online learning has grown rapidly in recent years.",                        zh: "在线学习近年来迅速增长。" },
+      { id: 2,  en: "Students can now take classes from anywhere in the world.",                 zh: "学生现在可以在世界任何地方上课。" },
+      { id: 3,  en: "All you need is a computer and an internet connection.",                    zh: "你只需要一台电脑和网络连接。" },
+      { id: 4,  en: "Many top universities offer free courses online.",                          zh: "许多顶尖大学提供免费在线课程。" },
+      { id: 5,  en: "Video lessons let students learn at their own speed.",                      zh: "视频课程让学生以自己的速度学习。" },
+      { id: 6,  en: "You can pause, rewind, and watch lessons as many times as you want.",      zh: "你可以暂停、倒带，想看几次就看几次。" },
+      { id: 7,  en: "Online quizzes and tests give immediate feedback on your progress.",       zh: "在线测验和考试对你的进步给出即时反馈。" },
+      { id: 8,  en: "Discussion forums let students talk to each other about lessons.",         zh: "讨论论坛让学生们互相讨论课程。" },
+      { id: 9,  en: "Some people prefer online learning because it fits their schedule.",       zh: "有些人喜欢在线学习因为它适合他们的时间表。" },
+      { id: 10, en: "Parents with young children can study while their kids sleep.",            zh: "有小孩的父母可以在孩子睡觉时学习。" },
+      { id: 11, en: "However, online learning requires self-discipline and motivation.",         zh: "但是，在线学习需要自律和动力。" },
+      { id: 12, en: "It can be easy to fall behind without a regular schedule.",                 zh: "没有规律的时间安排很容易落后。" },
+      { id: 13, en: "Some students miss the social interaction of a real classroom.",            zh: "一些学生怀念真实教室的社交互动。" },
+      { id: 14, en: "The best approach may combine online and in-person learning.",              zh: "最好的方法可能是结合在线和面授学习。" },
+      { id: 15, en: "Technology will continue to make education more accessible.",               zh: "技术将继续使教育更加普及。" },
+      { id: 16, en: "Online learning gives everyone a chance to improve their knowledge.",       zh: "在线学习给每个人一个提高知识的机会。" }
+    ]
+  },
+  {
+    id: "ep079", category: "Education", title: "How Children Learn Through Play", description: "Education · 儿童如何通过玩耍学习",
+    sentences: [
+      { id: 1,  en: "Play is not just fun for children; it is how they learn.",                  zh: "玩耍对孩子来说不仅是乐趣，也是他们学习的方式。" },
+      { id: 2,  en: "Through play, children develop important thinking skills.",                 zh: "通过玩耍，孩子发展重要的思维能力。" },
+      { id: 3,  en: "Building with blocks teaches children about shapes and balance.",           zh: "搭积木教会孩子形状和平衡。" },
+      { id: 4,  en: "Playing with other children helps develop social skills.",                  zh: "和其他孩子一起玩有助于发展社交技能。" },
+      { id: 5,  en: "Children learn to share, take turns, and solve problems together.",        zh: "孩子学会分享、轮流和共同解决问题。" },
+      { id: 6,  en: "Pretend play lets children use their imagination freely.",                  zh: "假装游戏让孩子自由使用想象力。" },
+      { id: 7,  en: "Drawing and painting help children express their feelings.",                zh: "绘画和涂色帮助孩子表达感受。" },
+      { id: 8,  en: "Outdoor play is important for physical health and strength.",               zh: "户外玩耍对身体健康和力量很重要。" },
+      { id: 9,  en: "Running, climbing, and jumping build strong muscles and bones.",            zh: "跑步、攀爬和跳跃建立强壮的肌肉和骨骼。" },
+      { id: 10, en: "Simple games with rules teach children about following instructions.",      zh: "有规则的简单游戏教孩子遵循指令。" },
+      { id: 11, en: "Puzzles help children develop problem-solving abilities.",                  zh: "拼图帮助孩子发展解决问题的能力。" },
+      { id: 12, en: "Music and singing help with language development.",                         zh: "音乐和唱歌有助于语言发展。" },
+      { id: 13, en: "Playing in nature teaches children about the natural world.",               zh: "在大自然中玩耍教孩子了解自然世界。" },
+      { id: 14, en: "Too much screen time can reduce opportunities for active play.",            zh: "过多的屏幕时间会减少主动玩耍的机会。" },
+      { id: 15, en: "Parents should give children time for both structured and free play.",      zh: "父母应该给孩子有组织和自由玩耍的时间。" },
+      { id: 16, en: "Play is a child's most important work in their early years.",               zh: "玩耍是孩子早年最重要的工作。" }
+    ]
+  },
+  {
+    id: "ep080", category: "Economy", title: "How Banks Work", description: "Economy · 银行如何运作",
+    sentences: [
+      { id: 1,  en: "Banks are institutions that keep people's money safe.",                     zh: "银行是保管人们金钱安全的机构。" },
+      { id: 2,  en: "When you put money in a bank, it is called making a deposit.",             zh: "当你把钱放进银行，这叫做存款。" },
+      { id: 3,  en: "Banks pay you a small amount called interest for keeping your money.",     zh: "银行为保管你的钱付给你少量的利息。" },
+      { id: 4,  en: "Banks then lend that money to other people who need it.",                   zh: "然后银行把那些钱借给需要的人。" },
+      { id: 5,  en: "People borrow money from banks to buy houses or start businesses.",        zh: "人们从银行借钱买房或创业。" },
+      { id: 6,  en: "The bank charges higher interest on loans than it pays on deposits.",      zh: "银行贷款收取的利息比存款支付的利息高。" },
+      { id: 7,  en: "This difference is how banks make their profit.",                           zh: "这个差额就是银行盈利的方式。" },
+      { id: 8,  en: "Central banks control the money supply in a country.",                      zh: "中央银行控制一个国家的货币供应。" },
+      { id: 9,  en: "They set interest rates that affect the whole economy.",                    zh: "它们设定影响整个经济的利率。" },
+      { id: 10, en: "Credit cards let people buy things and pay for them later.",                zh: "信用卡让人们先买东西后付款。" },
+      { id: 11, en: "Online banking makes it easy to manage money from your phone.",             zh: "网上银行让你轻松用手机管理资金。" },
+      { id: 12, en: "Banks must follow strict rules to protect people's savings.",               zh: "银行必须遵守严格规定以保护人们的储蓄。" },
+      { id: 13, en: "If a bank fails, the government usually protects depositors.",              zh: "如果银行倒闭，政府通常会保护存款人。" },
+      { id: 14, en: "Saving money in a bank is safer than keeping it at home.",                  zh: "把钱存银行比放在家里更安全。" },
+      { id: 15, en: "Understanding banks helps you make better financial decisions.",             zh: "了解银行帮助你做出更好的财务决定。" },
+      { id: 16, en: "Even small savings can grow over time with interest.",                      zh: "即使是少量储蓄，随时间推移加上利息也能增长。" }
+    ]
+  },
+  {
+    id: "ep081", category: "Economy", title: "Supply and Demand Explained", description: "Economy · 供需解释",
+    sentences: [
+      { id: 1,  en: "Supply and demand is a basic rule of economics.",                           zh: "供给和需求是经济学的基本法则。" },
+      { id: 2,  en: "Supply is how much of a product is available to buy.",                      zh: "供给是有多少产品可以购买。" },
+      { id: 3,  en: "Demand is how much people want to buy that product.",                       zh: "需求是人们想购买该产品的程度。" },
+      { id: 4,  en: "When demand is high and supply is low, prices go up.",                      zh: "当需求高而供给低时，价格上升。" },
+      { id: 5,  en: "When supply is high and demand is low, prices go down.",                    zh: "当供给高而需求低时，价格下降。" },
+      { id: 6,  en: "Think about umbrellas on a rainy day as an example.",                       zh: "以雨天的雨伞为例来思考。" },
+      { id: 7,  en: "More people want umbrellas when it rains, so demand increases.",            zh: "下雨时更多人想要雨伞，所以需求增加。" },
+      { id: 8,  en: "If stores have few umbrellas left, the price might rise.",                  zh: "如果商店里雨伞所剩无几，价格可能上涨。" },
+      { id: 9,  en: "Farmers growing too much of one crop can cause prices to fall.",            zh: "农民种植过多某种作物会导致价格下降。" },
+      { id: 10, en: "Companies study demand to decide how much product to make.",                zh: "公司研究需求来决定生产多少产品。" },
+      { id: 11, en: "Holiday seasons often increase demand for certain products.",               zh: "节假日通常会增加对某些产品的需求。" },
+      { id: 12, en: "New technology can increase supply by making production cheaper.",          zh: "新技术通过降低生产成本来增加供给。" },
+      { id: 13, en: "Rare items are expensive because their supply is very limited.",            zh: "稀有物品价格高因为供给非常有限。" },
+      { id: 14, en: "Competition between sellers usually leads to lower prices.",                zh: "卖家之间的竞争通常会导致价格降低。" },
+      { id: 15, en: "Understanding supply and demand helps explain why prices change.",           zh: "理解供需帮助解释为什么价格会变化。" },
+      { id: 16, en: "This simple idea affects almost everything we buy and sell.",                zh: "这个简单概念影响着我们买卖的几乎一切。" }
+    ]
+  },
+  {
+    id: "ep082", category: "Economy", title: "The Rise of Digital Money", description: "Economy · 数字货币的崛起",
+    sentences: [
+      { id: 1,  en: "Digital money is changing how people buy and sell things.",                 zh: "数字货币正在改变人们买卖东西的方式。" },
+      { id: 2,  en: "Mobile payment apps let you pay with just your phone.",                    zh: "移动支付应用让你只用手机就能付款。" },
+      { id: 3,  en: "In some countries, cash is becoming less and less common.",                 zh: "在一些国家，现金越来越不常见了。" },
+      { id: 4,  en: "People can send money to friends and family instantly online.",             zh: "人们可以在线即时向朋友和家人转账。" },
+      { id: 5,  en: "Cryptocurrency is a type of digital money without a central bank.",        zh: "加密货币是一种没有中央银行的数字货币。" },
+      { id: 6,  en: "Bitcoin was the first cryptocurrency, created in two thousand nine.",      zh: "比特币是第一种加密货币，创建于 2009 年。" },
+      { id: 7,  en: "Digital payments are faster than writing checks or counting coins.",        zh: "数字支付比写支票或数硬币更快。" },
+      { id: 8,  en: "However, digital money also brings new risks and challenges.",             zh: "然而，数字货币也带来新的风险和挑战。" },
+      { id: 9,  en: "Hackers sometimes try to steal digital money from people.",                 zh: "黑客有时试图窃取人们的数字货币。" },
+      { id: 10, en: "Strong passwords and security features help protect accounts.",             zh: "强密码和安全功能有助于保护账户。" },
+      { id: 11, en: "Some people worry about privacy when all payments are digital.",            zh: "一些人担心当所有支付都数字化时的隐私问题。" },
+      { id: 12, en: "Older people may find it harder to switch to digital payments.",            zh: "老年人可能觉得转向数字支付更困难。" },
+      { id: 13, en: "Many governments are studying how to create their own digital money.",     zh: "许多政府正在研究如何创建自己的数字货币。" },
+      { id: 14, en: "The technology behind digital money keeps improving every year.",           zh: "数字货币背后的技术每年都在进步。" },
+      { id: 15, en: "In the future, we may not need physical money at all.",                    zh: "未来，我们可能根本不需要实物货币。" },
+      { id: 16, en: "Understanding digital money is important in today's modern world.",        zh: "理解数字货币在当今现代世界中很重要。" }
+    ]
+  },
+  {
+    id: "ep083", category: "Cinema", title: "The Art of Animation", description: "Cinema · 动画的艺术",
+    sentences: [
+      { id: 1,  en: "Animation brings drawings and objects to life through movement.",           zh: "动画通过运动赋予图画和物体生命。" },
+      { id: 2,  en: "The first animated films were made over one hundred years ago.",            zh: "第一部动画电影是在一百多年前制作的。" },
+      { id: 3,  en: "Walt Disney created the first full-length animated movie in nineteen thirty seven.", zh: "沃尔特·迪士尼在 1937 年制作了第一部动画长片。" },
+      { id: 4,  en: "Snow White and the Seven Dwarfs changed cinema forever.",                   zh: "《白雪公主》永远改变了电影。" },
+      { id: 5,  en: "Traditional animation uses thousands of hand-drawn pictures.",              zh: "传统动画使用数千张手绘图片。" },
+      { id: 6,  en: "Each picture is slightly different to create the illusion of movement.",   zh: "每张图片都略有不同以创造运动的错觉。" },
+      { id: 7,  en: "Computer animation has made the process faster and more detailed.",         zh: "计算机动画使过程更快、更精细。" },
+      { id: 8,  en: "Pixar's Toy Story was the first fully computer-animated film.",            zh: "皮克斯的《玩具总动员》是第一部全电脑动画电影。" },
+      { id: 9,  en: "Japanese anime has a unique style that is popular worldwide.",              zh: "日本动漫有一种在全球流行的独特风格。" },
+      { id: 10, en: "Studio Ghibli creates beautiful animated films loved by many.",             zh: "吉卜力工作室创作了许多人喜爱的美丽动画。" },
+      { id: 11, en: "Stop-motion animation moves real objects frame by frame.",                  zh: "定格动画逐帧移动真实物体。" },
+      { id: 12, en: "Animation can tell stories that live action films cannot.",                  zh: "动画可以讲述真人电影无法呈现的故事。" },
+      { id: 13, en: "Animated films are enjoyed by both children and adults.",                   zh: "动画电影老少皆宜。" },
+      { id: 14, en: "The industry employs thousands of artists and technicians.",                zh: "这个行业雇用了数千名艺术家和技术人员。" },
+      { id: 15, en: "Modern animated films can take three to five years to complete.",           zh: "现代动画电影可能需要三到五年才能完成。" },
+      { id: 16, en: "Animation continues to push the boundaries of storytelling.",               zh: "动画继续推动着讲故事的边界。" }
+    ]
+  },
+  {
+    id: "ep084", category: "Cinema", title: "How Movies Are Made", description: "Cinema · 电影是如何制作的",
+    sentences: [
+      { id: 1,  en: "Making a movie is a long and complex process.",                             zh: "制作一部电影是一个漫长而复杂的过程。" },
+      { id: 2,  en: "It starts with a script that tells the story in words.",                   zh: "它从一个用文字讲述故事的剧本开始。" },
+      { id: 3,  en: "A director is chosen to lead the creative vision of the film.",            zh: "导演被选来引领电影的创意愿景。" },
+      { id: 4,  en: "Actors are cast to play the different characters in the story.",           zh: "演员被选角来扮演故事中的不同角色。" },
+      { id: 5,  en: "The production team builds sets and finds locations for filming.",          zh: "制作团队搭建布景并寻找拍摄场地。" },
+      { id: 6,  en: "Filming can take several weeks or even months to complete.",                zh: "拍摄可能需要几周甚至几个月才能完成。" },
+      { id: 7,  en: "Camera operators work with the director to capture each scene.",            zh: "摄影师与导演合作拍摄每个场景。" },
+      { id: 8,  en: "Many scenes are filmed multiple times to get the best result.",             zh: "许多场景被多次拍摄以获得最好的效果。" },
+      { id: 9,  en: "After filming, editors put the best scenes together.",                      zh: "拍摄后，剪辑师将最好的场景组合在一起。" },
+      { id: 10, en: "Music and sound effects are added to create atmosphere.",                   zh: "音乐和音效被添加以营造氛围。" },
+      { id: 11, en: "Visual effects can add things that do not exist in real life.",             zh: "视觉特效可以添加现实生活中不存在的东西。" },
+      { id: 12, en: "A big movie can cost hundreds of millions of dollars to make.",             zh: "一部大电影的制作成本可达数亿美元。" },
+      { id: 13, en: "Hundreds of people work together to create a single film.",                 zh: "数百人合作创作一部电影。" },
+      { id: 14, en: "Marketing helps audiences know about the movie before it opens.",          zh: "营销帮助观众在电影上映前了解它。" },
+      { id: 15, en: "Movies are released in theaters and later on streaming platforms.",         zh: "电影在影院上映，之后在流媒体平台播放。" },
+      { id: 16, en: "Great movies can entertain, educate, and inspire people everywhere.",       zh: "优秀的电影可以娱乐、教育和激励各地的人们。" }
+    ]
+  },
+  {
+    id: "ep085", category: "Cinema", title: "Documentary Films and Their Impact", description: "Cinema · 纪录片及其影响",
+    sentences: [
+      { id: 1,  en: "Documentary films tell true stories about real people and events.",         zh: "纪录片讲述关于真实人物和事件的真实故事。" },
+      { id: 2,  en: "They use real footage instead of actors and scripts.",                      zh: "它们使用真实的影像而非演员和剧本。" },
+      { id: 3,  en: "Documentaries can change the way people think about important issues.",     zh: "纪录片可以改变人们对重要问题的看法。" },
+      { id: 4,  en: "Nature documentaries show us the beauty of the animal world.",              zh: "自然纪录片向我们展示动物世界的美丽。" },
+      { id: 5,  en: "Some documentaries investigate crimes or political problems.",              zh: "一些纪录片调查犯罪或政治问题。" },
+      { id: 6,  en: "Others tell personal stories that touch people's hearts.",                  zh: "另一些讲述触动人心的个人故事。" },
+      { id: 7,  en: "Making a good documentary requires patience and research.",                 zh: "制作一部好的纪录片需要耐心和研究。" },
+      { id: 8,  en: "Filmmakers may spend years filming their subjects.",                        zh: "电影制作人可能花数年拍摄他们的主题。" },
+      { id: 9,  en: "Interviews with real people give documentaries emotional power.",           zh: "对真实人物的采访赋予纪录片情感力量。" },
+      { id: 10, en: "Some documentaries have helped pass new laws to protect people.",           zh: "一些纪录片帮助推动了保护人们的新法律。" },
+      { id: 11, en: "Environmental documentaries raise awareness about climate change.",         zh: "环境纪录片提高了人们对气候变化的认识。" },
+      { id: 12, en: "Streaming services have made documentaries more popular than ever.",        zh: "流媒体服务使纪录片比以往任何时候都更受欢迎。" },
+      { id: 13, en: "Anyone with a camera can now make a documentary film.",                     zh: "现在任何有相机的人都可以制作纪录片。" },
+      { id: 14, en: "Short documentaries on the internet reach millions of viewers.",            zh: "网上的短纪录片触达数百万观众。" },
+      { id: 15, en: "Good documentaries present facts fairly and let viewers decide.",           zh: "好的纪录片公平地呈现事实，让观众自行判断。" },
+      { id: 16, en: "They remain one of the most powerful ways to share truth.",                 zh: "纪录片仍然是分享真相最有力的方式之一。" }
+    ]
+  },
+  {
+    id: "ep086", category: "Art", title: "The Story of Impressionism", description: "Art · 印象派的故事",
+    sentences: [
+      { id: 1,  en: "Impressionism is one of the most loved art movements in history.",         zh: "印象派是历史上最受喜爱的艺术运动之一。" },
+      { id: 2,  en: "It began in France in the eighteen sixties.",                               zh: "它始于 1860 年代的法国。" },
+      { id: 3,  en: "Impressionist painters wanted to capture light and movement.",              zh: "印象派画家想要捕捉光线和运动。" },
+      { id: 4,  en: "They often painted outdoors instead of in a studio.",                       zh: "他们经常在户外而非画室中作画。" },
+      { id: 5,  en: "Claude Monet is perhaps the most famous Impressionist painter.",            zh: "克劳德·莫奈可能是最著名的印象派画家。" },
+      { id: 6,  en: "His paintings of water lilies are known around the world.",                 zh: "他的睡莲画作闻名世界。" },
+      { id: 7,  en: "Impressionists used bright colors and quick brush strokes.",                zh: "印象派画家使用明亮的色彩和快速的笔触。" },
+      { id: 8,  en: "Their paintings look blurry up close but clear from a distance.",           zh: "他们的画近看模糊，远看清晰。" },
+      { id: 9,  en: "At first, art critics did not like this new style.",                        zh: "起初，艺术评论家不喜欢这种新风格。" },
+      { id: 10, en: "They thought the paintings looked unfinished and messy.",                   zh: "他们认为这些画看起来未完成且杂乱。" },
+      { id: 11, en: "The name Impressionism came from a critic's negative review.",              zh: "印象派这个名字来自一位评论家的负面评价。" },
+      { id: 12, en: "Over time, people learned to appreciate the beauty of this style.",        zh: "随着时间推移，人们学会欣赏这种风格的美。" },
+      { id: 13, en: "Other famous Impressionists include Renoir, Degas, and Pissarro.",         zh: "其他著名的印象派画家包括雷诺阿、德加和毕沙罗。" },
+      { id: 14, en: "Impressionism influenced many art movements that came after it.",          zh: "印象派影响了之后出现的许多艺术运动。" },
+      { id: 15, en: "Today, Impressionist paintings sell for millions of dollars.",              zh: "今天，印象派画作售价高达数百万美元。" },
+      { id: 16, en: "Museums around the world proudly display these beautiful works.",           zh: "世界各地的博物馆自豪地展示这些美丽的作品。" }
+    ]
+  },
+  {
+    id: "ep087", category: "Art", title: "Street Art and Graffiti", description: "Art · 街头艺术与涂鸦",
+    sentences: [
+      { id: 1,  en: "Street art has become a respected form of creative expression.",            zh: "街头艺术已成为一种受尊重的创意表达形式。" },
+      { id: 2,  en: "Artists paint murals on buildings, walls, and bridges.",                    zh: "艺术家在建筑物、墙壁和桥梁上绘制壁画。" },
+      { id: 3,  en: "Some street art is small and hidden; other works are enormous.",            zh: "有些街头艺术小而隐蔽；其他作品则非常巨大。" },
+      { id: 4,  en: "Banksy is one of the most famous street artists in the world.",            zh: "班克西是世界上最著名的街头艺术家之一。" },
+      { id: 5,  en: "His identity remains a mystery to this day.",                               zh: "他的身份至今仍是一个谜。" },
+      { id: 6,  en: "Street art can make ugly areas beautiful and interesting.",                  zh: "街头艺术可以让丑陋的地方变得美丽有趣。" },
+      { id: 7,  en: "Many cities now invite artists to paint walls legally.",                    zh: "许多城市现在邀请艺术家合法地绘制墙壁。" },
+      { id: 8,  en: "This helps reduce illegal graffiti in those areas.",                        zh: "这有助于减少那些地区的非法涂鸦。" },
+      { id: 9,  en: "Some people consider all graffiti to be vandalism.",                        zh: "有些人认为所有涂鸦都是破坏行为。" },
+      { id: 10, en: "Others see it as a powerful form of free speech.",                          zh: "其他人视其为言论自由的有力形式。" },
+      { id: 11, en: "Street art often carries political or social messages.",                    zh: "街头艺术经常传递政治或社会信息。" },
+      { id: 12, en: "It can give a voice to people who feel unheard by society.",                zh: "它可以给那些感觉不被社会听到的人一个声音。" },
+      { id: 13, en: "Tourism has increased in areas known for great street art.",                zh: "以优秀街头艺术著称的地区旅游业有所增长。" },
+      { id: 14, en: "Some street art pieces now sell for high prices in galleries.",             zh: "一些街头艺术品现在在画廊以高价出售。" },
+      { id: 15, en: "The outdoor nature of street art means it changes with weather and time.", zh: "街头艺术的户外性质意味着它随天气和时间而变化。" },
+      { id: 16, en: "This temporary quality makes it even more special to see in person.",       zh: "这种短暂的特质使亲眼看到它更加特别。" }
+    ]
+  },
+  {
+    id: "ep088", category: "Art", title: "Photography as Art", description: "Art · 摄影作为艺术",
+    sentences: [
+      { id: 1,  en: "Photography was invented in the eighteen thirties.",                        zh: "摄影发明于 1830 年代。" },
+      { id: 2,  en: "Early cameras were large and heavy, and photos took minutes to create.",   zh: "早期相机又大又重，照片需要几分钟才能拍成。" },
+      { id: 3,  en: "Today, almost everyone carries a camera in their phone.",                   zh: "如今，几乎每个人的手机里都有相机。" },
+      { id: 4,  en: "Photography captures a single moment in time forever.",                     zh: "摄影永远捕捉住时间中的一个瞬间。" },
+      { id: 5,  en: "A good photograph can tell a story without any words.",                    zh: "一张好照片不需要任何文字就能讲述故事。" },
+      { id: 6,  en: "Light is the most important element in photography.",                       zh: "光线是摄影中最重要的元素。" },
+      { id: 7,  en: "The word photography means drawing with light in Greek.",                   zh: "摄影这个词在希腊语中意味着用光画画。" },
+      { id: 8,  en: "Portrait photography captures the personality of a person.",                zh: "肖像摄影捕捉一个人的个性。" },
+      { id: 9,  en: "Landscape photographers travel to find beautiful natural scenes.",          zh: "风光摄影师旅行寻找美丽的自然景色。" },
+      { id: 10, en: "Street photography shows the everyday life of cities and people.",          zh: "街头摄影展示城市和人们的日常生活。" },
+      { id: 11, en: "Digital photography made it easy to take thousands of pictures.",           zh: "数码摄影使拍摄数千张照片变得容易。" },
+      { id: 12, en: "Some photographers still prefer to use film cameras.",                      zh: "一些摄影师仍然喜欢使用胶片相机。" },
+      { id: 13, en: "Famous photographs have changed how we see the world.",                     zh: "著名的照片改变了我们看世界的方式。" },
+      { id: 14, en: "News photography shows us events happening far away.",                      zh: "新闻摄影向我们展示远方发生的事件。" },
+      { id: 15, en: "Learning basic rules of composition improves anyone's photos.",             zh: "学习基本的构图规则能提高任何人的照片质量。" },
+      { id: 16, en: "Photography allows everyone to express their view of the world.",           zh: "摄影让每个人都能表达他们对世界的看法。" }
+    ]
+  },
+  {
+    id: "ep089", category: "Music", title: "The History of Jazz Music", description: "Music · 爵士乐的历史",
+    sentences: [
+      { id: 1,  en: "Jazz music was born in New Orleans in the early nineteen hundreds.",       zh: "爵士乐诞生于 1900 年代初期的新奥尔良。" },
+      { id: 2,  en: "It grew from African American musical traditions.",                         zh: "它源于非裔美国人的音乐传统。" },
+      { id: 3,  en: "Jazz combines elements of blues, ragtime, and African rhythms.",           zh: "爵士乐结合了布鲁斯、拉格泰姆和非洲节奏的元素。" },
+      { id: 4,  en: "One special feature of jazz is improvisation.",                             zh: "爵士乐的一个特殊特征是即兴演奏。" },
+      { id: 5,  en: "Musicians make up new melodies while they play.",                           zh: "音乐家在演奏时创造新的旋律。" },
+      { id: 6,  en: "Louis Armstrong was one of the first great jazz musicians.",               zh: "路易斯·阿姆斯特朗是最早的伟大爵士音乐家之一。" },
+      { id: 7,  en: "His trumpet playing and singing amazed audiences everywhere.",              zh: "他的小号演奏和歌唱令各地观众惊叹。" },
+      { id: 8,  en: "In the nineteen twenties, jazz became hugely popular in America.",         zh: "在 1920 年代，爵士乐在美国非常流行。" },
+      { id: 9,  en: "This period is often called the Jazz Age.",                                 zh: "这一时期通常被称为爵士时代。" },
+      { id: 10, en: "Jazz spread to Europe and then around the world.",                          zh: "爵士乐传播到欧洲，然后到世界各地。" },
+      { id: 11, en: "Different styles of jazz developed over the decades.",                      zh: "几十年来发展出了不同风格的爵士乐。" },
+      { id: 12, en: "Bebop, cool jazz, and fusion are just a few examples.",                    zh: "比博普、冷爵士和融合爵士只是几个例子。" },
+      { id: 13, en: "Jazz influenced many other types of music including rock and hip-hop.",    zh: "爵士乐影响了许多其他音乐类型，包括摇滚和嘻哈。" },
+      { id: 14, en: "Jazz clubs can be found in cities around the world.",                       zh: "世界各地的城市都能找到爵士俱乐部。" },
+      { id: 15, en: "Listening to live jazz is an exciting and unique experience.",              zh: "听现场爵士乐是一种令人兴奋和独特的体验。" },
+      { id: 16, en: "Jazz continues to grow and change with each new generation.",               zh: "爵士乐随着每一代人继续成长和变化。" }
+    ]
+  },
+  {
+    id: "ep090", category: "Music", title: "How Music Affects the Brain", description: "Music · 音乐如何影响大脑",
+    sentences: [
+      { id: 1,  en: "Music has a powerful effect on the human brain.",                           zh: "音乐对人脑有强大的影响。" },
+      { id: 2,  en: "Listening to music activates many different parts of the brain.",          zh: "听音乐会激活大脑的许多不同区域。" },
+      { id: 3,  en: "Happy music can make you feel better when you are sad.",                   zh: "快乐的音乐可以在你悲伤时让你感觉好些。" },
+      { id: 4,  en: "Slow, calm music helps people relax and reduce stress.",                    zh: "缓慢平静的音乐帮助人们放松并减轻压力。" },
+      { id: 5,  en: "Many people study or work better while listening to music.",                zh: "许多人在听音乐时学习或工作效率更高。" },
+      { id: 6,  en: "Music without words is often best for concentration.",                      zh: "没有歌词的音乐通常最有助于集中注意力。" },
+      { id: 7,  en: "Babies respond to music even before they are born.",                        zh: "婴儿在出生前就对音乐有反应。" },
+      { id: 8,  en: "Learning to play an instrument improves memory and attention.",             zh: "学习乐器可以提高记忆力和注意力。" },
+      { id: 9,  en: "Children who study music often do better in math and reading.",             zh: "学习音乐的孩子通常在数学和阅读上表现更好。" },
+      { id: 10, en: "Music therapy is used to help people with brain injuries.",                 zh: "音乐治疗被用来帮助脑损伤患者。" },
+      { id: 11, en: "Some patients with memory loss can still remember old songs.",              zh: "一些失忆患者仍然能记住老歌。" },
+      { id: 12, en: "Exercise feels easier when you listen to energetic music.",                 zh: "听充满活力的音乐时运动感觉更轻松。" },
+      { id: 13, en: "The beat of music naturally makes our bodies want to move.",                zh: "音乐的节拍自然地让我们的身体想要动起来。" },
+      { id: 14, en: "Singing releases chemicals in the brain that create happiness.",            zh: "唱歌释放大脑中产生快乐的化学物质。" },
+      { id: 15, en: "Group singing or playing music builds social connections.",                  zh: "集体唱歌或演奏音乐建立社交联系。" },
+      { id: 16, en: "Music is truly a universal language that connects all humans.",              zh: "音乐真正是一种连接所有人的通用语言。" }
+    ]
+  },
+  {
+    id: "ep091", category: "Music", title: "Traditional Music Around the World", description: "Music · 世界各地的传统音乐",
+    sentences: [
+      { id: 1,  en: "Every culture in the world has its own traditional music.",                zh: "世界上每种文化都有自己的传统音乐。" },
+      { id: 2,  en: "Traditional music is passed down from generation to generation.",           zh: "传统音乐代代相传。" },
+      { id: 3,  en: "It often tells stories about a people's history and beliefs.",             zh: "它经常讲述一个民族的历史和信仰的故事。" },
+      { id: 4,  en: "African drumming uses complex rhythms to communicate and celebrate.",      zh: "非洲鼓乐使用复杂节奏来交流和庆祝。" },
+      { id: 5,  en: "Indian classical music uses special scales called ragas.",                  zh: "印度古典音乐使用称为拉格的特殊音阶。" },
+      { id: 6,  en: "Chinese traditional music features instruments like the erhu and pipa.",   zh: "中国传统音乐以二胡和琵琶等乐器为特色。" },
+      { id: 7,  en: "Celtic music from Ireland and Scotland uses fiddles and flutes.",          zh: "来自爱尔兰和苏格兰的凯尔特音乐使用小提琴和笛子。" },
+      { id: 8,  en: "Flamenco from Spain combines guitar, singing, and dancing.",               zh: "西班牙弗拉门戈结合了吉他、歌唱和舞蹈。" },
+      { id: 9,  en: "Traditional music is often played at festivals and ceremonies.",            zh: "传统音乐经常在节日和仪式上演奏。" },
+      { id: 10, en: "Some traditional instruments are thousands of years old in design.",        zh: "一些传统乐器的设计已有数千年历史。" },
+      { id: 11, en: "Many modern musicians mix traditional sounds with new styles.",             zh: "许多现代音乐家将传统声音与新风格混合。" },
+      { id: 12, en: "This creates exciting new music that respects the past.",                   zh: "这创造了尊重过去的令人兴奋的新音乐。" },
+      { id: 13, en: "Recording technology helps preserve traditional music for the future.",    zh: "录音技术帮助为未来保存传统音乐。" },
+      { id: 14, en: "Some traditional music styles are in danger of being forgotten.",           zh: "一些传统音乐风格面临被遗忘的危险。" },
+      { id: 15, en: "Young people learning traditional music keep these cultures alive.",        zh: "年轻人学习传统音乐使这些文化保持活力。" },
+      { id: 16, en: "Traditional music reminds us of the rich diversity of human culture.",     zh: "传统音乐提醒我们人类文化的丰富多样性。" }
+    ]
+  },
+  {
+    id: "ep092", category: "Music", title: "The Electric Guitar Revolution", description: "Music · 电吉他革命",
+    sentences: [
+      { id: 1,  en: "The electric guitar changed popular music forever.",                        zh: "电吉他永远改变了流行音乐。" },
+      { id: 2,  en: "It was first developed in the nineteen thirties.",                          zh: "它最初在 1930 年代被开发出来。" },
+      { id: 3,  en: "Electric guitars use electricity to make their sound much louder.",        zh: "电吉他使用电力使声音大得多。" },
+      { id: 4,  en: "In the nineteen fifties, rock and roll music made the guitar a star.",     zh: "在 1950 年代，摇滚乐使吉他成为明星。" },
+      { id: 5,  en: "Chuck Berry and Elvis Presley helped make guitar music popular.",          zh: "查克·贝里和猫王帮助使吉他音乐流行。" },
+      { id: 6,  en: "Jimi Hendrix created sounds no one had ever heard before.",                 zh: "吉米·亨德里克斯创造了前所未闻的声音。" },
+      { id: 7,  en: "He showed that the guitar could express any emotion.",                      zh: "他展示了吉他可以表达任何情感。" },
+      { id: 8,  en: "The guitar became the main instrument in rock, blues, and pop.",           zh: "吉他成为摇滚、布鲁斯和流行乐的主要乐器。" },
+      { id: 9,  en: "Different effects pedals can completely change the guitar's sound.",        zh: "不同的效果器踏板可以完全改变吉他的声音。" },
+      { id: 10, en: "Heavy metal uses very loud, distorted guitar sounds.",                      zh: "重金属使用非常响亮、失真的吉他声音。" },
+      { id: 11, en: "Acoustic guitars are still popular for folk and country music.",            zh: "原声吉他在民谣和乡村音乐中仍然流行。" },
+      { id: 12, en: "Many young people dream of learning to play the guitar.",                   zh: "许多年轻人梦想学习弹吉他。" },
+      { id: 13, en: "Online lessons have made learning guitar easier than ever.",                zh: "在线课程使学吉他比以往更容易。" },
+      { id: 14, en: "Guitar heroes inspire new generations of musicians.",                       zh: "吉他英雄激励着新一代音乐家。" },
+      { id: 15, en: "The guitar is one of the most played instruments in the world.",           zh: "吉他是世界上被演奏最多的乐器之一。" },
+      { id: 16, en: "Its versatile sound works in almost any style of music.",                   zh: "它多变的声音适用于几乎任何音乐风格。" }
+    ]
+  },
+  {
+    id: "ep093", category: "Idioms", title: "Idioms About Time", description: "Idioms · 关于时间的习语",
+    sentences: [
+      { id: 1,  en: "English has many idioms related to time.",                                  zh: "英语中有许多与时间相关的习语。" },
+      { id: 2,  en: "'Time flies' means that time seems to pass very quickly.",                 zh: "'时光飞逝'意味着时间似乎过得很快。" },
+      { id: 3,  en: "You might say this when you are having fun with friends.",                  zh: "当你和朋友玩得开心时你可能会这么说。" },
+      { id: 4,  en: "'In the nick of time' means just before it is too late.",                  zh: "'在最后一刻'意味着恰好赶在太迟之前。" },
+      { id: 5,  en: "If you catch your bus at the last second, you arrived in the nick of time.", zh: "如果你在最后一秒赶上公交，你就是在最后一刻到达。" },
+      { id: 6,  en: "'Kill time' means to do something while waiting.",                          zh: "'消磨时间'意味着在等待时做些事情。" },
+      { id: 7,  en: "People kill time by reading or playing games on their phones.",             zh: "人们通过阅读或玩手机游戏来消磨时间。" },
+      { id: 8,  en: "'Around the clock' means all day and all night without stopping.",         zh: "'日夜不停'意味着全天全夜不停歇。" },
+      { id: 9,  en: "Hospitals work around the clock to help sick people.",                       zh: "医院日夜不停地帮助病人。" },
+      { id: 10, en: "'Better late than never' means it is good to do something even if delayed.", zh: "'迟做总比不做好'意味着即使延迟了做也好。" },
+      { id: 11, en: "'Time is money' reminds us that wasting time wastes opportunities.",       zh: "'时间就是金钱'提醒我们浪费时间就是浪费机会。" },
+      { id: 12, en: "'Once in a blue moon' means something happens very rarely.",               zh: "'千载难逢'意味着某事极少发生。" },
+      { id: 13, en: "'Call it a day' means to stop working and rest.",                           zh: "'收工'意味着停止工作去休息。" },
+      { id: 14, en: "After a long meeting, your boss might say let's call it a day.",           zh: "长时间会议后，你的老板可能会说我们收工吧。" },
+      { id: 15, en: "Learning time idioms helps you sound more natural in English.",             zh: "学习时间习语帮助你说英语时更自然。" },
+      { id: 16, en: "Try using one new idiom each day to practice.",                             zh: "尝试每天使用一个新习语来练习。" }
+    ]
+  },
+  {
+    id: "ep094", category: "Idioms", title: "Idioms About Animals", description: "Idioms · 关于动物的习语",
+    sentences: [
+      { id: 1,  en: "Many English idioms use animals to express ideas.",                         zh: "许多英语习语用动物来表达想法。" },
+      { id: 2,  en: "'Let sleeping dogs lie' means not to disturb a peaceful situation.",       zh: "'别惹是生非'意味着不要打扰平静的局面。" },
+      { id: 3,  en: "'The elephant in the room' is an obvious problem no one talks about.",    zh: "'房间里的大象'是一个没人谈论的明显问题。" },
+      { id: 4,  en: "'Hold your horses' means to wait and be patient.",                          zh: "'别着急'意味着等等，要有耐心。" },
+      { id: 5,  en: "If someone is 'busy as a bee', they are working very hard.",               zh: "如果某人'忙得像蜜蜂'，他们正在非常努力工作。" },
+      { id: 6,  en: "'A fish out of water' describes someone in an uncomfortable situation.",   zh: "'如鱼离水'描述某人处于不舒服的处境。" },
+      { id: 7,  en: "Starting a new school can make you feel like a fish out of water.",        zh: "开始上新学校可能让你感觉如鱼离水。" },
+      { id: 8,  en: "'The early bird catches the worm' means arriving early brings success.",   zh: "'早起的鸟儿有虫吃'意味着早到带来成功。" },
+      { id: 9,  en: "'When pigs fly' means something will never happen.",                        zh: "'除非猪会飞'意味着某事永远不会发生。" },
+      { id: 10, en: "'Monkey see, monkey do' means people copy what others do.",                 zh: "'有样学样'意味着人们模仿别人的行为。" },
+      { id: 11, en: "'A leopard can't change its spots' means people don't change easily.",    zh: "'江山易改本性难移'意味着人不容易改变。" },
+      { id: 12, en: "'Straight from the horse's mouth' means from a reliable source.",         zh: "'来自可靠来源'意味着消息直接来自知情人。" },
+      { id: 13, en: "'Kill two birds with one stone' means solving two problems at once.",      zh: "'一石二鸟'意味着同时解决两个问题。" },
+      { id: 14, en: "These animal idioms make English more colorful and fun.",                   zh: "这些动物习语使英语更加丰富多彩和有趣。" },
+      { id: 15, en: "Many languages have similar animal idioms with different animals.",         zh: "许多语言有类似的动物习语但使用不同的动物。" },
+      { id: 16, en: "Practice using these idioms in your daily conversations.",                  zh: "在日常对话中练习使用这些习语。" }
+    ]
+  },
+  {
+    id: "ep095", category: "Idioms", title: "Idioms About Food", description: "Idioms · 关于食物的习语",
+    sentences: [
+      { id: 1,  en: "Food idioms are used every day in English conversation.",                  zh: "食物习语每天都在英语对话中使用。" },
+      { id: 2,  en: "'A piece of cake' means something is very easy to do.",                    zh: "'小菜一碟'意味着某事非常容易做。" },
+      { id: 3,  en: "The test was a piece of cake because I studied hard.",                     zh: "考试很容易因为我努力学习了。" },
+      { id: 4,  en: "'Spill the beans' means to reveal a secret accidentally.",                 zh: "'泄露秘密'意味着不小心透露了秘密。" },
+      { id: 5,  en: "'In a nutshell' means to explain something in a few words.",               zh: "'简而言之'意味着用几句话解释某事。" },
+      { id: 6,  en: "'Bring home the bacon' means to earn money for your family.",              zh: "'养家糊口'意味着为家庭赚钱。" },
+      { id: 7,  en: "'Have your cake and eat it too' means wanting two things that conflict.",  zh: "'鱼和熊掌兼得'意味着想要两个冲突的东西。" },
+      { id: 8,  en: "'Cry over spilled milk' means to be upset about something you cannot fix.", zh: "'为打翻的牛奶哭泣'意味着为无法挽回的事情难过。" },
+      { id: 9,  en: "'The apple doesn't fall far from the tree' means children are like parents.", zh: "'有其父必有其子'意味着孩子像父母。" },
+      { id: 10, en: "'Go bananas' means to become very excited or crazy.",                      zh: "'发疯'意味着变得非常兴奋或疯狂。" },
+      { id: 11, en: "'Cool as a cucumber' describes someone who stays calm.",                    zh: "'冷静如黄瓜'描述保持冷静的人。" },
+      { id: 12, en: "'Butter someone up' means to say nice things to get what you want.",       zh: "'拍马屁'意味着说好话来得到你想要的。" },
+      { id: 13, en: "'Full of beans' means having lots of energy.",                              zh: "'精力充沛'意味着有很多能量。" },
+      { id: 14, en: "Food idioms exist because food is a universal human experience.",           zh: "食物习语的存在是因为食物是人类共通的经验。" },
+      { id: 15, en: "Using these idioms will make your English sound more natural.",             zh: "使用这些习语会让你的英语听起来更自然。" },
+      { id: 16, en: "Try to memorize one new food idiom every week.",                            zh: "尝试每周记住一个新的食物习语。" }
+    ]
+  },
+  {
+    id: "ep096", category: "Idioms", title: "Idioms About Weather", description: "Idioms · 关于天气的习语",
+    sentences: [
+      { id: 1,  en: "Weather idioms are very common in English.",                                zh: "天气习语在英语中非常常见。" },
+      { id: 2,  en: "'Under the weather' means feeling sick or not well.",                      zh: "'不舒服'意味着感到生病或不适。" },
+      { id: 3,  en: "You might tell your boss you are under the weather to take a sick day.",   zh: "你可能告诉老板你不舒服来请病假。" },
+      { id: 4,  en: "'Every cloud has a silver lining' means bad situations have good parts.",  zh: "'每片乌云都有银边'意味着坏情况中有好的部分。" },
+      { id: 5,  en: "'It's raining cats and dogs' means it is raining very heavily.",           zh: "'倾盆大雨'意味着雨下得非常大。" },
+      { id: 6,  en: "'A storm in a teacup' is a big fuss about something unimportant.",        zh: "'茶杯里的风暴'是对不重要的事大惊小怪。" },
+      { id: 7,  en: "'Break the ice' means to start a conversation in a new situation.",        zh: "'打破僵局'意味着在新环境中开始对话。" },
+      { id: 8,  en: "'Save for a rainy day' means keeping money for when you might need it.",  zh: "'未雨绸缪'意味着存钱以备不时之需。" },
+      { id: 9,  en: "'On cloud nine' means feeling extremely happy.",                            zh: "'欣喜若狂'意味着感到极度快乐。" },
+      { id: 10, en: "She was on cloud nine after getting the job she wanted.",                   zh: "得到想要的工作后，她欣喜若狂。" },
+      { id: 11, en: "'Steal someone's thunder' means to take credit for their idea.",           zh: "'抢别人的风头'意味着把别人的功劳据为己有。" },
+      { id: 12, en: "'A bolt from the blue' is something completely unexpected.",                zh: "'晴天霹雳'是完全出乎意料的事。" },
+      { id: 13, en: "'Chase rainbows' means to try to achieve something impossible.",           zh: "'追彩虹'意味着试图实现不可能的事。" },
+      { id: 14, en: "'Calm before the storm' means a quiet period before trouble comes.",       zh: "'暴风雨前的平静'意味着麻烦来临前的安静时期。" },
+      { id: 15, en: "Weather idioms work well because everyone experiences weather.",            zh: "天气习语很有效因为每个人都经历天气。" },
+      { id: 16, en: "Practice using weather idioms to describe daily situations.",               zh: "练习使用天气习语来描述日常情况。" }
+    ]
+  },
+  {
+    id: "ep097", category: "Business", title: "Starting a Small Business", description: "Business · 创办小企业",
+    sentences: [
+      { id: 1,  en: "Many successful companies started as small businesses.",                    zh: "许多成功的公司最初是小企业。" },
+      { id: 2,  en: "A good business starts with solving a real problem.",                       zh: "好的生意从解决一个真实问题开始。" },
+      { id: 3,  en: "Before starting, you need a plan that describes your idea.",               zh: "开始之前，你需要一个描述你想法的计划。" },
+      { id: 4,  en: "The plan should explain who your customers will be.",                       zh: "计划应该说明你的客户将是谁。" },
+      { id: 5,  en: "You also need to think about how much money you will need.",               zh: "你还需要考虑你将需要多少钱。" },
+      { id: 6,  en: "Some people save money for years before starting their business.",         zh: "有些人存钱好几年才开始创业。" },
+      { id: 7,  en: "Others borrow money from banks or find investors.",                         zh: "其他人从银行借钱或找到投资者。" },
+      { id: 8,  en: "Location is important for businesses that serve local customers.",          zh: "对于服务本地客户的企业来说，位置很重要。" },
+      { id: 9,  en: "Online businesses can reach customers anywhere in the world.",              zh: "在线企业可以触达世界任何地方的客户。" },
+      { id: 10, en: "Marketing helps people learn about your product or service.",               zh: "营销帮助人们了解你的产品或服务。" },
+      { id: 11, en: "Social media is a free way to advertise your business.",                    zh: "社交媒体是免费宣传生意的方式。" },
+      { id: 12, en: "Good customer service keeps people coming back.",                           zh: "良好的客户服务让人们回头光顾。" },
+      { id: 13, en: "Many new businesses fail in their first year.",                             zh: "许多新企业在第一年就失败了。" },
+      { id: 14, en: "Learning from mistakes is an important part of business.",                  zh: "从错误中学习是经营企业的重要部分。" },
+      { id: 15, en: "Patience and hard work are needed to build a successful business.",        zh: "建立成功的企业需要耐心和努力。" },
+      { id: 16, en: "Small businesses create jobs and help communities grow.",                   zh: "小企业创造就业机会并帮助社区发展。" }
+    ]
+  },
+  {
+    id: "ep098", category: "Business", title: "The Power of Teamwork", description: "Business · 团队合作的力量",
+    sentences: [
+      { id: 1,  en: "Teamwork is essential for success in almost every workplace.",              zh: "团队合作对于几乎每个工作场所的成功都至关重要。" },
+      { id: 2,  en: "A good team can achieve more than any single person alone.",                zh: "一个好的团队能比任何个人单独完成的更多。" },
+      { id: 3,  en: "Each team member brings different skills and ideas.",                       zh: "每个团队成员带来不同的技能和想法。" },
+      { id: 4,  en: "Clear communication is the foundation of effective teamwork.",              zh: "清晰的沟通是有效团队合作的基础。" },
+      { id: 5,  en: "Team members should listen to each other with respect.",                    zh: "团队成员应该互相尊重地倾听。" },
+      { id: 6,  en: "A good leader helps the team stay focused on their goals.",                 zh: "好的领导帮助团队保持专注于目标。" },
+      { id: 7,  en: "Trust between team members is built over time through actions.",            zh: "团队成员之间的信任通过行动随时间建立。" },
+      { id: 8,  en: "Disagreements are normal and can lead to better solutions.",                zh: "分歧是正常的，可以带来更好的解决方案。" },
+      { id: 9,  en: "The key is to disagree about ideas, not attack people.",                    zh: "关键是对想法有分歧，而不是攻击人。" },
+      { id: 10, en: "Celebrating small wins keeps the team motivated.",                          zh: "庆祝小胜利让团队保持动力。" },
+      { id: 11, en: "Regular meetings help everyone stay on the same page.",                     zh: "定期会议帮助每个人保持同步。" },
+      { id: 12, en: "Sharing credit for success builds stronger team bonds.",                    zh: "分享成功的功劳建立更强的团队纽带。" },
+      { id: 13, en: "When one person struggles, the team should offer support.",                 zh: "当一个人遇到困难时，团队应该提供支持。" },
+      { id: 14, en: "Diverse teams often produce more creative solutions.",                      zh: "多元化团队通常产生更有创意的解决方案。" },
+      { id: 15, en: "Good teamwork skills are valuable in every career.",                        zh: "良好的团队合作技能在每个职业中都很有价值。" },
+      { id: 16, en: "Together, everyone achieves more than they could alone.",                    zh: "在一起，每个人都能比独自完成更多。" }
+    ]
+  },
+  {
+    id: "ep099", category: "Business", title: "Remote Work in the Modern Age", description: "Business · 现代远程办公",
+    sentences: [
+      { id: 1,  en: "Remote work means working from home or any place outside the office.",     zh: "远程工作意味着在家或办公室外的任何地方工作。" },
+      { id: 2,  en: "Technology makes it possible to work from almost anywhere.",                zh: "技术使得几乎在任何地方工作成为可能。" },
+      { id: 3,  en: "Video calls let teams meet face to face without traveling.",                zh: "视频通话让团队无需出行就能面对面开会。" },
+      { id: 4,  en: "Many workers enjoy the flexibility of working from home.",                  zh: "许多工人享受在家工作的灵活性。" },
+      { id: 5,  en: "They save time and money by not commuting to an office.",                   zh: "他们不用通勤到办公室，从而节省时间和金钱。" },
+      { id: 6,  en: "However, working from home can sometimes feel lonely.",                     zh: "然而，在家工作有时会感到孤独。" },
+      { id: 7,  en: "It requires discipline to stay focused without a boss nearby.",             zh: "没有老板在旁边需要自律来保持专注。" },
+      { id: 8,  en: "Setting up a quiet workspace at home helps productivity.",                  zh: "在家布置一个安静的工作区有助于生产力。" },
+      { id: 9,  en: "Taking regular breaks prevents tiredness and keeps you fresh.",             zh: "定期休息防止疲倦并保持精力充沛。" },
+      { id: 10, en: "Some companies let workers choose where they want to work.",                zh: "一些公司让员工选择他们想在哪里工作。" },
+      { id: 11, en: "Others require workers to come to the office some days each week.",        zh: "其他公司要求员工每周来办公室几天。" },
+      { id: 12, en: "This mix of home and office work is called hybrid work.",                   zh: "这种家庭和办公室工作的混合被称为混合办公。" },
+      { id: 13, en: "Good internet connection is essential for remote work.",                     zh: "良好的网络连接对远程工作至关重要。" },
+      { id: 14, en: "Cloud tools let teams share files and work together online.",               zh: "云工具让团队在线共享文件和协同工作。" },
+      { id: 15, en: "Remote work has opened jobs to people in different cities and countries.",  zh: "远程工作为不同城市和国家的人打开了就业机会。" },
+      { id: 16, en: "The way we work continues to change with new technology.",                  zh: "我们的工作方式随新技术不断变化。" }
+    ]
+  },
+  {
+    id: "ep100", category: "Business", title: "Understanding Marketing", description: "Business · 理解市场营销",
+    sentences: [
+      { id: 1,  en: "Marketing is how businesses tell people about their products.",             zh: "营销是企业向人们介绍其产品的方式。" },
+      { id: 2,  en: "Good marketing helps the right customers find what they need.",             zh: "好的营销帮助合适的客户找到他们需要的。" },
+      { id: 3,  en: "Before the internet, companies used TV, radio, and newspapers.",           zh: "在互联网出现之前，公司使用电视、广播和报纸。" },
+      { id: 4,  en: "Today, social media is one of the most powerful marketing tools.",         zh: "如今，社交媒体是最强大的营销工具之一。" },
+      { id: 5,  en: "Companies study what customers want before creating products.",             zh: "公司在创造产品之前研究客户想要什么。" },
+      { id: 6,  en: "A brand is the name and image that people remember.",                       zh: "品牌是人们记住的名称和形象。" },
+      { id: 7,  en: "Strong brands build trust and loyalty with their customers.",               zh: "强大的品牌与客户建立信任和忠诚。" },
+      { id: 8,  en: "Word of mouth is when happy customers tell their friends.",                 zh: "口碑营销是当满意的客户告诉他们的朋友。" },
+      { id: 9,  en: "This is often the most effective form of marketing.",                       zh: "这通常是最有效的营销形式。" },
+      { id: 10, en: "Email marketing sends messages directly to interested customers.",          zh: "电子邮件营销直接向感兴趣的客户发送信息。" },
+      { id: 11, en: "Content marketing creates useful articles and videos for people.",          zh: "内容营销为人们创建有用的文章和视频。" },
+      { id: 12, en: "Good marketing is honest and does not make false promises.",                zh: "好的营销是诚实的，不做虚假承诺。" },
+      { id: 13, en: "Understanding your competition helps you stand out in the market.",         zh: "了解竞争对手帮助你在市场中脱颖而出。" },
+      { id: 14, en: "Pricing must balance what customers will pay and what you need to earn.",  zh: "定价必须平衡客户愿意支付的和你需要赚取的。" },
+      { id: 15, en: "Data and analytics help marketers understand what works best.",             zh: "数据和分析帮助营销人员了解什么最有效。" },
+      { id: 16, en: "Marketing is both a science and an art that takes practice.",               zh: "营销既是科学也是艺术，需要实践。" }
+    ]
   }
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  VOA 节目来源元数据
-//  每个分类映射到真实的 VOA Learning English 栏目名 + 官方链接
-//  说明：本项目的文本是根据 VOA Special English 经典风格再创作（CEFR A2-B1 · 1500 核心词表），
-//        并非 VOA 官方原稿。以下链接指向对应栏目的官方页面，便于读者查找同类原声节目。
-//  参考：https://learningenglish.voanews.com/
-// ─────────────────────────────────────────────────────────────────────────────
-const VOA_SOURCES = {
-  "Health":      { program: "Health & Lifestyle",   url: "https://learningenglish.voanews.com/z/3881" },
-  "Science":     { program: "Science in the News",  url: "https://learningenglish.voanews.com/z/3879" },
-  "Technology":  { program: "Technology Report",    url: "https://learningenglish.voanews.com/z/3885" },
-  "Nature":      { program: "Science in the News",  url: "https://learningenglish.voanews.com/z/3879" },
-  "Culture":     { program: "Arts & Culture",       url: "https://learningenglish.voanews.com/z/3886" },
-  "History":     { program: "This Is America",      url: "https://learningenglish.voanews.com/z/3884" },
-  "Food":        { program: "Words & Their Stories",url: "https://learningenglish.voanews.com/z/3892" },
-  "Space":       { program: "Science in the News",  url: "https://learningenglish.voanews.com/z/3879" },
-  "Business":    { program: "Economics Report",     url: "https://learningenglish.voanews.com/z/3888" },
-  "Education":   { program: "Education Report",     url: "https://learningenglish.voanews.com/z/3887" },
-  "Travel":      { program: "Arts & Culture",       url: "https://learningenglish.voanews.com/z/3886" },
-  "Music":       { program: "Arts & Culture",       url: "https://learningenglish.voanews.com/z/3886" },
-  "Sports":      { program: "In The News",          url: "https://learningenglish.voanews.com/z/3896" },
-  "Psychology":  { program: "Health & Lifestyle",   url: "https://learningenglish.voanews.com/z/3881" },
-  "Environment": { program: "Science in the News",  url: "https://learningenglish.voanews.com/z/3879" },
-  "Biography":   { program: "People in America",    url: "https://learningenglish.voanews.com/z/3891" },
-  "Art":         { program: "Arts & Culture",       url: "https://learningenglish.voanews.com/z/3886" },
-  "Economy":     { program: "Economics Report",     url: "https://learningenglish.voanews.com/z/3888" },
-  "Cinema":      { program: "Arts & Culture",       url: "https://learningenglish.voanews.com/z/3886" },
-  "Idioms":      { program: "Words & Their Stories",url: "https://learningenglish.voanews.com/z/3892" }
-};
-
-function getVoaSource(category) {
-  return VOA_SOURCES[category] || { program: "VOA Learning English", url: "https://learningenglish.voanews.com/" };
-}
