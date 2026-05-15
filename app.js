@@ -245,6 +245,9 @@ createApp({
     const progress = ref(loadProgress());
 
     function recordSentencePlayed(epId) {
+      // 只有登录后才记录打卡数据
+      if (!SyncManager.isLoggedIn()) return;
+
       const p = progress.value;
       p.sentencesPlayed += 1;
 
@@ -265,6 +268,9 @@ createApp({
     }
 
     function recordEpisodeCompleted(epId) {
+      // 只有登录后才记录完成数据
+      if (!SyncManager.isLoggedIn()) return;
+
       const p = progress.value;
       p.episodesCompleted[epId] = Date.now();
       saveProgress(p);
@@ -281,6 +287,41 @@ createApp({
         totalDays: Object.keys(p.studyDays || {}).length
       };
     });
+
+    // ── 勋章成就系统 ──────────────────────────────────────────────────────────
+    const ACHIEVEMENTS = [
+      // 连续打卡
+      { id: 'streak_3',   icon: '\u{1F331}', name: '初学者',     desc: '连续学习 3 天',     category: '打卡', check: (p, v) => p.streak >= 3 },
+      { id: 'streak_7',   icon: '\u{1F525}', name: '坚持一周',   desc: '连续学习 7 天',     category: '打卡', check: (p, v) => p.streak >= 7 },
+      { id: 'streak_30',  icon: '\u{2B50}',  name: '月度达人',   desc: '连续学习 30 天',    category: '打卡', check: (p, v) => p.streak >= 30 },
+      { id: 'streak_100', icon: '\u{1F48E}', name: '百日坚持',   desc: '连续学习 100 天',   category: '打卡', check: (p, v) => p.streak >= 100 },
+      // 累计天数
+      { id: 'days_10',    icon: '\u{1F4C5}', name: '学习10天',   desc: '累计学习 10 天',    category: '累计', check: (p, v) => p.totalDays >= 10 },
+      { id: 'days_30',    icon: '\u{1F4C6}', name: '学习30天',   desc: '累计学习 30 天',    category: '累计', check: (p, v) => p.totalDays >= 30 },
+      // 听力句数
+      { id: 'sent_1',     icon: '\u{1F442}', name: '初次听力',   desc: '听完第 1 句',       category: '听力', check: (p, v) => p.sentencesPlayed >= 1 },
+      { id: 'sent_100',   icon: '\u{1F3A7}', name: '百句达成',   desc: '累计听 100 句',     category: '听力', check: (p, v) => p.sentencesPlayed >= 100 },
+      { id: 'sent_1000',  icon: '\u{1F3B5}', name: '千句大师',   desc: '累计听 1000 句',    category: '听力', check: (p, v) => p.sentencesPlayed >= 1000 },
+      // 完成篇数
+      { id: 'ep_1',       icon: '\u{1F463}', name: '第一步',     desc: '完成 1 篇听力',     category: '完成', check: (p, v) => p.episodesCompletedCount >= 1 },
+      { id: 'ep_20',      icon: '\u{1F680}', name: '进阶学者',   desc: '完成 20 篇听力',    category: '完成', check: (p, v) => p.episodesCompletedCount >= 20 },
+      { id: 'ep_100',     icon: '\u{1F451}', name: '满分通关',   desc: '完成全部 100 篇',   category: '完成', check: (p, v) => p.episodesCompletedCount >= 100 },
+      // 词汇量
+      { id: 'vocab_10',   icon: '\u{1F4DD}', name: '收词新手',   desc: '收藏 10 个生词',    category: '词汇', check: (p, v) => v >= 10 },
+      { id: 'vocab_50',   icon: '\u{1F4DA}', name: '词汇达人',   desc: '收藏 50 个生词',    category: '词汇', check: (p, v) => v >= 50 },
+      { id: 'vocab_200',  icon: '\u{1F3C6}', name: '词汇大师',   desc: '收藏 200 个生词',   category: '词汇', check: (p, v) => v >= 200 },
+    ];
+
+    const achievements = computed(() => {
+      const p = progressStats.value;
+      const v = vocabCount.value;
+      return ACHIEVEMENTS.map(a => ({
+        ...a,
+        unlocked: a.check(p, v)
+      }));
+    });
+
+    const achievementUnlockedCount = computed(() => achievements.value.filter(a => a.unlocked).length);
 
 
     // 分类列表
@@ -959,6 +1000,8 @@ createApp({
       getEpTitle, tokenize, cleanWord,
       // Theme & progress
       theme, setTheme, progressStats,
+      // Achievements
+      achievements, achievementUnlockedCount,
       // Auth & Sync
       authModalOpen, authStep, authEmail, authCode, authDisplayCode, authError, authLoading,
       authUser, syncVersion, doLogin, doVerify, doLogout,
