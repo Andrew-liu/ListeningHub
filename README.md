@@ -22,6 +22,7 @@
 | 功能 | 说明 |
 |------|------|
 | 🎯 **逐句精听** | 100 篇听力材料，每篇 16-17 句，支持单句/整集播放 |
+| 📖 **背单词** | 7 大词库（初/高中、四六级、考研、托福、SAT）2.6 万词，卡片式记忆，释义隐藏自测 |
 | 🌐 **中英对照** | 每句配有中文翻译，一键切换显示/隐藏 |
 | 📚 **智能生词本** | 点击任意单词查词典、收藏，支持 SRS 间隔复习 |
 | 🏅 **勋章成就** | 15 枚成就勋章，覆盖打卡、听力、词汇等维度 |
@@ -77,6 +78,7 @@ python3 -m http.server 8080
 ├── index.html          # 主页面（Vue 3 SPA）
 ├── app.js              # 业务逻辑
 ├── data/episodes.js    # 100 篇听力材料数据
+├── data/vocab/         # 背单词词库（7 词库分片 JSON，源自 KyleBing/english-vocabulary）
 ├── manifest.json       # PWA 配置
 ├── service-worker.js   # 离线缓存
 └── .github/workflows/deploy.yml  # GitHub Pages 自动部署

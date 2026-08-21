@@ -503,18 +503,11 @@ createApp({
       srsShowAnswer.value = false;
     }
 
-    // SM-2 简化：quality = 0(忘)/1(难)/2(好)/3(熟)
-    function rateSRS(quality) {
-      if (!srsCurrent.value) return;
-      const word = srsCurrent.value.word.toLowerCase();
-      const item = vocabulary.value[word];
-      if (!item) return;
+    // SM-2 简化打分（quality: 0忘/1难/2好/3熟），SRS 复习与拼写模式共用
+    function applySRSQuality(item, quality) {
       initSRS(item);
-
-      // 间隔计算（单位：毫秒）
       const DAY = 24 * 60 * 60 * 1000;
       const baseIntervals = [1, 6, 1 * DAY, 3 * DAY, 7 * DAY, 21 * DAY, 60 * DAY];
-
       if (quality === 0) {
         item.srsLevel = 0;
         item.srsEase = Math.max(1.3, item.srsEase - 0.2);
@@ -525,6 +518,15 @@ createApp({
       const idx = Math.min(item.srsLevel, baseIntervals.length - 1);
       item.nextReviewAt = Date.now() + baseIntervals[idx] * item.srsEase;
       item.lastReviewAt = Date.now();
+    }
+
+    // SM-2 简化：quality = 0(忘)/1(难)/2(好)/3(熟)
+    function rateSRS(quality) {
+      if (!srsCurrent.value) return;
+      const word = srsCurrent.value.word.toLowerCase();
+      const item = vocabulary.value[word];
+      if (!item) return;
+      applySRSQuality(item, quality);
 
       saveVocab(vocabulary.value);
 
@@ -872,6 +874,299 @@ createApp({
       return EPISODES.find(e => e.id === epId)?.title || epId;
     }
 
+    // ── Vocab Trainer 背单词 ──────────────────────────────────────────────────
+    // 词库数据: data/vocab/{lib}/{chunk}.json（200词/片，按需加载）
+    const vtLibs = { chuzhong: '初中', gaozhong: '高中', cet4: 'CET4', cet6: 'CET6', kaoyan: '考研', toefl: '托福', sat: 'SAT' };
+    const vt = reactive({
+      manifest: null,
+      library: localStorage.getItem('vt_library') || 'cet4',
+      index: 1,
+      word: null,
+      loading: false,
+      error: false,
+      showMeaning: localStorage.getItem('vt_show_meaning') !== 'false',
+      jumpInput: '',
+      searchInput: '',
+      searchMsg: '',
+      searchError: false,
+      searching: false
+    });
+    const vtChunkCache = new Map();
+    const vtIndexCache = new Map();
+    let vtReqId = 0;
+
+    const vtTotal = computed(() => vt.manifest?.libs?.[vt.library]?.total || 0);
+    const vtWordSaved = computed(() => !!(vt.word && vocabulary.value[vt.word.word.toLowerCase()]));
+
+    async function vtEnsureManifest() {
+      if (vt.manifest) return;
+      const res = await fetch('data/vocab/manifest.json');
+      if (!res.ok) throw new Error('manifest');
+      vt.manifest = await res.json();
+    }
+
+    async function vtFetchChunk(lib, chunkIdx) {
+      const key = `${lib}/${chunkIdx}`;
+      if (vtChunkCache.has(key)) return vtChunkCache.get(key);
+      const res = await fetch(`data/vocab/${lib}/${chunkIdx}.json`);
+      if (!res.ok) throw new Error('chunk');
+      const data = await res.json();
+      vtChunkCache.set(key, data);
+      return data;
+    }
+
+    async function vtLoadWord() {
+      const reqId = ++vtReqId;
+      vt.loading = true;
+      vt.error = false;
+      try {
+        await vtEnsureManifest();
+        const size = vt.manifest.chunkSize;
+        const chunk = Math.floor((vt.index - 1) / size);
+        const words = await vtFetchChunk(vt.library, chunk);
+        if (reqId !== vtReqId) return;
+        vt.word = words[(vt.index - 1) % size] || null;
+        vtSpellReset();
+        // 默写模式：切到新词自动播放发音（听音拼词）
+        if (vtSpell.active && vtSpell.hideWord && vt.word) {
+          setTimeout(() => { if (reqId === vtReqId) vtSpeak('us'); }, 150);
+        }
+        recordVocabStudied();
+      } catch {
+        if (reqId === vtReqId) { vt.word = null; vt.error = true; }
+      } finally {
+        if (reqId === vtReqId) vt.loading = false;
+      }
+    }
+
+    // 背单词计入打卡（studyDays / streak，与听力共用进度）
+    function recordVocabStudied() {
+      const p = progress.value;
+      const today = todayStr();
+      if (!p.studyDays[today]) p.studyDays[today] = 0;
+      p.studyDays[today] += 1;
+      if (p.lastStudyDate !== today) {
+        p.streak = p.lastStudyDate === yesterdayStr() ? (p.streak || 0) + 1 : 1;
+        p.lastStudyDate = today;
+      }
+      saveProgress(p);
+    }
+
+    function vtGo(idx) {
+      const total = vtTotal.value || 1;
+      const next = Math.min(Math.max(idx, 1), total);
+      vt.index = next;
+      localStorage.setItem(`vt_index_${vt.library}`, String(next));
+      vtLoadWord();
+    }
+    function vtPrev() { if (vt.index > 1) vtGo(vt.index - 1); }
+    function vtNext() { if (vt.index < vtTotal.value) vtGo(vt.index + 1); }
+    function vtJump() {
+      const n = parseInt(vt.jumpInput, 10);
+      if (!Number.isNaN(n)) vtGo(n);
+      vt.jumpInput = '';
+    }
+
+    function vtSetLibrary(lib) {
+      if (!vtLibs[lib]) return;
+      vt.library = lib;
+      localStorage.setItem('vt_library', lib);
+      vt.index = parseInt(localStorage.getItem(`vt_index_${lib}`) || '1', 10);
+      vt.searchMsg = '';
+      vtLoadWord();
+    }
+
+    function vtToggleMeaning() {
+      vt.showMeaning = !vt.showMeaning;
+      localStorage.setItem('vt_show_meaning', String(vt.showMeaning));
+    }
+
+    function vtSpeak(type) {
+      if (!vt.word || !synth) return;
+      synth.cancel();
+      const u = new SpeechSynthesisUtterance(vt.word.word);
+      const voices = synth.getVoices();
+      const v = voices.find(x => x.lang === (type === 'uk' ? 'en-GB' : 'en-US')) || getBestEnglishVoice();
+      if (v) u.voice = v;
+      u.lang = type === 'uk' ? 'en-GB' : 'en-US';
+      u.rate = 0.9;
+      synth.speak(u);
+    }
+
+    async function vtGetIndex(lib) {
+      if (vtIndexCache.has(lib)) return vtIndexCache.get(lib);
+      const res = await fetch(`data/vocab/${lib}/index.json`);
+      if (!res.ok) throw new Error('index');
+      const data = await res.json();
+      vtIndexCache.set(lib, data);
+      return data;
+    }
+
+    async function vtSearch() {
+      const q = vt.searchInput.trim().toLowerCase();
+      if (!q || vt.searching) return;
+      vt.searching = true;
+      vt.searchMsg = '';
+      try {
+        await vtEnsureManifest();
+        const libs = [vt.library, ...Object.keys(vtLibs).filter(k => k !== vt.library)];
+        for (const lib of libs) {
+          const list = await vtGetIndex(lib);
+          const pos = list.indexOf(q);
+          if (pos >= 0) {
+            vt.library = lib;
+            localStorage.setItem('vt_library', lib);
+            vt.index = pos + 1;
+            localStorage.setItem(`vt_index_${lib}`, String(pos + 1));
+            await vtLoadWord();
+            vt.searchMsg = `已跳转到 ${q}（${vtLibs[lib]}词库）`;
+            vt.searchError = false;
+            return;
+          }
+        }
+        vt.searchMsg = `未找到 "${q}"`;
+        vt.searchError = true;
+      } catch {
+        vt.searchMsg = '搜索失败，请稍后重试';
+        vt.searchError = true;
+      } finally {
+        vt.searching = false;
+      }
+    }
+
+    // "不会" → 加入现有生词本（复用 SRS 复习体系）
+    function vtAddToVocab() {
+      const w = vt.word;
+      if (!w) return;
+      const key = w.word.toLowerCase();
+      if (vocabulary.value[key]) return;
+      vocabulary.value[key] = {
+        word: w.word,
+        phonetic: w.us ? `/${w.us}/` : '',
+        audioUrl: '',
+        meanings: (w.translations || []).map(t => ({ partOfSpeech: t.type || '', definition: t.translation, example: '' })),
+        translation: (w.translations || []).map(t => t.translation).join('；'),
+        addedAt: Date.now(),
+        fromEpisode: '',
+        fromSentenceId: null
+      };
+      vocabulary.value = { ...vocabulary.value };
+      saveVocab(vocabulary.value);
+    }
+
+    // ── 拼写模式（参考 TypeWords：逐字母键入判定 + 错误次数映射记忆曲线评分）──
+    const vtSpell = reactive({
+      active: false,               // 拼写模式开关（背单词页内切换）
+      input: '',                   // 已正确输入的部分
+      wrongChar: '',               // 当前打错的字母（红色闪现）
+      wrongTimes: 0,               // 本词累计错误次数
+      done: false,                 // 本词已拼完
+      hideWord: localStorage.getItem('vt_spell_hide') === 'true'  // 默写模式：隐藏单词拼写
+    });
+    let vtSpellWrongTimer = null;
+
+    function vtToggleSpell() {
+      vtSpell.active = !vtSpell.active;
+      vtSpellReset();
+      // 开启拼写且处于默写状态 → 自动播放发音作为听写提示
+      if (vtSpell.active && vtSpell.hideWord) vtSpeak('us');
+    }
+    function vtToggleSpellHide() {
+      vtSpell.hideWord = !vtSpell.hideWord;
+      localStorage.setItem('vt_spell_hide', String(vtSpell.hideWord));
+      vtSpellReset();
+      // 开启默写 → 立即播放当前词发音
+      if (vtSpell.hideWord) vtSpeak('us');
+    }
+    function vtSpellReset() {
+      vtSpell.input = '';
+      vtSpell.wrongChar = '';
+      vtSpell.wrongTimes = 0;
+      vtSpell.done = false;
+      if (vtSpellWrongTimer) { clearTimeout(vtSpellWrongTimer); vtSpellWrongTimer = null; }
+    }
+
+    // 展示用字母状态数组: [{ char, state: 'ok' | 'wrong' | 'pending' }]
+    const vtSpellChars = computed(() => {
+      if (!vt.word) return [];
+      const target = vt.word.word;
+      const typed = vtSpell.input.length;
+      return target.split('').map((ch, i) => ({
+        char: ch,
+        state: i < typed ? 'ok' : (i === typed && vtSpell.wrongChar) ? 'wrong' : 'pending'
+      }));
+    });
+
+    // 错误次数 → SM-2 质量分（对齐 TypeWords 的 wrongTimes→Rating 映射）
+    function vtSpellQuality(wrongTimes) {
+      if (wrongTimes === 0) return 3;   // 熟
+      if (wrongTimes <= 2) return 2;    // 好
+      if (wrongTimes <= 4) return 1;    // 难
+      return 0;                          // 忘
+    }
+
+    function vtSpellComplete() {
+      vtSpell.done = true;
+      // 拼完自动发音
+      vtSpeak('us');
+      // 在生词本中的词（含刚因错 3 次被自动收录的）：按本次拼写表现走记忆曲线打分
+      const key = vt.word.word.toLowerCase();
+      const item = vocabulary.value[key];
+      if (item) {
+        applySRSQuality(item, vtSpellQuality(vtSpell.wrongTimes));
+        saveVocab(vocabulary.value);
+      }
+      // 短暂停留后自动切下一个
+      setTimeout(() => {
+        if (vtSpell.active && vtSpell.done) { vtNext(); }
+      }, 1200);
+    }
+
+    function vtSpellKey(e) {
+      if (!vtSpell.active || !vt.word || vt.loading) return false;
+      const target = vt.word.word;
+
+      if (e.key === 'Backspace') {
+        vtSpell.wrongChar = '';
+        vtSpell.input = vtSpell.input.slice(0, -1);
+        return true;
+      }
+      // 只处理可打印单字符（字母、连字符、空格、撇号等）
+      if (e.key.length !== 1 || vtSpell.done) return false;
+
+      const expect = target[vtSpell.input.length];
+      if (!expect) return true;
+
+      if (e.key.toLowerCase() === expect.toLowerCase()) {
+        vtSpell.input += expect;
+        vtSpell.wrongChar = '';
+        if (vtSpell.input.length === target.length) vtSpellComplete();
+      } else {
+        vtSpell.wrongTimes += 1;
+        vtSpell.wrongChar = e.key;
+        // 错满 3 次：立即自动收录生词本（不等拼完，防止放弃切词后漏记）
+        if (vtSpell.wrongTimes === 3 && !vocabulary.value[target.toLowerCase()]) {
+          vtAddToVocab();
+        }
+        // 打错 500ms 后清空重输（对齐 TypeWords 的 inputWrongClear 行为）
+        if (vtSpellWrongTimer) clearTimeout(vtSpellWrongTimer);
+        vtSpellWrongTimer = setTimeout(() => {
+          vtSpell.wrongChar = '';
+          vtSpell.input = '';
+          vtSpellWrongTimer = null;
+        }, 500);
+      }
+      return true;
+    }
+
+    function enterVocab() {
+      stopSpeaking();
+      view.value = 'vocab';
+      vt.index = parseInt(localStorage.getItem(`vt_index_${vt.library}`) || '1', 10);
+      if (!vt.word) vtLoadWord();
+    }
+
+
     // ── Keyboard shortcuts ────────────────────────────────────────────────────
     function onKeyDown(e) {
       if (popup.visible) {
@@ -880,6 +1175,13 @@ createApp({
       }
       if (vocabOpen.value && e.key === 'Escape') { vocabOpen.value = false; return; }
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (view.value === 'vocab') {
+        if (vtSpell.active && vtSpellKey(e)) { e.preventDefault(); return; }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); vtPrev(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); vtNext(); }
+        if (e.key === ' ')          { e.preventDefault(); vtToggleMeaning(); }
+        return;
+      }
       if (e.key === 'ArrowLeft')  { e.preventDefault(); prevSentence(); }
       if (e.key === 'ArrowRight') { e.preventDefault(); nextSentence(); }
       if (e.key === ' ') {
@@ -926,6 +1228,12 @@ createApp({
       achievements, achievementUnlockedCount,
       // Stats modal
       statsModalOpen,
+      // Vocab Trainer
+      vt, vtLibs, vtTotal, vtWordSaved, enterVocab,
+      vtSetLibrary, vtPrev, vtNext, vtJump, vtGo, vtSearch,
+      vtToggleMeaning, vtSpeak, vtAddToVocab,
+      // Spell mode
+      vtSpell, vtSpellChars, vtToggleSpell, vtToggleSpellHide,
       // Dictation
       dictation, startDictation, replayDictation, submitDictation, closeDictation,
       // Shadowing
