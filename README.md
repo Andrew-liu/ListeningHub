@@ -4,12 +4,12 @@
 
 ### *沉浸式英语听力练习平台*
 
-**100篇精选听力材料 · 逐句精听 · 中英对照 · 智能生词本 · 云端同步 · 勋章成就**
+**100篇精选听力材料 · 逐句精听 · 中英对照 · 智能生词本 · 勋章成就 · 纯静态零依赖**
 
 <p>
   <img alt="Vue" src="https://img.shields.io/badge/Vue-3.x-42b883?style=flat-square&logo=vue.js&logoColor=white" />
   <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind-3.x-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white" />
-  <img alt="Cloudflare" src="https://img.shields.io/badge/Cloudflare-Workers-f38020?style=flat-square&logo=cloudflare&logoColor=white" />
+  <img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub-Pages-222?style=flat-square&logo=github&logoColor=white" />
   <img alt="PWA" src="https://img.shields.io/badge/PWA-Offline-blueviolet?style=flat-square" />
 </p>
 
@@ -25,7 +25,7 @@
 | 🌐 **中英对照** | 每句配有中文翻译，一键切换显示/隐藏 |
 | 📚 **智能生词本** | 点击任意单词查词典、收藏，支持 SRS 间隔复习 |
 | 🏅 **勋章成就** | 15 枚成就勋章，覆盖打卡、听力、词汇等维度 |
-| ☁️ **云端同步** | 登录后数据自动同步，跨设备无缝衔接 |
+| 📊 **学习统计** | 打卡天数、连续 streak、已听句数，本地自动记录 |
 | 📝 **听写模式** | 听后默写，自动对比原文 |
 | 🎙️ **跟读录音** | 录制发音与原文对比 |
 | 🎨 **三色主题** | 明亮 / 复古 / 暗黑，护眼阅读 |
@@ -34,20 +34,18 @@
 
 ## 架构
 
+纯静态单页应用，无后端、无账号系统：
+
 ```
 ┌─────────────────────────────────────────┐
-│  前端（GitHub Pages 纯静态）              │
+│  GitHub Pages（纯静态托管）               │
 │  Vue 3 CDN + Tailwind CSS + Web Speech  │
-│  离线优先：localStorage 作为主存储        │
-└────────────────┬────────────────────────┘
-                 │ HTTPS (fetch)
-┌────────────────▼────────────────────────┐
-│  后端（Cloudflare Workers + D1）         │
-│  认证：邮箱 + 验证码 → JWT              │
-│  同步：JSON blob per user               │
-│  免费额度足够个人/小范围使用              │
+│  所有数据存储在浏览器 localStorage        │
+│  PWA Service Worker 提供离线能力          │
 └─────────────────────────────────────────┘
 ```
+
+学习进度、生词本、成就等数据全部保存在本设备浏览器中，无需登录。
 
 ## 快速开始
 
@@ -58,85 +56,31 @@
 ### 本地开发
 
 ```bash
-# 前端（零依赖，无需 npm）
+# 零依赖，无需 npm，任意静态服务器即可
 python3 -m http.server 8080
 # 打开 http://localhost:8080
-
-# 后端（可选，用于本地测试同步功能）
-cd server
-npm install
-node index.js
-# API 运行在 http://localhost:3000
 ```
 
-### Docker 部署（自托管）
+## 部署（GitHub Pages）
 
-```bash
-docker compose up -d
-# 访问 http://localhost:28080
-```
+推送到 `main`/`master` 分支后，`.github/workflows/deploy.yml` 会自动完成部署：
 
-## 部署说明
+1. 注入 commit sha 到 Service Worker 缓存名（确保客户端更新）
+2. 上传整个目录为 Pages artifact
+3. 发布到 GitHub Pages
 
-### 前端 → GitHub Pages
-
-项目根目录的静态文件直接推送到 GitHub 即可：
-- `index.html` / `app.js` / `sync.js` / `data/` / `manifest.json` / `service-worker.js`
-
-### 后端 → Cloudflare Workers
-
-```bash
-cd worker
-npm install
-npx wrangler d1 create listening-hub-db
-# 将 database_id 填入 wrangler.toml
-npx wrangler d1 execute listening-hub-db --remote --file=schema.sql
-npx wrangler deploy
-```
-
-部署后在 `index.html` 中配置 Worker 地址：
-```html
-<script>window.API_BASE = 'https://your-worker.workers.dev/api';</script>
-```
-
-### 后端 → Docker 自部署（备选）
-
-不用 Cloudflare 也行，`docker-compose.yml` 包含前后端：
-- 前端：nginx 容器
-- 后端：Node.js + SQLite 容器
-- nginx 反代 `/api/` 到后端
+仓库设置中将 Pages 的 Source 设为 "GitHub Actions" 即可。
 
 ## 项目结构
 
 ```
 ├── index.html          # 主页面（Vue 3 SPA）
 ├── app.js              # 业务逻辑
-├── sync.js             # 云端同步模块
 ├── data/episodes.js    # 100 篇听力材料数据
 ├── manifest.json       # PWA 配置
 ├── service-worker.js   # 离线缓存
-├── server/             # Node.js 后端（Docker 自部署用）
-│   ├── index.js
-│   ├── db.js
-│   ├── routes/
-│   └── Dockerfile
-├── worker/             # Cloudflare Worker 后端
-│   ├── src/
-│   │   ├── index.js          # Hono 版本（wrangler 部署）
-│   │   └── worker-inline.js  # 零依赖版（网页编辑器粘贴）
-│   ├── schema.sql
-│   └── wrangler.toml
-├── docker-compose.yml
-├── Dockerfile
-└── nginx.conf
+└── .github/workflows/deploy.yml  # GitHub Pages 自动部署
 ```
-
-## 账号系统
-
-- **注册/登录**：输入邮箱 → 获取验证码 → 验证即登录（无密码）
-- **数据同步**：登录后学习进度、生词本自动同步到云端
-- **离线优先**：断网照常使用，恢复网络后自动同步
-- **打卡规则**：登录状态下听听力才计入打卡天数
 
 ## 技术栈
 
@@ -147,10 +91,8 @@ npx wrangler deploy
 | 语音 | Web Speech API |
 | 词典 | Free Dictionary API |
 | 翻译 | MyMemory API |
-| 存储 | localStorage + Cloudflare D1 |
-| 认证 | JWT (HMAC-SHA256) |
-| 部署 | GitHub Pages + Cloudflare Workers |
-| 备选部署 | Docker (nginx + Node.js) |
+| 存储 | localStorage |
+| 部署 | GitHub Pages (Actions) |
 
 ## License
 

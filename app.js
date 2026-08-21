@@ -13,7 +13,6 @@ function loadVocab() {
 }
 function saveVocab(v) {
   localStorage.setItem(VOCAB_KEY, JSON.stringify(v));
-  if (typeof SyncManager !== 'undefined') SyncManager.schedulePush();
 }
 
 function loadTheme() {
@@ -40,7 +39,6 @@ function loadProgress() {
 }
 function saveProgress(p) {
   localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
-  if (typeof SyncManager !== 'undefined') SyncManager.schedulePush();
 }
 
 function todayStr() {
@@ -155,85 +153,14 @@ createApp({
     const searchQuery = ref('');
     const selectedCategory = ref('all');
 
-    // ── Auth & Sync ───────────────────────────────────────────────────────────
-    const authModalOpen = ref(false);
-    const authStep = ref('email');  // 'email' | 'verify'
-    const authEmail = ref('');
-    const authCode = ref('');
-    const authDisplayCode = ref('');
-    const authError = ref('');
-    const authLoading = ref(false);
-    const authUser = ref(SyncManager.getUser());
-    const syncVersion = ref(parseInt(localStorage.getItem('sync_version') || '0', 10));
+    // ── Stats Modal（学习统计 / 成就）──────────────────────────────────────────
+    const statsModalOpen = ref(false);
 
-    // ── Vocabulary (声明需在 SyncManager.onChange 之前) ──────────────────────
+    // ── Vocabulary ────────────────────────────────────────────────────────────
     const vocabOpen = ref(false);
     const vocabulary = ref(loadVocab());
     const vocabList = computed(() => Object.values(vocabulary.value).sort((a, b) => b.addedAt - a.addedAt));
     const vocabCount = computed(() => vocabList.value.length);
-
-    // 初始化同步管理器
-    SyncManager.init();
-    SyncManager.onChange((event, data) => {
-      if (event === 'login') {
-        authUser.value = data;
-      } else if (event === 'logout') {
-        authUser.value = null;
-        syncVersion.value = 0;
-      } else if (event === 'synced') {
-        syncVersion.value = data.version;
-      } else if (event === 'dataUpdated') {
-        // 云端数据合并后，刷新本地状态
-        progress.value = loadProgress();
-        vocabulary.value = loadVocab();
-      }
-    });
-
-    async function doLogin() {
-      if (!authEmail.value || !authEmail.value.includes('@')) {
-        authError.value = '请输入有效的邮箱地址';
-        return;
-      }
-      authError.value = '';
-      authLoading.value = true;
-      try {
-        const result = await SyncManager.login(authEmail.value);
-        authDisplayCode.value = result.code;
-        authStep.value = 'verify';
-      } catch (err) {
-        authError.value = err.message;
-      } finally {
-        authLoading.value = false;
-      }
-    }
-
-    async function doVerify() {
-      if (!authCode.value || authCode.value.length !== 6) {
-        authError.value = '请输入 6 位验证码';
-        return;
-      }
-      authError.value = '';
-      authLoading.value = true;
-      try {
-        await SyncManager.verify(authEmail.value, authCode.value);
-        authModalOpen.value = false;
-        // 重置登录表单
-        authStep.value = 'email';
-        authEmail.value = '';
-        authCode.value = '';
-        authDisplayCode.value = '';
-      } catch (err) {
-        authError.value = err.message;
-      } finally {
-        authLoading.value = false;
-      }
-    }
-
-    function doLogout() {
-      SyncManager.logout();
-      authModalOpen.value = false;
-      authStep.value = 'email';
-    }
 
     // ── Theme ─────────────────────────────────────────────────────────────────
     const theme = ref(loadTheme());
@@ -251,9 +178,6 @@ createApp({
     const progress = ref(loadProgress());
 
     function recordSentencePlayed(epId) {
-      // 只有登录后才记录打卡数据
-      if (!SyncManager.isLoggedIn()) return;
-
       const p = progress.value;
       p.sentencesPlayed += 1;
 
@@ -274,9 +198,6 @@ createApp({
     }
 
     function recordEpisodeCompleted(epId) {
-      // 只有登录后才记录完成数据
-      if (!SyncManager.isLoggedIn()) return;
-
       const p = progress.value;
       p.episodesCompleted[epId] = Date.now();
       saveProgress(p);
@@ -1003,9 +924,8 @@ createApp({
       theme, setTheme, progressStats,
       // Achievements
       achievements, achievementUnlockedCount,
-      // Auth & Sync
-      authModalOpen, authStep, authEmail, authCode, authDisplayCode, authError, authLoading,
-      authUser, syncVersion, doLogin, doVerify, doLogout,
+      // Stats modal
+      statsModalOpen,
       // Dictation
       dictation, startDictation, replayDictation, submitDictation, closeDictation,
       // Shadowing
