@@ -64,3 +64,8 @@ SYNC_IMPLEMENTATION_GUIDE.md
 # ─── 包管理器锁文件 ────────────────────────────────────────
 package-lock.json
 server/data/
+
+# ─── ListeningHub 素材管线 ───────────────────────────────
+.venv/
+scripts/.cache/
+__pycache__/

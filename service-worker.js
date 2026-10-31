@@ -1,67 +1,75 @@
-/* Listening Hub Service Worker v4 - network-first for HTML/JS, cache-first for others */
-const CACHE_NAME = 'listening-hub-v4';
+/* Listening Hub Service Worker
+ * - 应用代码与 JSON 数据：network-first，离线回退缓存
+ * - 插画 / 字体 / CDN 脚本：cache-first
+ * - 音频（mp3、Range 请求）：不拦截，交给浏览器 HTTP 缓存，避免破坏逐句 seek
+ */
+const CACHE_NAME = 'listening-hub-v5';
+const RUNTIME = 'listening-hub-runtime-v1';
 const CORE_ASSETS = [
   './',
   './index.html',
   './app.js',
-  './data/episodes.js',
-  './manifest.json'
+  './js/lib/utils.js',
+  './js/lib/segment-player.js',
+  './js/lib/subtitles.js',
+  './js/lib/idb.js',
+  './js/lib/atlas.js',
+  './js/listening/training.js',
+  './js/listening/use-listening.js',
+  './js/vocab/use-vocab-trainer.js',
+  './data/listening/index.json',
+  './data/vocab/manifest.json',
+  './data/atlas/meta.json',
+  './manifest.json',
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(CORE_ASSETS)).then(() => self.skipWaiting()));
+});
+
+self.addEventListener('activate', event => {
+  const keep = [CACHE_NAME, RUNTIME];
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(CORE_ASSETS))
-      .then(() => self.skipWaiting())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => !keep.includes(k)).map(k => caches.delete(k))))
+      .then(() => self.clients.claim()),
   );
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
-
   const url = new URL(req.url);
 
-  // 1) API 不缓存，直通
-  if (url.host.includes('dictionaryapi.dev') || url.host.includes('mymemory.translated.net')) {
-    return;
-  }
+  // 音频与外部 API 直通
+  if (req.headers.has('range') || /\.(mp3|m4a|wav|ogg|webm)$/i.test(url.pathname)) return;
+  if (url.host.includes('dictionaryapi.dev') || url.host.includes('mymemory.translated.net')) return;
 
-  // 2) 应用核心文件（HTML / JS / JSON）：network-first，失败回退缓存
-  //    这样新版本发布后可以立刻生效，仅在离线时才读缓存
-  const isCore = /\.(html|js|json)$/.test(url.pathname) || url.pathname.endsWith('/');
-  if (url.origin === self.location.origin && isCore) {
+  const sameOrigin = url.origin === self.location.origin;
+  const isCore = sameOrigin && (/\.(html|js|json)$/.test(url.pathname) || url.pathname.endsWith('/'));
+  if (isCore) {
     event.respondWith(
-      fetch(req).then((res) => {
+      fetch(req).then(res => {
         if (res && res.status === 200) {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then(c => c.put(req, copy));
         }
         return res;
-      }).catch(() => caches.match(req))
+      }).catch(() => caches.match(req)),
     );
     return;
   }
 
-  // 3) 其他静态资源（字体、CDN）：cache-first
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((res) => {
-        if (res && res.status === 200 && url.origin === self.location.origin) {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+  // 插画、字体、CDN：cache-first
+  if (/\.(webp|png|jpg|svg|woff2?)$/i.test(url.pathname) || /unpkg\.com|cdn\.tailwindcss\.com|fonts\.(googleapis|gstatic)\.com|raw\.githubusercontent\.com/.test(url.host)) {
+    event.respondWith(
+      caches.match(req).then(hit => hit || fetch(req).then(res => {
+        if (res && (res.status === 200 || res.type === 'opaque')) {
+          const copy = res.clone();
+          caches.open(RUNTIME).then(c => c.put(req, copy));
         }
         return res;
-      }).catch(() => cached);
-    })
-  );
+      })),
+    );
+  }
 });

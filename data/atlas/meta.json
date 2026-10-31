@@ -1,0 +1,54 @@
+{
+ "name": "Word Atlas Open（词光）",
+ "upstream": "https://github.com/designfuchen/word-atlas",
+ "commit": "19a9bd889d2f642fef1d8d0eef85a3f35e1a66ff",
+ "license": "CC BY 4.0 — Word Atlas contributors（词光）",
+ "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+ "modified": "转换为 ListeningHub 词库格式；未修改释义、例句、插画与录音内容",
+ "voiceNote": "单词与例句录音为 ElevenLabs 合成语音（英音 Alice / 美音 Sarah）",
+ "media": {
+  "thumb": "data/atlas/thumb/",
+  "uk": "data/atlas/audio/uk/",
+  "us": "data/atlas/audio/us/",
+  "img": "https://raw.githubusercontent.com/designfuchen/word-atlas/19a9bd889d2f642fef1d8d0eef85a3f35e1a66ff/public/atlas/img/",
+  "ex": "https://raw.githubusercontent.com/designfuchen/word-atlas/19a9bd889d2f642fef1d8d0eef85a3f35e1a66ff/public/atlas/audio/ex/",
+  "ex2": "https://raw.githubusercontent.com/designfuchen/word-atlas/19a9bd889d2f642fef1d8d0eef85a3f35e1a66ff/public/atlas/audio/ex2/"
+ },
+ "mediaBits": {
+  "img": 1,
+  "uk": 2,
+  "us": 4,
+  "ex": 8,
+  "ex2": 16
+ },
+ "topics": {
+  "education": "教育",
+  "work": "职场",
+  "technology": "科技",
+  "science": "科学",
+  "environment": "环境",
+  "health": "健康",
+  "society": "社会",
+  "government": "政法",
+  "economy": "经济",
+  "media": "媒体",
+  "arts": "艺术",
+  "travel": "旅行",
+  "city": "城市",
+  "nature": "自然",
+  "daily": "生活",
+  "emotion": "情感",
+  "thinking": "思维",
+  "sport": "运动",
+  "history": "历史"
+ },
+ "cefr": [
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "C1",
+  "C2"
+ ],
+ "count": 7298
+}

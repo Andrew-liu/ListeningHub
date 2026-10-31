@@ -1,7 +1,7 @@
 {
-  "name": "Listening Hub - VOA Special English",
+  "name": "Listening Hub - 真人原声英语听力",
   "short_name": "Listening Hub",
-  "description": "VOA Special English 听力练习平台",
+  "description": "VOA Learning English 真人原声精听 + 词光雅思背单词",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait-primary",
