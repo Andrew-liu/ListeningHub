@@ -251,9 +251,14 @@ export function useVocabTrainer(ctx) {
     return false;
   }
 
+  // 插画本身就是释义提示：释义隐藏（自测中）或默写未完成时不显示，卡片回到居中布局
+  const showImg = computed(() => !!atlasMedia('thumb')
+    && (vt.showMeaning || spell.done)
+    && !(spell.active && spell.hideWord && !spell.done));
+
   return {
     vt, vtLibs: VT_LIBS, vtTotal: total, vtWordSaved: wordSaved, vtAtlas: atlas, vtAtlasTopic: atlasTopic, atlasMeta,
-    vtAtlasMedia: atlasMedia, vtPlayExample: playExample, vtExampleHasAudio: exampleHasAudio,
+    vtAtlasMedia: atlasMedia, vtShowImg: showImg, vtPlayExample: playExample, vtExampleHasAudio: exampleHasAudio,
     vtSetLibrary: setLibrary, vtPrev: prev, vtNext: next, vtJump: jump, vtGo: go, vtSearch: search,
     vtToggleMeaning: toggleMeaning, vtSpeak: speak, vtAddToVocab: addToVocab,
     vtSpell: spell, vtSpellChars: spellChars, vtToggleSpell: toggleSpell, vtToggleSpellHide: toggleSpellHide,

@@ -444,19 +444,19 @@
       <!-- CTA -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
         <button @click="enterApp"
-                class="btn-gradient px-8 py-4 rounded-2xl text-base font-bold flex items-center gap-2 shadow-2xl shadow-brand-500/30 hover:scale-105 transition-transform">
+                class="btn-gradient w-48 h-14 rounded-2xl text-base font-bold flex items-center justify-center gap-2 border border-transparent shadow-2xl shadow-brand-500/30 hover:scale-105 transition-transform">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           立即开始练习
         </button>
         <button @click="enterVocab"
-                class="px-8 py-4 rounded-2xl text-base font-bold flex items-center gap-2 bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-2xl shadow-rose-500/30 hover:scale-105 transition-transform">
+                class="w-48 h-14 rounded-2xl text-base font-bold flex items-center justify-center gap-2 border border-transparent bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-2xl shadow-rose-500/30 hover:scale-105 transition-transform">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
           背单词
         </button>
         <a href="#features"
-           class="px-8 py-4 rounded-2xl bg-white border border-sand-200 text-sand-700 font-semibold hover:bg-sand-50 transition-all flex items-center gap-2">
+           class="w-48 h-14 rounded-2xl bg-white border border-sand-200 text-sand-700 text-base font-bold shadow-2xl shadow-sand-900/5 hover:scale-105 transition-transform flex items-center justify-center gap-2">
           了解更多
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
         </a>
       </div>
 
@@ -1270,10 +1270,11 @@
       </div>
       <p v-if="vt.searchMsg" class="text-xs mb-4 px-1" :class="vt.searchError ? 'text-rose-500' : 'text-emerald-600'">{{ vt.searchMsg }}</p>
 
-      <div class="glass-strong rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[360px]">
-        <div class="flex items-center justify-between mb-5 relative gap-2 flex-wrap">
+      <div class="glass-strong rounded-3xl p-6 md:p-10 relative overflow-hidden min-h-[360px]">
+        <div class="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-gradient-to-br from-brand-200/50 to-indigo-200/50 blur-3xl pointer-events-none"></div>
+        <div class="flex items-center justify-between mb-6 relative gap-2 flex-wrap">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="px-2.5 py-0.5 rounded-md bg-brand-100 text-brand-700 text-[10px] font-bold">{{ vtLibs[vt.library] }}</span>
+            <span class="px-2.5 py-0.5 rounded-md bg-brand-100 text-brand-700 text-[10px] font-bold">{{ vtLibs[vt.library] }} 词库</span>
             <template v-if="vtAtlas">
               <span class="px-2 py-0.5 rounded-md bg-violet-100 text-violet-700 text-[10px] font-bold">{{ vtAtlas.cefr }}</span>
               <span class="px-2 py-0.5 rounded-md bg-sand-100 text-sand-600 text-[10px] font-bold">{{ vtAtlasTopic }}</span>
@@ -1295,17 +1296,17 @@
         </div>
 
         <template v-else-if="vt.word">
-          <div class="flex flex-col md:flex-row md:items-center gap-5 mb-6">
+          <div class="mb-6 relative" :class="vtShowImg ? 'flex flex-col md:flex-row md:items-center gap-6' : 'text-center'">
             <!-- 词光插画（缩略图本地托管，点击加载 512px 大图） -->
-            <button v-if="vtAtlasMedia('thumb') && !(vtSpell.active && vtSpell.hideWord && !vtSpell.done && !vt.showMeaning)" @click="vt.imgLarge = !vt.imgLarge"
+            <button v-if="vtShowImg" @click="vt.imgLarge = !vt.imgLarge"
                     class="mx-auto md:mx-0 flex-shrink-0 rounded-3xl overflow-hidden border border-sand-200 bg-sand-50 shadow-sm transition-all"
                     :class="vt.imgLarge ? 'w-64 h-64 md:w-72 md:h-72' : 'w-36 h-36 md:w-40 md:h-40'" title="点击放大 / 缩小">
               <img :src="vt.imgLarge ? vtAtlasMedia('img') : vtAtlasMedia('thumb')" :alt="vt.word.word" class="w-full h-full object-cover" />
             </button>
-            <div class="flex-1 text-center" :class="vtAtlasMedia('thumb') ? 'md:text-left' : ''">
-              <h2 v-if="!vtSpell.active" class="text-4xl md:text-5xl font-display font-extrabold text-sand-900 tracking-tight mb-3">{{ vt.word.word }}</h2>
-              <div v-else class="mb-3">
-                <div class="text-4xl md:text-5xl font-extrabold tracking-[0.15em] font-mono flex items-center flex-wrap gap-y-2" :class="vtAtlasMedia('thumb') ? 'justify-center md:justify-start' : 'justify-center'">
+            <div class="flex-1 text-center" :class="vtShowImg ? 'md:text-left' : ''">
+              <h2 v-if="!vtSpell.active" class="text-4xl md:text-5xl font-display font-extrabold text-sand-900 tracking-tight mb-4">{{ vt.word.word }}</h2>
+              <div v-else class="mb-4">
+                <div class="text-4xl md:text-5xl font-display font-extrabold tracking-[0.15em] font-mono flex items-center flex-wrap gap-y-2" :class="vtShowImg ? 'justify-center md:justify-start' : 'justify-center'">
                   <span v-for="(c, i) in vtSpellChars" :key="i"
                         :class="c.state === 'ok' ? 'text-emerald-500' : c.state === 'wrong' ? 'text-rose-500 animate-pulse' : (vtSpell.hideWord && !vtSpell.done) ? 'text-sand-300' : 'text-sand-400'">
                     <template v-if="c.state === 'ok'">{{ c.char }}</template>
@@ -1313,21 +1314,21 @@
                     <template v-else>{{ (vtSpell.hideWord && !vtSpell.done) ? '_' : c.char }}</template>
                   </span>
                 </div>
-                <p class="mt-2 text-xs" :class="vtSpell.done ? 'text-emerald-600 font-semibold' : 'text-sand-400'">
+                <p class="mt-3 text-xs" :class="vtSpell.done ? 'text-emerald-600 font-semibold' : 'text-sand-400'">
                   <template v-if="vtSpell.done">✓ 拼写正确{{ vtSpell.wrongTimes > 0 ? `（错 ${vtSpell.wrongTimes} 次）` : ' · 一次通过' }} · 即将下一个</template>
                   <template v-else>直接敲键盘拼写{{ vtSpell.hideWord ? '（默写：听发音拼单词，按 P 重听）' : '' }} · 打错会清空重来</template>
                 </p>
               </div>
-              <div class="flex items-center gap-2 flex-wrap" :class="vtAtlasMedia('thumb') ? 'justify-center md:justify-start' : 'justify-center'">
-                <button v-if="vt.word.us" @click="vtSpeak('us')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all"
-                        :class="vt.accent === 'us' ? 'bg-brand-500 border-brand-500 text-white' : 'bg-brand-50 border-brand-200 text-brand-700'">🔊 美 /{{ vt.word.us }}/</button>
-                <button v-if="vt.word.uk" @click="vtSpeak('uk')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all"
-                        :class="vt.accent === 'uk' ? 'bg-brand-500 border-brand-500 text-white' : 'bg-brand-50 border-brand-200 text-brand-700'">🔊 英 /{{ vt.word.uk }}/</button>
+              <div class="flex items-center gap-3 flex-wrap" :class="vtShowImg ? 'justify-center md:justify-start' : 'justify-center'">
+                <button v-if="vt.word.us" @click="vtSpeak('us')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-medium hover:bg-brand-100 transition-all"
+                        :class="vt.accent === 'us' ? 'ring-2 ring-brand-300' : ''"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>美 /{{ vt.word.us }}/</button>
+                <button v-if="vt.word.uk" @click="vtSpeak('uk')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-medium hover:bg-brand-100 transition-all"
+                        :class="vt.accent === 'uk' ? 'ring-2 ring-brand-300' : ''"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>英 /{{ vt.word.uk }}/</button>
               </div>
             </div>
           </div>
 
-          <div v-if="vt.showMeaning" class="space-y-3 animate-slide-up">
+          <div v-if="vt.showMeaning" class="space-y-4 animate-slide-up relative">
             <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 space-y-1.5">
               <div v-for="(t, i) in vt.word.translations" :key="i" class="text-sm text-sand-800 leading-relaxed">
                 <span v-if="t.type" class="inline-block px-1.5 py-0.5 mr-1.5 rounded bg-brand-100 text-brand-700 text-[10px] font-bold align-middle">{{ t.type }}</span>{{ t.translation }}
@@ -1358,30 +1359,30 @@
             </div>
             <p v-if="vtAtlas?.note" class="text-xs text-rose-600 px-1">⚠ {{ vtAtlas.note }}</p>
           </div>
-          <div v-else class="py-8 text-center text-sm text-sand-400">释义已隐藏 · 先回忆，再按 <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">Space</kbd> 核对</div>
+          <div v-else class="py-10 text-center text-sm text-sand-400 relative">释义已隐藏 · 先回忆，再按 <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">Space</kbd> 核对</div>
         </template>
       </div>
 
-      <div class="flex items-center justify-between gap-3 mt-5 flex-wrap">
-        <button @click="vtPrev" :disabled="vt.loading || vt.index <= 1" class="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-50 disabled:opacity-30">← 上一个</button>
+      <div class="flex items-center justify-between gap-3 mt-6 flex-wrap">
+        <button @click="vtPrev" :disabled="vt.loading || vt.index <= 1" class="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>上一个</button>
         <div class="flex items-center gap-2 order-first md:order-none w-full md:w-auto justify-center">
           <button @click="vtToggleMeaning" class="px-4 py-3 rounded-2xl text-sm font-semibold transition-all"
                   :class="vt.showMeaning ? 'bg-sand-100 border border-sand-200 text-sand-700' : 'bg-gradient-to-br from-brand-500 to-indigo-500 text-white shadow-md'">{{ vt.showMeaning ? '隐藏释义' : '显示释义' }}</button>
-          <button @click="vtAddToVocab" :disabled="!vt.word || vtWordSaved" class="px-4 py-3 rounded-2xl text-sm font-semibold transition-all"
-                  :class="vtWordSaved ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' : 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md'">{{ vtWordSaved ? '✓ 已在生词本' : '不会，加入生词本' }}</button>
+          <button @click="vtAddToVocab" :disabled="!vt.word || vtWordSaved" class="px-4 py-3 rounded-2xl text-sm font-semibold transition-all flex items-center gap-1.5"
+                  :class="vtWordSaved ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' : 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md'"><svg v-if="vtWordSaved" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>{{ vtWordSaved ? '已在生词本' : '不会，加入生词本' }}</button>
           <form @submit.prevent="vtJump" class="hidden md:flex items-center gap-1">
             <input v-model="vt.jumpInput" type="number" min="1" :max="vtTotal" placeholder="序号" class="w-20 px-3 py-3 rounded-2xl bg-white border border-sand-200 text-sm text-center outline-none" />
             <button type="submit" class="px-3 py-3 rounded-2xl bg-white border border-sand-200 text-sm font-semibold text-sand-600">跳转</button>
           </form>
         </div>
-        <button @click="vtNext" :disabled="vt.loading || vt.index >= vtTotal" class="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-50 disabled:opacity-30">下一个 →</button>
+        <button @click="vtNext" :disabled="vt.loading || vt.index >= vtTotal" class="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white border border-sand-200 text-sm font-semibold text-sand-700 hover:bg-sand-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2">下一个<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
       </div>
 
       <div class="mt-4 flex items-center justify-center gap-4 text-[11px] text-sand-400 flex-wrap">
-        <span>← → 切换单词</span>
-        <span>P 发音</span>
-        <span v-if="!vtSpell.active">Space 显隐释义</span>
-        <span v-else>拼写模式：直接敲字母 · Backspace 删除 · 全对自动切词并更新复习计划</span>
+        <span><kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">→</kbd> 切换单词</span>
+        <span><kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">P</kbd> 发音</span>
+        <span v-if="!vtSpell.active"><kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">Space</kbd> 显隐释义</span>
+        <span v-else>拼写模式：直接敲字母 · <kbd class="px-1.5 py-0.5 rounded bg-sand-100 border border-sand-200 font-mono text-[10px] text-sand-700">Backspace</kbd> 删除 · 全对自动切词并按表现更新复习计划</span>
       </div>
       <p v-if="vt.library === 'ielts' && atlasMeta" class="mt-6 text-center text-[11px] text-sand-400 leading-relaxed">
         雅思词库、插画与录音来自 <a :href="atlasMeta.upstream" target="_blank" rel="noopener" class="underline hover:text-brand-600">词光 Word Atlas</a>
