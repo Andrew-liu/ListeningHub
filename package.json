@@ -1,0 +1,15 @@
+{
+  "name": "listening-hub",
+  "private": true,
+  "description": "真人原声英语听力训练 + 词光雅思背单词（纯静态站点，无构建步骤）",
+  "license": "MIT",
+  "scripts": {
+    "serve": "http-server -p 8080 -c-1 .",
+    "test": "node tests/e2e-listening.js && node tests/e2e-import.js",
+    "screenshots": "node tests/screenshots.js"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "playwright-core": "^1.50.0"
+  }
+}
